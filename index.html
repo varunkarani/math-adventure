@@ -29,15 +29,25 @@
 
 <div class="app">
 
+  <!-- ========================= -->
+  <!-- TABS -->
+  <!-- ========================= -->
+
   <header class="topbar">
 
     <div class="app-tabs">
 
-      <button id="mathTab" class="tab active">
+      <button
+        id="mathTab"
+        class="tab active"
+      >
         🧮 Math Adventure
       </button>
 
-      <button id="storyTab" class="tab">
+      <button
+        id="storyTab"
+        class="tab"
+      >
         📚 Story Time
       </button>
 
@@ -53,20 +63,6 @@
 
     <div class="top-row">
 
-      <div class="left-controls">
-
-        <div class="stat-card">
-          🔥 Streak:
-          <span id="streak">0</span>
-        </div>
-
-        <div class="stat-card">
-          🏆 Solved:
-          <span id="solvedCount">0</span>
-        </div>
-
-      </div>
-
       <div class="right-controls">
 
         <button id="settingsBtn">
@@ -80,42 +76,58 @@
       </div>
 
     </div>
-<div class="bottom-row">
 
-  <select id="difficulty">
+    <div class="bottom-row">
 
-    <option value="easy">
-      🌱 Easy
-    </option>
+      <select id="difficulty">
 
-    <option value="medium" selected>
-      🚀 Medium
-    </option>
+        <option value="easy">
+          🌱 Easy
+        </option>
 
-    <option value="hard">
-      🔥 Hard
-    </option>
+        <option value="medium" selected>
+          🚀 Medium
+        </option>
 
-    <option value="expert">
-      👑 Expert
-    </option>
+        <option value="hard">
+          🔥 Hard
+        </option>
 
-  </select>
+        <option value="expert">
+          👑 Expert
+        </option>
 
-</div>
+      </select>
+
+    </div>
+
     <main class="main-content">
 
-      <div class="story-banner" id="storyBanner">
-        🚀 Spaceship Progress
+      <div
+        class="story-banner"
+        id="storyBanner"
+      >
+        🚀 Loading Adventure...
       </div>
 
-      <div class="question-container"
-        id="questionContainer"></div>
+      <div
+        class="question-container"
+        id="questionContainer"
+      ></div>
 
-      <div class="feedback"
-        id="feedback"></div>
+      <div
+        class="feedback"
+        id="feedback"
+      ></div>
 
-      <div class="keypad" id="keypad">
+      <!-- ========================= -->
+      <!-- KEYPAD -->
+      <!-- ========================= -->
+
+      <div
+        class="keypad"
+        id="keypad"
+      >
 
         <button class="key">1</button>
         <button class="key">2</button>
@@ -129,9 +141,15 @@
         <button class="key">8</button>
         <button class="key">9</button>
 
-        <button class="key action">⌫</button>
+        <button class="key action">
+          ⌫
+        </button>
+
         <button class="key">0</button>
-        <button class="key action">✓</button>
+
+        <button class="key action">
+          ✓
+        </button>
 
       </div>
 
@@ -143,7 +161,10 @@
   <!-- STORY -->
   <!-- ========================= -->
 
-  <section id="storySection" class="hidden fade-section">
+  <section
+    id="storySection"
+    class="hidden"
+  >
 
     <div class="story-mode-header">
 
@@ -165,14 +186,7 @@
 
     </div>
 
-    <div class="story-progress-card">
-
-      ⭐ Stories Completed:
-      <span id="storiesCompleted">0</span>
-
-    </div>
-
-    <div class="story-book fade-card">
+    <div class="story-book">
 
       <div
         class="story-illustration"
@@ -200,25 +214,6 @@
 
     </div>
 
-    <div
-      class="mini-challenge hidden"
-      id="miniChallenge"
-    >
-
-      <div class="mini-title">
-        🚀 Fuel Crystal Challenge
-      </div>
-
-      <div
-        class="mini-question"
-        id="miniQuestion"
-      ></div>
-
-      <div class="mini-buttons"
-        id="miniButtons"></div>
-
-    </div>
-
   </section>
 
 </div>
@@ -228,4 +223,5 @@
 <script src="js/app.js"></script>
 
 </body>
+
 </html>
