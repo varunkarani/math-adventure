@@ -622,4 +622,14 @@ select{
 
     height:78px;
   }
+  
+  .settings-panel{
+
+  display:none;
+}
+
+.settings-panel.open{
+
+  display:flex;
+}
 }
