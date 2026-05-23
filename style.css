@@ -8,10 +8,6 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-html{
-  scroll-behavior:smooth;
-}
-
 html,
 body{
   margin:0;
@@ -20,7 +16,9 @@ body{
 }
 
 body{
+
   font-family:'Nunito',sans-serif;
+
   background:
     radial-gradient(
       circle at top,
@@ -31,9 +29,6 @@ body{
   color:white;
 
   overflow-x:hidden;
-
-  transition:
-    background 0.4s ease;
 }
 
 /* ========================= */
@@ -41,13 +36,18 @@ body{
 /* ========================= */
 
 #confettiCanvas{
+
   position:fixed;
+
   inset:0;
+
   pointer-events:none;
+
   z-index:0;
 }
 
 .background-glow{
+
   position:fixed;
 
   width:500px;
@@ -75,13 +75,16 @@ body{
 /* ========================= */
 
 .app{
+
   position:relative;
+
   z-index:10;
+
   padding:20px;
 }
 
 /* ========================= */
-/* FORCE INTERACTIONS */
+/* GLOBAL INTERACTIONS */
 /* ========================= */
 
 button,
@@ -89,8 +92,25 @@ select,
 input,
 .key,
 .tab{
+
   pointer-events:auto !important;
+
   touch-action:manipulation;
+
+  position:relative;
+
+  z-index:20;
+}
+
+/* ========================= */
+/* HIDDEN */
+/* ========================= */
+
+.hidden{
+
+  display:none !important;
+
+  pointer-events:none !important;
 }
 
 /* ========================= */
@@ -98,9 +118,13 @@ input,
 /* ========================= */
 
 .app-tabs{
+
   display:flex;
+
   justify-content:center;
+
   gap:14px;
+
   margin-bottom:20px;
 }
 
@@ -123,14 +147,14 @@ input,
 
   transition:
     transform 0.12s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+    background 0.2s ease;
 
   box-shadow:
     0 6px 20px rgba(0,0,0,0.16);
 }
 
 .tab.active{
+
   background:
     linear-gradient(
       135deg,
@@ -140,6 +164,7 @@ input,
 }
 
 .tab:active{
+
   transform:scale(0.96);
 }
 
@@ -148,31 +173,36 @@ input,
 /* ========================= */
 
 .top-row{
+
   display:flex;
-  justify-content:space-between;
+
+  justify-content:center;
+
   gap:16px;
+
   flex-wrap:wrap;
 }
 
 .bottom-row{
+
   display:flex;
+
   justify-content:center;
-  gap:16px;
+
   margin-top:16px;
 }
 
-.left-controls,
 .right-controls{
+
   display:flex;
+
   gap:12px;
-  flex-wrap:wrap;
 }
 
 /* ========================= */
-/* UI */
+/* BUTTONS */
 /* ========================= */
 
-.stat-card,
 button,
 select{
 
@@ -197,17 +227,21 @@ select{
 }
 
 button{
+
   transition:
-    transform 0.12s ease,
-    box-shadow 0.2s ease;
+    transform 0.12s ease;
 }
 
 button:active{
+
   transform:scale(0.96);
 }
 
 select{
-  min-width:180px;
+
+  width:min(500px,100%);
+
+  font-size:1rem;
 }
 
 /* ========================= */
@@ -215,31 +249,35 @@ select{
 /* ========================= */
 
 .main-content{
+
   display:flex;
+
   flex-direction:column;
+
   align-items:center;
+
   padding-top:20px;
 }
 
 /* ========================= */
-/* BANNERS */
+/* STORY BANNER */
 /* ========================= */
 
-.daily-mission,
-.story-banner,
-.achievement-banner{
+.story-banner{
 
   width:min(700px,100%);
 
-  margin-bottom:14px;
+  margin-bottom:20px;
 
-  padding:14px 20px;
+  padding:20px;
 
-  border-radius:20px;
+  border-radius:24px;
 
   text-align:center;
 
-  font-weight:800;
+  font-weight:900;
+
+  font-size:1.5rem;
 
   background:
     rgba(255,255,255,0.08);
@@ -248,22 +286,6 @@ select{
     1px solid rgba(255,255,255,0.08);
 
   backdrop-filter:blur(18px);
-
-  animation:
-    fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn{
-
-  from{
-    opacity:0;
-    transform:translateY(10px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
 }
 
 /* ========================= */
@@ -271,7 +293,9 @@ select{
 /* ========================= */
 
 .question-container{
+
   width:100%;
+
   max-width:720px;
 }
 
@@ -286,11 +310,6 @@ select{
   background:
     rgba(255,255,255,0.08);
 
-  animation:
-    cardEnter 0.35s ease;
-
-  transform-origin:center;
-
   backdrop-filter:blur(18px);
 
   border:
@@ -300,26 +319,8 @@ select{
     0 10px 40px rgba(0,0,0,0.18);
 }
 
-@keyframes cardEnter{
-
-  from{
-    opacity:0;
-
-    transform:
-      translateY(14px)
-      scale(0.98);
-  }
-
-  to{
-    opacity:1;
-
-    transform:
-      translateY(0)
-      scale(1);
-  }
-}
-
 .question-text{
+
   font-size:
     clamp(2.4rem,5vw,5rem);
 
@@ -342,14 +343,12 @@ select{
   display:flex;
 
   justify-content:center;
+
   align-items:center;
 
   font-size:2.2rem;
 
   font-weight:900;
-
-  border:
-    1px solid rgba(255,255,255,0.08);
 }
 
 /* ========================= */
@@ -367,9 +366,6 @@ select{
   font-weight:900;
 
   text-align:center;
-
-  animation:
-    fadeIn 0.25s ease;
 }
 
 .feedback.success{
@@ -389,6 +385,7 @@ select{
   margin-top:30px;
 
   width:100%;
+
   max-width:460px;
 
   display:grid;
@@ -419,33 +416,15 @@ select{
       rgba(255,255,255,0.12),
       rgba(255,255,255,0.05)
     );
-
-  transition:
-    transform 0.08s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
-
-  box-shadow:
-    0 8px 20px rgba(0,0,0,0.18);
 }
 
 .key:active{
 
-  transform:
-    scale(0.93);
-
-  box-shadow:
-    0 2px 8px rgba(0,0,0,0.25);
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.18),
-      rgba(255,255,255,0.08)
-    );
+  transform:scale(0.93);
 }
 
 .action{
+
   background:
     linear-gradient(
       180deg,
@@ -455,40 +434,32 @@ select{
 }
 
 /* ========================= */
-/* STORY MODE */
+/* STORY */
 /* ========================= */
 
 .story-mode-header{
+
   display:flex;
+
   justify-content:space-between;
+
   gap:16px;
+
   flex-wrap:wrap;
 }
 
 .story-mode-title{
+
   font-size:2rem;
+
   font-weight:900;
 }
 
 .story-controls{
+
   display:flex;
+
   gap:12px;
-}
-
-.story-progress-card{
-
-  margin-top:20px;
-
-  padding:16px 20px;
-
-  border-radius:22px;
-
-  background:
-    rgba(255,255,255,0.08);
-
-  font-weight:800;
-
-  backdrop-filter:blur(18px);
 }
 
 .story-book{
@@ -512,25 +483,6 @@ select{
 
   border:
     1px solid rgba(255,255,255,0.1);
-
-  box-shadow:
-    0 12px 40px rgba(0,0,0,0.22);
-
-  animation:
-    fadeStory 0.4s ease;
-}
-
-@keyframes fadeStory{
-
-  from{
-    opacity:0;
-    transform:translateY(16px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
 }
 
 .story-illustration{
@@ -538,28 +490,6 @@ select{
   font-size:5rem;
 
   margin-bottom:24px;
-
-  animation:
-    floaty 4s ease infinite;
-
-  transition:
-    transform 0.2s ease;
-
-  filter:
-    drop-shadow(
-      0 10px 20px rgba(0,0,0,0.25)
-    );
-}
-
-@keyframes floaty{
-
-  0%,100%{
-    transform:translateY(0);
-  }
-
-  50%{
-    transform:translateY(-8px);
-  }
 }
 
 .story-text{
@@ -584,55 +514,67 @@ select{
 }
 
 /* ========================= */
-/* MINI CHALLENGE */
+/* SETTINGS PANEL */
 /* ========================= */
 
-.mini-challenge{
+.settings-panel{
 
-  margin-top:30px;
+  position:fixed;
 
-  padding:24px;
+  left:50%;
+  top:50%;
+
+  transform:
+    translate(-50%,-50%);
+
+  width:min(420px,90vw);
+
+  padding:28px;
 
   border-radius:28px;
 
-  text-align:center;
-
   background:
-    rgba(124,92,255,0.15);
+    rgba(18,22,40,0.95);
 
-  backdrop-filter:blur(18px);
+  backdrop-filter:blur(24px);
 
-  animation:
-    fadeIn 0.3s ease;
-}
+  border:
+    1px solid rgba(255,255,255,0.1);
 
-.mini-title{
-  font-size:1.4rem;
-  font-weight:900;
-}
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.45);
 
-.mini-question{
-
-  margin:24px 0;
-
-  font-size:2.2rem;
-
-  font-weight:900;
-}
-
-.mini-buttons{
+  z-index:9999;
 
   display:flex;
 
-  justify-content:center;
+  flex-direction:column;
 
-  gap:14px;
+  gap:20px;
+}
 
-  flex-wrap:wrap;
+.settings-panel h2{
+
+  margin:0;
+
+  text-align:center;
+}
+
+.settings-panel label{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:20px;
+
+  font-weight:700;
 }
 
 /* ========================= */
-/* BEDTIME MODE */
+/* BEDTIME */
 /* ========================= */
 
 .bedtime-mode{
@@ -646,59 +588,38 @@ select{
 }
 
 /* ========================= */
-/* HELPERS */
-/* ========================= */
-
-.hidden{
-  display:none !important;
-}
-
-/* ========================= */
 /* MOBILE */
 /* ========================= */
 
 @media(max-width:768px){
 
-  .top-row{
-    flex-direction:column;
-  }
-
-  .left-controls,
-  .right-controls{
-    justify-content:center;
-  }
-
-  .bottom-row{
-    flex-direction:row;
-  }
-
-  select{
-    flex:1;
-    min-width:0;
-  }
-
   .story-mode-header{
+
     flex-direction:column;
   }
 
   .story-buttons{
+
     flex-direction:column;
   }
 
   .story-controls{
+
     width:100%;
   }
 
   .story-controls button{
+
     flex:1;
   }
 
   .question-card{
+
     padding:28px;
   }
 
   .key{
+
     height:78px;
   }
-
 }
