@@ -2,10 +2,6 @@ document.addEventListener(
   "DOMContentLoaded",
   ()=>{
 
-  /* ========================= */
-  /* HELPERS */
-  /* ========================= */
-
   function get(id){
 
     return document.getElementById(id);
@@ -17,9 +13,11 @@ document.addEventListener(
 
   const mathTab = get("mathTab");
   const storyTab = get("storyTab");
+  const parentTab = get("parentTab");
 
   const mathSection = get("mathSection");
   const storySection = get("storySection");
+  const parentSection = get("parentSection");
 
   const keypad = get("keypad");
 
@@ -38,9 +36,11 @@ document.addEventListener(
 
   const storyBanner = get("storyBanner");
 
-  const settingsBtn = get("settingsBtn");
+  const resetProgressBtn =
+    get("resetProgressBtn");
 
-  const settingsPanel = get("settingsPanel");
+  const totalSolvedStat =
+    get("totalSolvedStat");
 
   /* ========================= */
   /* INIT */
@@ -58,237 +58,218 @@ document.addEventListener(
 
   function renderStats(){
 
-    if(!storyBanner) return;
+    if(storyBanner){
 
-    const difficultyLevel =
-      difficulty
-        ? difficulty.value.toUpperCase()
-        : "MEDIUM";
+      storyBanner.innerHTML = `
 
-    storyBanner.innerHTML = `
+        🚀 Difficulty:
+        ${difficulty.value.toUpperCase()}
 
-      🚀 Difficulty:
-      ${difficultyLevel}
+        <br>
 
-      <br>
+        🏆 Solved:
+        ${solved}
 
-      🏆 Solved:
-      ${solved}
+        &nbsp;&nbsp;&nbsp;
 
-      &nbsp;&nbsp;&nbsp;
+        🔥 Streak:
+        ${streak}
+      `;
+    }
 
-      🔥 Streak:
-      ${streak}
-    `;
+    if(totalSolvedStat){
+
+      totalSolvedStat.innerText =
+        solved;
+    }
   }
 
   /* ========================= */
-  /* SETTINGS */
+  /* TAB SWITCHING */
   /* ========================= */
 
-  if(settingsBtn && settingsPanel){
+  function clearTabs(){
 
-    settingsBtn.onclick = ()=>{
+    mathTab.classList.remove("active");
+    storyTab.classList.remove("active");
+    parentTab.classList.remove("active");
 
-      settingsPanel.classList.toggle(
-        "open"
-      );
-    };
+    mathSection.classList.add("hidden");
+    storySection.classList.add("hidden");
+    parentSection.classList.add("hidden");
   }
 
-  /* ========================= */
-  /* TABS */
-  /* ========================= */
+  mathTab.onclick = ()=>{
 
-  if(mathTab){
+    clearTabs();
 
-    mathTab.onclick = ()=>{
+    mathTab.classList.add("active");
 
-      mathSection.classList.remove(
-        "hidden"
-      );
+    mathSection.classList.remove(
+      "hidden"
+    );
+  };
 
-      storySection.classList.add(
-        "hidden"
-      );
+  storyTab.onclick = ()=>{
 
-      mathTab.classList.add(
-        "active"
-      );
+    clearTabs();
 
-      storyTab.classList.remove(
-        "active"
-      );
-    };
-  }
+    storyTab.classList.add("active");
 
-  if(storyTab){
+    storySection.classList.remove(
+      "hidden"
+    );
+  };
 
-    storyTab.onclick = ()=>{
+  parentTab.onclick = ()=>{
 
-      storySection.classList.remove(
-        "hidden"
-      );
+    clearTabs();
 
-      mathSection.classList.add(
-        "hidden"
-      );
+    parentTab.classList.add("active");
 
-      storyTab.classList.add(
-        "active"
-      );
-
-      mathTab.classList.remove(
-        "active"
-      );
-    };
-  }
+    parentSection.classList.remove(
+      "hidden"
+    );
+  };
 
   /* ========================= */
   /* DIFFICULTY */
   /* ========================= */
 
-  if(difficulty){
+  difficulty.onchange = ()=>{
 
-    difficulty.onchange = ()=>{
+    generateQuestion();
 
-      generateQuestion();
-
-      renderStats();
-    };
-  }
+    renderStats();
+  };
 
   /* ========================= */
   /* REFRESH */
   /* ========================= */
 
-  if(refreshBtn){
+  refreshBtn.onclick = ()=>{
 
-    refreshBtn.onclick = ()=>{
-
-      generateQuestion();
-    };
-  }
+    generateQuestion();
+  };
 
   /* ========================= */
   /* KEYPAD */
   /* ========================= */
 
-  if(keypad){
+  keypad.onclick = (e)=>{
 
-    keypad.onclick = (e)=>{
+    if(
+      !e.target.classList.contains("key")
+    ) return;
 
-      if(
-        !e.target.classList.contains("key")
-      ) return;
+    const value =
+      e.target.innerText;
 
-      const value =
-        e.target.innerText;
+    if(value==="⌫"){
 
-      if(value==="⌫"){
+      currentInput =
+        currentInput.slice(0,-1);
 
-        currentInput =
-          currentInput.slice(0,-1);
-
-      }else if(value==="✓"){
-
-        if(
-          parseInt(currentInput)===
-          currentAnswer
-        ){
-
-          handleCorrect();
-
-          renderStats();
-
-        }else{
-
-          handleWrong();
-
-          renderStats();
-        }
-
-      }else{
-
-        currentInput += value;
-      }
-
-      updateAnswerDisplay();
-    };
-  }
-
-  /* ========================= */
-  /* STORY NAVIGATION */
-  /* ========================= */
-
-  if(nextPageBtn){
-
-    nextPageBtn.onclick = ()=>{
+    }else if(value==="✓"){
 
       if(
-        storyPage <
-        STORY_PAGES.length-1
+        parseInt(currentInput)===
+        currentAnswer
       ){
 
-        storyPage++;
+        handleCorrect();
 
       }else{
 
-        storyPage = 0;
+        handleWrong();
       }
+
+      renderStats();
+
+    }else{
+
+      currentInput += value;
+    }
+
+    updateAnswerDisplay();
+  };
+
+  /* ========================= */
+  /* STORY */
+  /* ========================= */
+
+  nextPageBtn.onclick = ()=>{
+
+    if(
+      storyPage <
+      STORY_PAGES.length-1
+    ){
+
+      storyPage++;
+
+    }else{
+
+      storyPage = 0;
+    }
+
+    renderStory();
+  };
+
+  prevPageBtn.onclick = ()=>{
+
+    if(storyPage>0){
+
+      storyPage--;
 
       renderStory();
-    };
-  }
-
-  if(prevPageBtn){
-
-    prevPageBtn.onclick = ()=>{
-
-      if(storyPage>0){
-
-        storyPage--;
-
-        renderStory();
-      }
-    };
-  }
+    }
+  };
 
   /* ========================= */
   /* READ STORY */
   /* ========================= */
 
-  if(readStoryBtn){
+  readStoryBtn.onclick = ()=>{
 
-    readStoryBtn.onclick = ()=>{
+    speechSynthesis.cancel();
 
-      speechSynthesis.cancel();
-
-      const utterance =
-        new SpeechSynthesisUtterance(
-          STORY_PAGES[storyPage].text
-        );
-
-      utterance.rate = 0.85;
-
-      speechSynthesis.speak(
-        utterance
+    const utterance =
+      new SpeechSynthesisUtterance(
+        STORY_PAGES[storyPage].text
       );
-    };
-  }
+
+    utterance.rate = 0.85;
+
+    speechSynthesis.speak(
+      utterance
+    );
+  };
 
   /* ========================= */
   /* BEDTIME */
   /* ========================= */
 
-  if(bedtimeBtn){
+  bedtimeBtn.onclick = ()=>{
 
-    bedtimeBtn.onclick = ()=>{
+    document.body.classList.toggle(
+      "bedtime-mode"
+    );
+  };
 
-      document.body.classList.toggle(
-        "bedtime-mode"
-      );
-    };
-  }
+  /* ========================= */
+  /* RESET */
+  /* ========================= */
+
+  resetProgressBtn.onclick = ()=>{
+
+    solved = 0;
+
+    streak = 0;
+
+    renderStats();
+
+    feedback.innerHTML =
+      "🧹 Progress Reset!";
+  };
 
 });
