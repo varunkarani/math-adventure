@@ -1,39 +1,63 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
-/>
+  <meta
+    name="viewport"
+    content="
+      width=device-width,
+      initial-scale=1,
+      maximum-scale=1,
+      user-scalable=no
+    "
+  />
 
-<title>Ryan's Adventure World</title>
+  <title>
+    Ryan's Math Adventure
+  </title>
 
-<link rel="stylesheet" href="style.css"/>
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
 
-<link
-  href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
-  rel="stylesheet"
-/>
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
+
+  <link
+    href="
+      https://fonts.googleapis.com/css2?
+      family=Nunito:wght@400;700;800;900&
+      display=swap
+    "
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
 
 </head>
 
-<body>
+<body class="theme-space">
 
-<canvas id="confettiCanvas"></canvas>
+  <canvas id="confettiCanvas"></canvas>
 
-<div class="background-glow"></div>
+  <div class="background-glow"></div>
 
-<div class="app">
+  <div class="app">
 
-  <!-- ========================= -->
-  <!-- TABS -->
-  <!-- ========================= -->
-
-  <header class="topbar">
+    <!-- ========================= -->
+    <!-- TABS -->
+    <!-- ========================= -->
 
     <div class="app-tabs">
 
@@ -41,300 +65,258 @@
         id="mathTab"
         class="tab active"
       >
-        🧮 Math Adventure
+        ➕ Math Adventure
       </button>
 
       <button
         id="storyTab"
         class="tab"
       >
-        📚 Story Time
-      </button>
-
-      <button
-        id="parentTab"
-        class="tab"
-      >
-        ⚙️ Parent Zone
+        📚 Story Adventures
       </button>
 
     </div>
 
-  </header>
+    <!-- ========================= -->
+    <!-- MATH SECTION -->
+    <!-- ========================= -->
 
-  <!-- ========================= -->
-  <!-- MATH -->
-  <!-- ========================= -->
+    <section id="mathSection">
 
-  <section id="mathSection">
+      <!-- ========================= -->
+      <!-- TOP CONTROLS -->
+      <!-- ========================= -->
 
-    <div class="top-row">
+      <div class="top-row">
 
-      <div class="right-controls">
+        <select id="difficulty">
+
+          <option value="easy">
+            Easy
+          </option>
+
+          <option
+            value="medium"
+            selected
+          >
+            Medium
+          </option>
+
+          <option value="hard">
+            Hard
+          </option>
+
+          <option value="expert">
+            Expert
+          </option>
+
+        </select>
 
         <button id="refreshBtn">
-          🔄 Refresh
+          🔄 New Question
         </button>
 
       </div>
 
-    </div>
+      <!-- ========================= -->
+      <!-- MAIN CONTENT -->
+      <!-- ========================= -->
 
-    <div class="bottom-row">
+      <div class="main-content">
 
-      <select id="difficulty">
+        <div class="story-banner">
 
-        <option value="easy">
-          🌱 Easy
-        </option>
+          ⭐ Solve math problems
+          to power Ryan's adventures!
 
-        <option value="medium" selected>
-          🚀 Medium
-        </option>
+        </div>
 
-        <option value="hard">
-          🔥 Hard
-        </option>
+        <div class="question-container">
 
-        <option value="expert">
-          👑 Expert
-        </option>
+          <div class="question-card">
 
-      </select>
+            <div
+              id="question"
+              class="question-text"
+            >
+              5 + 5
+            </div>
 
-    </div>
+            <div
+              id="answerDisplay"
+              class="answer-display"
+            >
+              _
+            </div>
 
-    <main class="main-content">
+            <div
+              id="feedback"
+              class="feedback"
+            ></div>
 
-      <div
-        class="story-banner"
-        id="storyBanner"
-      >
-        🚀 Loading Adventure...
+          </div>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- KEYPAD -->
+        <!-- ========================= -->
+
+        <div
+          id="keypad"
+          class="keypad"
+        >
+
+          <button class="key">1</button>
+          <button class="key">2</button>
+          <button class="key">3</button>
+
+          <button class="key">4</button>
+          <button class="key">5</button>
+          <button class="key">6</button>
+
+          <button class="key">7</button>
+          <button class="key">8</button>
+          <button class="key">9</button>
+
+          <button class="key action">
+            ⌫
+          </button>
+
+          <button class="key">0</button>
+
+          <button class="key action">
+            ✓
+          </button>
+
+        </div>
+
       </div>
 
-      <div
-        class="question-container"
-        id="questionContainer"
-      ></div>
-
-      <div
-        class="feedback"
-        id="feedback"
-      ></div>
-
-      <div
-        class="keypad"
-        id="keypad"
-      >
-
-        <button class="key">1</button>
-        <button class="key">2</button>
-        <button class="key">3</button>
-
-        <button class="key">4</button>
-        <button class="key">5</button>
-        <button class="key">6</button>
-
-        <button class="key">7</button>
-        <button class="key">8</button>
-        <button class="key">9</button>
-
-        <button class="key action">
-          ⌫
-        </button>
-
-        <button class="key">0</button>
-
-        <button class="key action">
-          ✓
-        </button>
-
-      </div>
-
-    </main>
-
-  </section>
-
-  <!-- ========================= -->
-  <!-- STORY -->
-  <!-- ========================= -->
-
-  <section
-    id="storySection"
-    class="hidden"
-  >
+    </section>
 
     <!-- ========================= -->
-    <!-- BOOKSHELF -->
+    <!-- STORY SECTION -->
     <!-- ========================= -->
 
-    <div id="bookshelfView">
-
-      <div class="story-mode-title">
-        📚 Ryan's Bookshelf
-      </div>
-
-      <div class="bookshelf" id="bookshelf"></div>
-
-    </div>
-
-    <!-- ========================= -->
-    <!-- READER -->
-    <!-- ========================= -->
-
-    <div
-      id="readerView"
+    <section
+      id="storySection"
       class="hidden"
     >
 
-      <div class="story-mode-header">
+      <!-- ========================= -->
+      <!-- BOOKSHELF -->
+      <!-- ========================= -->
+
+      <div id="bookshelfView">
+
+        <div class="story-mode-header">
+
+          <div class="story-mode-title">
+            📚 Ryan's Story Adventures
+          </div>
+
+          <div class="story-controls">
+
+            <button id="bedtimeBtn">
+              🌙 Bedtime Mode
+            </button>
+
+          </div>
+
+        </div>
 
         <div
-          class="story-mode-title"
-          id="storyTitle"
-        >
-          🚀 Space Mission
-        </div>
+          id="bookshelf"
+          class="bookshelf"
+        ></div>
+
+      </div>
+
+      <!-- ========================= -->
+      <!-- READER -->
+      <!-- ========================= -->
+
+      <div
+        id="readerView"
+        class="hidden"
+      >
 
         <div class="story-controls">
 
-          <button id="backToBooksBtn">
-            📚 Bookshelf
+          <button
+            id="backToLibraryBtn"
+          >
+            ⬅ Library
           </button>
 
-          <button id="readStoryBtn">
-            🎙️ Read To Me
+          <button
+            id="readStoryBtn"
+          >
+            🔊 Read To Me
           </button>
 
-          <button id="bedtimeBtn">
-            🌙 Bedtime
-          </button>
+        </div>
+
+        <div class="story-book">
+
+          <div
+            id="storyTitle"
+            class="story-mode-title"
+          >
+            Story Title
+          </div>
+
+          <div
+            id="storyProgress"
+            class="story-banner"
+          >
+            Page 1 of 8
+          </div>
+
+          <div
+            id="storyIllustration"
+            class="story-illustration"
+          >
+            🚀 🌌 ⭐
+          </div>
+
+          <div
+            id="storyText"
+            class="story-text"
+          >
+            Story text here...
+          </div>
+
+          <div class="story-buttons">
+
+            <button id="prevPageBtn">
+              ⬅ Previous
+            </button>
+
+            <button id="nextPageBtn">
+              Next ➡
+            </button>
+
+          </div>
 
         </div>
 
       </div>
 
-      <div class="story-book">
+    </section>
 
-        <div
-          class="story-illustration"
-          id="storyIllustration"
-        >
-          🚀🌕⭐
-        </div>
-
-        <div
-          class="story-text"
-          id="storyText"
-        ></div>
-
-        <div class="story-buttons">
-
-          <button id="prevPageBtn">
-            ⬅️ Previous
-          </button>
-
-          <button id="nextPageBtn">
-            Next ➡️
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
+  </div>
 
   <!-- ========================= -->
-  <!-- PARENT -->
+  <!-- SCRIPTS -->
   <!-- ========================= -->
 
-  <section
-    id="parentSection"
-    class="hidden"
-  >
+  <script src="js/math.js"></script>
 
-    <div class="story-book">
+  <script src="js/story.js"></script>
 
-      <div class="story-mode-title">
-        ⚙️ Parent Zone
-      </div>
-
-      <div class="settings-grid">
-
-        <label class="setting-row">
-
-          🔊 Sound Effects
-
-          <input
-            type="checkbox"
-            checked
-          />
-
-        </label>
-
-        <label class="setting-row">
-
-          🌙 Bedtime Glow
-
-          <input
-            type="checkbox"
-            checked
-          />
-
-        </label>
-
-        <label class="setting-row">
-
-          🔢 Bigger Numbers
-
-          <input
-            type="checkbox"
-          />
-
-        </label>
-
-        <label class="setting-row">
-
-          💡 Show Hints
-
-          <input
-            type="checkbox"
-            checked
-          />
-
-        </label>
-
-      </div>
-
-      <br><br>
-
-      <div class="story-banner">
-
-        🏆 Total Solved:
-        <span id="totalSolvedStat">
-          0
-        </span>
-
-      </div>
-
-      <button id="resetProgressBtn">
-
-        🗑️ Reset Progress
-
-      </button>
-
-    </div>
-
-  </section>
-
-</div>
-
-<script src="js/math.js"></script>
-<script src="js/story.js"></script>
-<script src="js/app.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 
