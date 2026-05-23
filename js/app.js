@@ -11,36 +11,65 @@ document.addEventListener(
   /* ELEMENTS */
   /* ========================= */
 
-  const mathTab = get("mathTab");
-  const storyTab = get("storyTab");
-  const parentTab = get("parentTab");
+  const mathTab =
+    get("mathTab");
 
-  const mathSection = get("mathSection");
-  const storySection = get("storySection");
-  const parentSection = get("parentSection");
+  const storyTab =
+    get("storyTab");
 
-  const keypad = get("keypad");
+  const parentTab =
+    get("parentTab");
 
-  const refreshBtn = get("refreshBtn");
+  const mathSection =
+    get("mathSection");
 
-  const nextPageBtn = get("nextPageBtn");
-  const prevPageBtn = get("prevPageBtn");
+  const storySection =
+    get("storySection");
 
-  const difficulty = get("difficulty");
+  const parentSection =
+    get("parentSection");
 
-  const bedtimeBtn = get("bedtimeBtn");
+  const keypad =
+    get("keypad");
 
-  const readStoryBtn = get("readStoryBtn");
+  const refreshBtn =
+    get("refreshBtn");
 
-  const feedback = get("feedback");
+  const difficulty =
+    get("difficulty");
 
-  const storyBanner = get("storyBanner");
+  const feedback =
+    get("feedback");
 
-  const resetProgressBtn =
-    get("resetProgressBtn");
+  const storyBanner =
+    get("storyBanner");
+
+  const nextPageBtn =
+    get("nextPageBtn");
+
+  const prevPageBtn =
+    get("prevPageBtn");
+
+  const readStoryBtn =
+    get("readStoryBtn");
+
+  const bedtimeBtn =
+    get("bedtimeBtn");
+
+  const backToBooksBtn =
+    get("backToBooksBtn");
+
+  const bookshelfView =
+    get("bookshelfView");
+
+  const readerView =
+    get("readerView");
 
   const totalSolvedStat =
     get("totalSolvedStat");
+
+  const resetProgressBtn =
+    get("resetProgressBtn");
 
   /* ========================= */
   /* INIT */
@@ -48,7 +77,7 @@ document.addEventListener(
 
   generateQuestion();
 
-  renderStory();
+  renderBookshelf();
 
   renderStats();
 
@@ -85,28 +114,46 @@ document.addEventListener(
   }
 
   /* ========================= */
-  /* TAB SWITCHING */
+  /* TABS */
   /* ========================= */
 
   function clearTabs(){
 
-    mathTab.classList.remove("active");
-    storyTab.classList.remove("active");
-    parentTab.classList.remove("active");
+    mathSection.classList.add(
+      "hidden"
+    );
 
-    mathSection.classList.add("hidden");
-    storySection.classList.add("hidden");
-    parentSection.classList.add("hidden");
+    storySection.classList.add(
+      "hidden"
+    );
+
+    parentSection.classList.add(
+      "hidden"
+    );
+
+    mathTab.classList.remove(
+      "active"
+    );
+
+    storyTab.classList.remove(
+      "active"
+    );
+
+    parentTab.classList.remove(
+      "active"
+    );
   }
 
   mathTab.onclick = ()=>{
 
     clearTabs();
 
-    mathTab.classList.add("active");
-
     mathSection.classList.remove(
       "hidden"
+    );
+
+    mathTab.classList.add(
+      "active"
     );
   };
 
@@ -114,10 +161,12 @@ document.addEventListener(
 
     clearTabs();
 
-    storyTab.classList.add("active");
-
     storySection.classList.remove(
       "hidden"
+    );
+
+    storyTab.classList.add(
+      "active"
     );
   };
 
@@ -125,10 +174,12 @@ document.addEventListener(
 
     clearTabs();
 
-    parentTab.classList.add("active");
-
     parentSection.classList.remove(
       "hidden"
+    );
+
+    parentTab.classList.add(
+      "active"
     );
   };
 
@@ -159,7 +210,9 @@ document.addEventListener(
   keypad.onclick = (e)=>{
 
     if(
-      !e.target.classList.contains("key")
+      !e.target.classList.contains(
+        "key"
+      )
     ) return;
 
     const value =
@@ -195,24 +248,29 @@ document.addEventListener(
   };
 
   /* ========================= */
-  /* STORY */
+  /* STORY NAVIGATION */
   /* ========================= */
 
   nextPageBtn.onclick = ()=>{
 
+    const totalPages =
+      BOOKS[currentBook]
+      .pages.length;
+
     if(
       storyPage <
-      STORY_PAGES.length-1
+      totalPages-1
     ){
 
       storyPage++;
 
+      renderStory();
+
     }else{
 
-      storyPage = 0;
+      feedback.innerHTML =
+        "📚 Story Complete!";
     }
-
-    renderStory();
   };
 
   prevPageBtn.onclick = ()=>{
@@ -226,6 +284,21 @@ document.addEventListener(
   };
 
   /* ========================= */
+  /* BOOKSHELF */
+  /* ========================= */
+
+  backToBooksBtn.onclick = ()=>{
+
+    readerView.classList.add(
+      "hidden"
+    );
+
+    bookshelfView.classList.remove(
+      "hidden"
+    );
+  };
+
+  /* ========================= */
   /* READ STORY */
   /* ========================= */
 
@@ -233,12 +306,19 @@ document.addEventListener(
 
     speechSynthesis.cancel();
 
+    const text =
+      BOOKS[currentBook]
+      .pages[storyPage]
+      .text;
+
     const utterance =
       new SpeechSynthesisUtterance(
-        STORY_PAGES[storyPage].text
+        text
       );
 
-    utterance.rate = 0.85;
+    utterance.rate = 0.82;
+
+    utterance.pitch = 1.02;
 
     speechSynthesis.speak(
       utterance
@@ -246,7 +326,7 @@ document.addEventListener(
   };
 
   /* ========================= */
-  /* BEDTIME */
+  /* BEDTIME MODE */
   /* ========================= */
 
   bedtimeBtn.onclick = ()=>{
