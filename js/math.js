@@ -276,4 +276,27 @@ function launchConfetti(){
   }
 
   animate();
+  function updateStats(){
+
+  const solvedEl =
+    document.getElementById(
+      "solvedCount"
+    );
+
+  const streakEl =
+    document.getElementById(
+      "streakCount"
+    );
+
+  if(solvedEl){
+
+    solvedEl.innerHTML =
+      solved;
+  }
+
+  if(streakEl){
+
+    streakEl.innerHTML =
+      streak;
+  }
 }
