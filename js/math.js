@@ -3,12 +3,24 @@ let currentInput="";
 let streak=0;
 let solved=0;
 
+function random(min,max){
+
+  return Math.floor(
+    Math.random()*(max-min+1)
+  )+min;
+}
+
 function getDifficultySettings(){
 
-  const difficulty=
+  const difficultySelect=
     document.getElementById(
       "difficulty"
-    ).value;
+    );
+
+  const difficulty=
+    difficultySelect
+      ? difficultySelect.value
+      : "medium";
 
   switch(difficulty){
 
@@ -39,14 +51,14 @@ function getDifficultySettings(){
         max:100,
         operations:["+","-","×","÷"]
       };
+
+    default:
+      return {
+        min:1,
+        max:20,
+        operations:["+","-"]
+      };
   }
-}
-
-function random(min,max){
-
-  return Math.floor(
-    Math.random()*(max-min+1)
-  )+min;
 }
 
 function generateQuestion(){
@@ -121,9 +133,14 @@ function generateQuestion(){
 
   currentInput="";
 
-  document.getElementById(
-    "questionContainer"
-  ).innerHTML=`
+  const container=
+    document.getElementById(
+      "questionContainer"
+    );
+
+  if(!container) return;
+
+  container.innerHTML=`
 
     <div class="question-card fade-card">
 
@@ -165,10 +182,17 @@ function updateProgress(){
       "storyBanner"
     );
 
-  const difficulty=
+  if(!progress) return;
+
+  const difficultySelect=
     document.getElementById(
       "difficulty"
-    ).value;
+    );
+
+  const difficulty=
+    difficultySelect
+      ? difficultySelect.value
+      : "medium";
 
   progress.innerHTML=`
     🚀 Difficulty:
