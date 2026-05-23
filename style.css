@@ -632,4 +632,40 @@ select{
 
   display:flex;
 }
+
+.settings-grid{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:18px;
+
+  margin-top:20px;
+}
+
+.setting-row{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  padding:18px;
+
+  border-radius:20px;
+
+  background:
+    rgba(255,255,255,0.06);
+
+  font-weight:800;
+
+  font-size:1.1rem;
+}
+
+.setting-row input{
+
+  transform:scale(1.4);
+}
 }
