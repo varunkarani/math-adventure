@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8" />
 
 <meta
   name="viewport"
-  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  content="width=device-width, initial-scale=1.0"
 />
 
 <title>Ryan's Adventure World</title>
 
 <link rel="stylesheet" href="style.css" />
 
-<link rel="manifest" href="manifest.json" />
-
-<meta name="theme-color" content="#0b1020" />
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link
   href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
   rel="stylesheet"
->
+/>
 
 </head>
 
@@ -51,7 +46,7 @@
   </header>
 
   <!-- ========================= -->
-  <!-- MATH SECTION -->
+  <!-- MATH -->
   <!-- ========================= -->
 
   <section id="mathSection">
@@ -70,11 +65,6 @@
           <span id="solvedCount">0</span>
         </div>
 
-        <div class="stat-card">
-          🌍 World:
-          <span id="worldName">Space Academy</span>
-        </div>
-
       </div>
 
       <div class="right-controls">
@@ -91,51 +81,17 @@
 
     </div>
 
-    <div class="bottom-row">
-
-      <select id="difficulty">
-        <option value="easy">🌱 Easy</option>
-        <option value="medium" selected>🚀 Medium</option>
-        <option value="hard">🔥 Hard</option>
-        <option value="expert">👑 Expert</option>
-      </select>
-
-      <select id="themeSelector">
-        <option value="space">🚀 Space</option>
-        <option value="dino">🦖 Dino</option>
-        <option value="ocean">🌊 Ocean</option>
-        <option value="castle">🏰 Castle</option>
-        <option value="wizard">🧙 Wizard</option>
-      </select>
-
-    </div>
-
     <main class="main-content">
 
-      <div class="daily-mission">
-        🚀 Today's Mission:
-        Solve 15 Questions
+      <div class="story-banner" id="storyBanner">
+        🚀 Spaceship Progress
       </div>
 
-      <div class="achievement-banner hidden" id="achievementBanner"></div>
+      <div class="question-container"
+        id="questionContainer"></div>
 
-      <div class="story-banner" id="storyBanner"></div>
-
-      <div class="mascot-container">
-
-        <div id="mascot" class="mascot">
-          🚀
-        </div>
-
-        <div id="mascotSpeech" class="mascot-speech">
-          Let's do some math!
-        </div>
-
-      </div>
-
-      <div id="questionContainer" class="question-container"></div>
-
-      <div id="feedback" class="feedback"></div>
+      <div class="feedback"
+        id="feedback"></div>
 
       <div class="keypad" id="keypad">
 
@@ -157,23 +113,15 @@
 
       </div>
 
-      <div class="progress-track">
-
-        <div class="progress-bar">
-          <div id="progressFill" class="progress-fill"></div>
-        </div>
-
-      </div>
-
     </main>
 
   </section>
 
   <!-- ========================= -->
-  <!-- STORY SECTION -->
+  <!-- STORY -->
   <!-- ========================= -->
 
-  <section id="storySection" class="hidden">
+  <section id="storySection" class="hidden fade-section">
 
     <div class="story-mode-header">
 
@@ -202,11 +150,7 @@
 
     </div>
 
-    <div class="story-book">
-
-      <div class="story-world">
-        🚀 Space Adventure
-      </div>
+    <div class="story-book fade-card">
 
       <div
         class="story-illustration"
@@ -218,16 +162,7 @@
       <div
         class="story-text"
         id="storyText"
-      >
-        Ryan heard a strange sound outside.
-      </div>
-
-      <div
-        class="story-interaction"
-        id="storyInteraction"
-      >
-        ✨ Tap the stars!
-      </div>
+      ></div>
 
       <div class="story-buttons">
 
@@ -243,74 +178,36 @@
 
     </div>
 
-    <div class="mini-challenge hidden" id="miniChallenge">
+    <div
+      class="mini-challenge hidden"
+      id="miniChallenge"
+    >
 
       <div class="mini-title">
         🚀 Fuel Crystal Challenge
       </div>
 
-      <div class="mini-question" id="miniQuestion">
-        2 + 3 = ?
-      </div>
+      <div
+        class="mini-question"
+        id="miniQuestion"
+      ></div>
 
-      <div class="mini-buttons">
-
-        <button class="mini-answer">5</button>
-        <button class="mini-answer">4</button>
-        <button class="mini-answer">6</button>
-
-      </div>
+      <div class="mini-buttons"
+        id="miniButtons"></div>
 
     </div>
 
   </section>
 
-  <!-- SETTINGS -->
-
-  <div class="settings-panel hidden" id="settingsPanel">
-
-    <h2>Parent Settings</h2>
-
-    <label>
-      <input type="checkbox" id="additionToggle" checked />
-      Addition
-    </label>
-
-    <label>
-      <input type="checkbox" id="subtractionToggle" checked />
-      Subtraction
-    </label>
-
-    <label>
-      <input type="checkbox" id="multiplicationToggle" checked />
-      Multiplication
-    </label>
-
-    <label>
-      <input type="checkbox" id="divisionToggle" checked />
-      Division
-    </label>
-
-    <label>
-      <input type="checkbox" id="soundToggle" checked />
-      Sounds
-    </label>
-
-    <label>
-      Max Number:
-      <input type="range" id="maxRange" min="10" max="100" value="20" />
-    </label>
-
-    <div class="range-value">
-      Max:
-      <span id="rangeValue">20</span>
-    </div>
-
-  </div>
-
 </div>
 
-<script src="script.js"></script>
+<script src="js/data.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/confetti.js"></script>
+<script src="js/math.js"></script>
+<script src="js/story.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
