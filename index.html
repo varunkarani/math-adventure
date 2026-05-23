@@ -1,210 +1,274 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
 
-<meta
-name=“viewport”
-content=“width=device-width, initial-scale=1.0”
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>
     Ryan's Math Adventure
   </title>
+
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
   >
+
   <link
     rel="preconnect"
     href="https://fonts.gstatic.com"
     crossorigin
   >
+
   <link
     href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap"
     rel="stylesheet"
   >
+
   <link
     rel="stylesheet"
     href="style.css"
   >
+
 </head>
+
 <body class="theme-space">
+
   <div class="app">
-<!-- ========================= -->
-<!-- TABS -->
-<!-- ========================= -->
-<div class="app-tabs">
-  <button
-    id="mathTab"
-    class="tab active"
-  >
-    ➕ Math Adventure
-  </button>
-  <button
-    id="storyTab"
-    class="tab"
-  >
-    📚 Story Adventures
-  </button>
-</div>
-<!-- ========================= -->
-<!-- MATH SECTION -->
-<!-- ========================= -->
-<section id="mathSection">
-  <div class="top-row">
-    <select id="difficulty">
-      <option value="easy">
-        Easy
-      </option>
-      <option
-        value="medium"
-        selected
+
+    <div class="app-tabs">
+
+      <button
+        id="mathTab"
+        class="tab active"
       >
-        Medium
-      </option>
-      <option value="hard">
-        Hard
-      </option>
-      <option value="expert">
-        Expert
-      </option>
-    </select>
-  </div>
-  <div class="main-content">
-    <div class="story-banner">
-      ⭐ Solve math problems
-      to power Ryan's adventures!
+        ➕ Math Adventure
+      </button>
+
+      <button
+        id="storyTab"
+        class="tab"
+      >
+        📚 Story Adventures
+      </button>
+
     </div>
-    <div class="question-container">
-      <div class="question-card">
-        <div
-          id="question"
-          class="question-text"
-        >
-          5 + 5
-        </div>
-        <div
-          id="answerDisplay"
-          class="answer-display"
-        >
-          _
-        </div>
-        <div
-          id="feedback"
-          class="feedback"
-        ></div>
+
+    <!-- ========================= -->
+    <!-- MATH -->
+    <!-- ========================= -->
+
+    <section id="mathSection">
+
+      <div class="top-row">
+
+        <select id="difficulty">
+
+          <option value="easy">
+            Easy
+          </option>
+
+          <option
+            value="medium"
+            selected
+          >
+            Medium
+          </option>
+
+          <option value="hard">
+            Hard
+          </option>
+
+          <option value="expert">
+            Expert
+          </option>
+
+        </select>
+
       </div>
-    </div>
+
+      <div class="main-content">
+
+        <div class="story-banner">
+
+          ⭐ Solve math problems
+          to power Ryan's adventures!
+
+        </div>
+
+        <div class="question-container">
+
+          <div class="question-card">
+
+            <div
+              id="question"
+              class="question-text"
+            >
+              5 + 5
+            </div>
+
+            <div
+              id="answerDisplay"
+              class="answer-display"
+            >
+              _
+            </div>
+
+            <div
+              id="feedback"
+              class="feedback"
+            ></div>
+
+          </div>
+
+        </div>
+
+        <div
+          id="keypad"
+          class="keypad"
+        >
+
+          <button class="key">1</button>
+          <button class="key">2</button>
+          <button class="key">3</button>
+
+          <button class="key">4</button>
+          <button class="key">5</button>
+          <button class="key">6</button>
+
+          <button class="key">7</button>
+          <button class="key">8</button>
+          <button class="key">9</button>
+
+          <button class="key action">
+            ⌫
+          </button>
+
+          <button class="key">0</button>
+
+          <button class="key action">
+            ✓
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
     <!-- ========================= -->
-    <!-- KEYPAD -->
+    <!-- STORIES -->
     <!-- ========================= -->
-    <div
-      id="keypad"
-      class="keypad"
+
+    <section
+      id="storySection"
+      class="hidden"
     >
-      <button class="key">1</button>
-      <button class="key">2</button>
-      <button class="key">3</button>
-      <button class="key">4</button>
-      <button class="key">5</button>
-      <button class="key">6</button>
-      <button class="key">7</button>
-      <button class="key">8</button>
-      <button class="key">9</button>
-      <button class="key action">
-        ⌫
-      </button>
-      <button class="key">0</button>
-      <button class="key action">
-        ✓
-      </button>
-    </div>
-  </div>
-</section>
-<!-- ========================= -->
-<!-- STORY SECTION -->
-<!-- ========================= -->
-<section
-  id="storySection"
-  class="hidden"
->
-  <!-- ========================= -->
-  <!-- BOOKSHELF -->
-  <!-- ========================= -->
-  <div id="bookshelfView">
-    <div class="story-mode-header">
-      <div class="story-mode-title">
-        📚 Ryan's Story Adventures
+
+      <div id="bookshelfView">
+
+        <div class="story-mode-title">
+          📚 Ryan's Story Adventures
+        </div>
+
+        <div class="story-controls">
+
+          <button id="bedtimeBtn">
+            🌙 Bedtime Mode
+          </button>
+
+        </div>
+
+        <div
+          id="bookshelf"
+          class="bookshelf"
+        ></div>
+
       </div>
-      <div class="story-controls">
-        <button id="bedtimeBtn">
-          🌙 Bedtime Mode
-        </button>
-      </div>
-    </div>
-    <div
-      id="bookshelf"
-      class="bookshelf"
-    ></div>
-  </div>
-  <!-- ========================= -->
-  <!-- READER -->
-  <!-- ========================= -->
-  <div
-    id="readerView"
-    class="hidden"
-  >
-    <div class="story-controls">
-      <button
-        id="backToLibraryBtn"
-      >
-        ⬅ Library
-      </button>
-      <button
-        id="readStoryBtn"
-      >
-        🔊 Read To Me
-      </button>
-    </div>
-    <div class="story-book">
+
       <div
-        id="storyTitle"
-        class="story-mode-title"
+        id="readerView"
+        class="hidden"
       >
-        Story Title
+
+        <div class="story-controls">
+
+          <button
+            id="backToLibraryBtn"
+          >
+            ⬅ Library
+          </button>
+
+          <button
+            id="readStoryBtn"
+          >
+            🔊 Read To Me
+          </button>
+
+        </div>
+
+        <div class="story-book">
+
+          <div
+            id="storyTitle"
+            class="story-mode-title"
+          >
+            Story Title
+          </div>
+
+          <div
+            id="storyProgress"
+            class="story-banner"
+          >
+            Page 1 of 8
+          </div>
+
+          <div
+            id="storyIllustration"
+            class="story-illustration"
+          >
+            🚀 🌌 ⭐
+          </div>
+
+          <div
+            id="storyText"
+            class="story-text"
+          >
+            Story text here...
+          </div>
+
+          <div class="story-buttons">
+
+            <button id="prevPageBtn">
+              ⬅ Previous
+            </button>
+
+            <button id="nextPageBtn">
+              Next ➡
+            </button>
+
+          </div>
+
+        </div>
+
       </div>
-      <div
-        id="storyProgress"
-        class="story-banner"
-      >
-        Page 1 of 8
-      </div>
-      <div
-        id="storyIllustration"
-        class="story-illustration"
-      >
-        🚀 🌌 ⭐
-      </div>
-      <div
-        id="storyText"
-        class="story-text"
-      >
-        Story text here...
-      </div>
-      <div class="story-buttons">
-        <button id="prevPageBtn">
-          ⬅ Previous
-        </button>
-        <button id="nextPageBtn">
-          Next ➡
-        </button>
-      </div>
-    </div>
+
+    </section>
+
   </div>
-</section>
-  </div>
+
   <script src="js/math.js"></script>
+
   <script src="js/story.js"></script>
+
   <script src="js/app.js"></script>
+
 </body>
+
 </html>
