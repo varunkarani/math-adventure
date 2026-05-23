@@ -109,10 +109,18 @@ function generateQuestion(){
 
   else if(operator==="-"){
 
-    currentAnswer =
-      num1 - num2;
+  if(num2>num1){
+
+    let temp = num1;
+
+    num1 = num2;
+
+    num2 = temp;
   }
 
+  currentAnswer =
+    num1 - num2;
+}
   else{
 
     currentAnswer =
