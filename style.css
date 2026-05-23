@@ -9,7 +9,7 @@
 }
 
 /* ========================= */
-/* GLOBAL TOUCH FIXES */
+/* GLOBAL */
 /* ========================= */
 
 html,
@@ -26,25 +26,6 @@ body{
 
   -webkit-text-size-adjust:100%;
 }
-
-button,
-.key,
-.tab,
-.book-card,
-select{
-
-  touch-action:manipulation;
-
-  -webkit-user-select:none;
-
-  user-select:none;
-
-  -webkit-touch-callout:none;
-}
-
-/* ========================= */
-/* BODY */
-/* ========================= */
 
 body{
 
@@ -63,6 +44,27 @@ body{
 
   transition:
     background 0.5s ease;
+}
+
+/* ========================= */
+/* CLICKABLE ELEMENTS */
+/* ========================= */
+
+button,
+.key,
+.tab,
+.book-card,
+select{
+
+  touch-action:manipulation;
+
+  -webkit-user-select:none;
+
+  user-select:none;
+
+  -webkit-touch-callout:none;
+
+  cursor:pointer;
 }
 
 /* ========================= */
@@ -110,45 +112,6 @@ body{
 }
 
 /* ========================= */
-/* BACKGROUND */
-/* ========================= */
-
-#confettiCanvas{
-
-  position:fixed;
-
-  inset:0;
-
-  pointer-events:none;
-
-  z-index:0;
-}
-
-.background-glow{
-
-  position:fixed;
-
-  width:500px;
-  height:500px;
-
-  top:-150px;
-  left:50%;
-
-  transform:translateX(-50%);
-
-  border-radius:50%;
-
-  background:
-    rgba(124,92,255,0.16);
-
-  filter:blur(120px);
-
-  pointer-events:none;
-
-  z-index:0;
-}
-
-/* ========================= */
 /* APP */
 /* ========================= */
 
@@ -158,11 +121,11 @@ body{
 
   z-index:10;
 
-  padding:20px;
-
   width:min(1100px,100%);
 
   margin:auto;
+
+  padding:20px;
 }
 
 /* ========================= */
@@ -203,19 +166,27 @@ select{
   transition:
     transform 0.12s ease,
     background 0.2s ease;
-
-  cursor:pointer;
 }
 
 button:active{
   transform:scale(0.95);
 }
 
+/* ========================= */
+/* SELECT */
+/* ========================= */
+
 select{
 
-  width:min(420px,100%);
+  width:auto;
+
+  min-width:170px;
+
+  max-width:220px;
 
   font-size:1rem;
+
+  flex:0 0 auto;
 }
 
 /* ========================= */
@@ -258,27 +229,19 @@ select{
 
   display:flex;
 
+  flex-direction:row;
+
   justify-content:center;
 
   align-items:center;
 
-  gap:14px;
+  gap:12px;
 
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
+
+  width:100%;
 
   margin-bottom:16px;
-}
-
-.top-row select{
-
-  width:auto;
-
-  min-width:220px;
-}
-
-.top-row button{
-
-  white-space:nowrap;
 }
 
 /* ========================= */
@@ -360,26 +323,6 @@ select{
 
   box-shadow:
     0 14px 40px rgba(0,0,0,0.22);
-
-  animation:
-    cardEnter 0.35s ease;
-}
-
-@keyframes cardEnter{
-
-  from{
-    opacity:0;
-    transform:
-      translateY(12px)
-      scale(0.98);
-  }
-
-  to{
-    opacity:1;
-    transform:
-      translateY(0)
-      scale(1);
-  }
 }
 
 .question-text{
@@ -535,8 +478,7 @@ select{
     0 12px 40px rgba(0,0,0,0.22);
 
   transition:
-    transform 0.2s ease,
-    background 0.2s ease;
+    transform 0.2s ease;
 }
 
 .book-card:hover{
@@ -565,35 +507,6 @@ select{
 /* STORY */
 /* ========================= */
 
-.story-mode-header{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  gap:18px;
-
-  flex-wrap:wrap;
-
-  align-items:center;
-}
-
-.story-mode-title{
-
-  font-size:2rem;
-
-  font-weight:900;
-}
-
-.story-controls{
-
-  display:flex;
-
-  flex-wrap:wrap;
-
-  gap:12px;
-}
-
 .story-book{
 
   margin-top:24px;
@@ -615,9 +528,6 @@ select{
 
   box-shadow:
     0 14px 40px rgba(0,0,0,0.22);
-
-  animation:
-    fadeStory 0.4s ease;
 }
 
 .story-illustration{
@@ -655,7 +565,7 @@ select{
 }
 
 /* ========================= */
-/* PARENT */
+/* SETTINGS */
 /* ========================= */
 
 .settings-grid{
@@ -706,21 +616,22 @@ select{
 
 @media(max-width:768px){
 
-  .story-mode-header{
+  .top-row{
 
-    flex-direction:column;
-  }
+    flex-direction:row;
 
-  .story-controls{
-
-    width:100%;
+    flex-wrap:nowrap;
 
     justify-content:center;
+
+    align-items:center;
   }
 
-  .story-buttons{
+  .top-row select{
 
-    flex-direction:column;
+    min-width:150px;
+
+    max-width:170px;
   }
 
   .question-card{
