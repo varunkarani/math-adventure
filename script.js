@@ -740,6 +740,194 @@ function launchConfetti(){
     }
 
   },16);
+  
+  /* ========================= */
+/* STORY MODE */
+/* ========================= */
+
+const mathTab=document.getElementById("mathTab");
+const storyTab=document.getElementById("storyTab");
+
+const mathSection=document.getElementById("mathSection");
+const storySection=document.getElementById("storySection");
+
+const storyText=document.getElementById("storyText");
+const storyIllustration=document.getElementById("storyIllustration");
+
+const nextPageBtn=document.getElementById("nextPageBtn");
+const prevPageBtn=document.getElementById("prevPageBtn");
+
+const readStoryBtn=document.getElementById("readStoryBtn");
+const bedtimeBtn=document.getElementById("bedtimeBtn");
+
+const miniChallenge=document.getElementById("miniChallenge");
+
+const storiesCompletedEl=
+  document.getElementById("storiesCompleted");
+
+let storyPage=0;
+let storiesCompleted=0;
+
+const storyPages=[
+
+  {
+    illustration:"🚀🌕⭐",
+    text:"Ryan heard a strange sound outside."
+  },
+
+  {
+    illustration:"🛸✨",
+    text:"A tiny spaceship had landed near the garden."
+  },
+
+  {
+    illustration:"🦖👨‍🚀",
+    text:"A dinosaur astronaut stepped out and waved hello."
+  },
+
+  {
+    illustration:"🔋🚀",
+    text:"The spaceship needed fuel crystals to fly again."
+  },
+
+  {
+    illustration:"🌌🚀⭐",
+    text:"Together, they blasted off into the stars!"
+  }
+
+];
+
+function renderStoryPage(){
+
+  const page=storyPages[storyPage];
+
+  storyIllustration.innerHTML=
+    page.illustration;
+
+  storyText.innerHTML=
+    page.text;
+
+  if(storyPage===3){
+
+    miniChallenge.classList.remove("hidden");
+
+  }else{
+
+    miniChallenge.classList.add("hidden");
+  }
+}
+
+mathTab.addEventListener("click",()=>{
+
+  mathTab.classList.add("active");
+  storyTab.classList.remove("active");
+
+  mathSection.classList.remove("hidden");
+  storySection.classList.add("hidden");
+});
+
+storyTab.addEventListener("click",()=>{
+
+  storyTab.classList.add("active");
+  mathTab.classList.remove("active");
+
+  storySection.classList.remove("hidden");
+  mathSection.classList.add("hidden");
+});
+
+nextPageBtn.addEventListener("click",()=>{
+
+  if(storyPage<storyPages.length-1){
+
+    storyPage++;
+
+    renderStoryPage();
+
+  }else{
+
+    storiesCompleted++;
+
+    storiesCompletedEl.innerText=
+      storiesCompleted;
+
+    achievementBanner.classList.remove("hidden");
+
+    achievementBanner.innerHTML=
+      "📚 STORY COMPLETE!";
+
+    setTimeout(()=>{
+      achievementBanner.classList.add("hidden");
+    },3000);
+
+    storyPage=0;
+
+    renderStoryPage();
+  }
+});
+
+prevPageBtn.addEventListener("click",()=>{
+
+  if(storyPage>0){
+
+    storyPage--;
+
+    renderStoryPage();
+  }
+});
+
+readStoryBtn.addEventListener("click",()=>{
+
+  speechSynthesis.cancel();
+
+  const utterance=
+    new SpeechSynthesisUtterance(
+      storyPages[storyPage].text
+    );
+
+  utterance.rate=0.82;
+
+  speechSynthesis.speak(utterance);
+});
+
+bedtimeBtn.addEventListener("click",()=>{
+
+  document.body.classList.toggle(
+    "bedtime-mode"
+  );
+});
+
+storyIllustration.addEventListener("click",()=>{
+
+  storyIllustration.style.transform=
+    "scale(1.12)";
+
+  setTimeout(()=>{
+    storyIllustration.style.transform=
+      "scale(1)";
+  },220);
+});
+
+document.querySelectorAll(".mini-answer")
+.forEach(button=>{
+
+  button.addEventListener("click",()=>{
+
+    if(button.innerText==="5"){
+
+      miniChallenge.innerHTML=`
+        🚀 Fuel crystals collected!
+      `;
+
+      launchConfetti();
+
+    }else{
+
+      button.innerText="❌";
+    }
+  });
+});
+
+renderStoryPage();
 }
 
 loadState();
