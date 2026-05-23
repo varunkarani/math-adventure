@@ -8,12 +8,43 @@
   -webkit-tap-highlight-color:transparent;
 }
 
+/* ========================= */
+/* GLOBAL TOUCH FIXES */
+/* ========================= */
+
 html,
 body{
+
   margin:0;
   padding:0;
+
   min-height:100%;
+
+  touch-action:manipulation;
+
+  overscroll-behavior:none;
+
+  -webkit-text-size-adjust:100%;
 }
+
+button,
+.key,
+.tab,
+.book-card,
+select{
+
+  touch-action:manipulation;
+
+  -webkit-user-select:none;
+
+  user-select:none;
+
+  -webkit-touch-callout:none;
+}
+
+/* ========================= */
+/* BODY */
+/* ========================= */
 
 body{
 
@@ -172,6 +203,8 @@ select{
   transition:
     transform 0.12s ease,
     background 0.2s ease;
+
+  cursor:pointer;
 }
 
 button:active{
@@ -565,43 +598,11 @@ select{
     fadeStory 0.4s ease;
 }
 
-@keyframes fadeStory{
-
-  from{
-    opacity:0;
-    transform:translateY(16px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
 .story-illustration{
 
   font-size:6rem;
 
   margin-bottom:24px;
-
-  animation:
-    floaty 4s ease infinite;
-
-  filter:
-    drop-shadow(
-      0 10px 20px rgba(0,0,0,0.25)
-    );
-}
-
-@keyframes floaty{
-
-  0%,100%{
-    transform:translateY(0);
-  }
-
-  50%{
-    transform:translateY(-8px);
-  }
 }
 
 .story-text{
@@ -664,11 +665,6 @@ select{
   font-size:1.1rem;
 
   font-weight:800;
-}
-
-.setting-row input{
-
-  transform:scale(1.4);
 }
 
 /* ========================= */
