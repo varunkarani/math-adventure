@@ -1,12 +1,150 @@
 let currentAnswer = 0;
 
-let currentInput = "";
-
 let solved = 0;
 
 let streak = 0;
 
-let wrongAttempts = 0;
+/* ========================= */
+/* QUESTION GENERATION */
+/* ========================= */
+
+function generateQuestion(){
+
+  const difficulty =
+    document.getElementById(
+      "difficulty"
+    )?.value || "medium";
+
+  let num1;
+  let num2;
+  let operator;
+
+  /* ========================= */
+  /* EASY */
+  /* ========================= */
+
+  if(difficulty==="easy"){
+
+    num1 =
+      random(1,10);
+
+    num2 =
+      random(1,10);
+
+    operator = "+";
+  }
+
+  /* ========================= */
+  /* MEDIUM */
+  /* ========================= */
+
+  else if(
+    difficulty==="medium"
+  ){
+
+    num1 =
+      random(5,20);
+
+    num2 =
+      random(5,20);
+
+    operator =
+      randomChoice([
+        "+",
+        "-"
+      ]);
+  }
+
+  /* ========================= */
+  /* HARD */
+  /* ========================= */
+
+  else if(
+    difficulty==="hard"
+  ){
+
+    num1 =
+      random(2,12);
+
+    num2 =
+      random(2,12);
+
+    operator =
+      randomChoice([
+        "+",
+        "-",
+        "×"
+      ]);
+  }
+
+  /* ========================= */
+  /* EXPERT */
+  /* ========================= */
+
+  else{
+
+    num1 =
+      random(10,30);
+
+    num2 =
+      random(2,12);
+
+    operator =
+      randomChoice([
+        "+",
+        "-",
+        "×"
+      ]);
+  }
+
+  /* ========================= */
+  /* ANSWER */
+  /* ========================= */
+
+  if(operator==="+"){
+
+    currentAnswer =
+      num1 + num2;
+  }
+
+  else if(operator==="-"){
+
+    currentAnswer =
+      num1 - num2;
+  }
+
+  else{
+
+    currentAnswer =
+      num1 * num2;
+  }
+
+  /* ========================= */
+  /* DISPLAY */
+  /* ========================= */
+
+  const question =
+    document.getElementById(
+      "question"
+    );
+
+  if(question){
+
+    question.innerHTML =
+      `${num1} ${operator} ${num2}`;
+  }
+
+  const answerDisplay =
+    document.getElementById(
+      "answerDisplay"
+    );
+
+  if(answerDisplay){
+
+    answerDisplay.innerHTML =
+      "_";
+  }
+}
 
 /* ========================= */
 /* RANDOM */
@@ -15,8 +153,19 @@ let wrongAttempts = 0;
 function random(min,max){
 
   return Math.floor(
-    Math.random()*(max-min+1)
-  )+min;
+    Math.random() *
+    (max-min+1)
+  ) + min;
+}
+
+function randomChoice(arr){
+
+  return arr[
+    Math.floor(
+      Math.random() *
+      arr.length
+    )
+  ];
 }
 
 /* ========================= */
@@ -43,28 +192,41 @@ function launchConfetti(){
 
   const pieces = [];
 
-  for(let i=0;i<80;i++){
+  for(let i=0;i<120;i++){
 
     pieces.push({
 
       x:
-        Math.random()*canvas.width,
+        Math.random() *
+        canvas.width,
 
       y:
-        Math.random()*canvas.height
-        -canvas.height,
+        Math.random() *
+        canvas.height -
+        canvas.height,
 
-      r:
-        Math.random()*6+2,
+      size:
+        Math.random()*8 + 4,
 
       speed:
-        Math.random()*4+2
+        Math.random()*3 + 2,
+
+      color:
+        randomChoice([
+          "#7c5cff",
+          "#32d583",
+          "#ffd166",
+          "#ff5c7c",
+          "#00c2ff"
+        ])
     });
   }
 
   let frame = 0;
 
-  const interval = setInterval(()=>{
+  function animate(){
+
+    frame++;
 
     ctx.clearRect(
       0,
@@ -73,31 +235,28 @@ function launchConfetti(){
       canvas.height
     );
 
-    pieces.forEach(p=>{
+    pieces.forEach(piece=>{
 
-      ctx.beginPath();
-
-      ctx.arc(
-        p.x,
-        p.y,
-        p.r,
-        0,
-        Math.PI*2
-      );
+      piece.y += piece.speed;
 
       ctx.fillStyle =
-        `hsl(${Math.random()*360},100%,60%)`;
+        piece.color;
 
-      ctx.fill();
-
-      p.y += p.speed;
+      ctx.fillRect(
+        piece.x,
+        piece.y,
+        piece.size,
+        piece.size
+      );
     });
 
-    frame++;
+    if(frame<120){
 
-    if(frame > 60){
+      requestAnimationFrame(
+        animate
+      );
 
-      clearInterval(interval);
+    }else{
 
       ctx.clearRect(
         0,
@@ -106,269 +265,7 @@ function launchConfetti(){
         canvas.height
       );
     }
-
-  },16);
-}
-
-/* ========================= */
-/* DIFFICULTY */
-/* ========================= */
-
-function getDifficulty(){
-
-  const difficulty =
-    document.getElementById(
-      "difficulty"
-    )?.value || "medium";
-
-  switch(difficulty){
-
-    case "easy":
-
-      return {
-        max:10,
-        operations:["+"]
-      };
-
-    case "medium":
-
-      return {
-        max:20,
-        operations:["+","-"]
-      };
-
-    case "hard":
-
-      return {
-        max:50,
-        operations:["+","-","×"]
-      };
-
-    case "expert":
-
-      return {
-        max:100,
-        operations:["+","-","×","÷"]
-      };
-
-    default:
-
-      return {
-        max:20,
-        operations:["+","-"]
-      };
-  }
-}
-
-/* ========================= */
-/* QUESTION */
-/* ========================= */
-
-function generateQuestion(){
-
-  wrongAttempts = 0;
-
-  const settings =
-    getDifficulty();
-
-  const op =
-    settings.operations[
-      random(
-        0,
-        settings.operations.length-1
-      )
-    ];
-
-  let a,b;
-
-  if(op === "+"){
-
-    a = random(1,settings.max);
-
-    b = random(1,settings.max);
-
-    currentAnswer = a+b;
   }
 
-  if(op === "-"){
-
-    a = random(1,settings.max);
-
-    b = random(1,a);
-
-    currentAnswer = a-b;
-  }
-
-  if(op === "×"){
-
-    a = random(1,12);
-
-    b = random(1,12);
-
-    currentAnswer = a*b;
-  }
-
-  if(op === "÷"){
-
-    b = random(1,12);
-
-    currentAnswer =
-      random(1,12);
-
-    a = b*currentAnswer;
-  }
-
-  currentInput = "";
-
-  document.getElementById(
-    "questionContainer"
-  ).innerHTML = `
-
-    <div class="question-card">
-
-      <div class="question-text">
-
-        ${a} ${op} ${b} = ?
-
-      </div>
-
-      <div
-        class="answer-display"
-        id="answerDisplay"
-      >
-
-        ?
-
-      </div>
-
-    </div>
-  `;
-
-  updateStats();
-}
-
-/* ========================= */
-/* ANSWER DISPLAY */
-/* ========================= */
-
-function updateAnswerDisplay(){
-
-  const display =
-    document.getElementById(
-      "answerDisplay"
-    );
-
-  if(display){
-
-    display.innerText =
-      currentInput || "?";
-  }
-}
-
-/* ========================= */
-/* STATS */
-/* ========================= */
-
-function updateStats(){
-
-  const banner =
-    document.getElementById(
-      "storyBanner"
-    );
-
-  if(!banner) return;
-
-  banner.innerHTML = `
-
-    🚀 Solved:
-    ${solved}
-
-    &nbsp;&nbsp;&nbsp;
-
-    🔥 Streak:
-    ${streak}
-  `;
-}
-
-/* ========================= */
-/* CORRECT */
-/* ========================= */
-
-function handleCorrect(){
-
-  solved++;
-
-  streak++;
-
-  launchConfetti();
-
-  const feedback =
-    document.getElementById(
-      "feedback"
-    );
-
-  if(feedback){
-
-    feedback.className =
-      "feedback success";
-
-    feedback.innerHTML =
-      "✅ Amazing!";
-  }
-
-  updateStats();
-
-  setTimeout(()=>{
-
-    generateQuestion();
-
-  },900);
-}
-
-/* ========================= */
-/* WRONG */
-/* ========================= */
-
-function handleWrong(){
-
-  wrongAttempts++;
-
-  streak = 0;
-
-  currentInput = "";
-
-  updateAnswerDisplay();
-
-  const feedback =
-    document.getElementById(
-      "feedback"
-    );
-
-  if(!feedback) return;
-
-  feedback.className =
-    "feedback error";
-
-  if(wrongAttempts >= 3){
-
-    feedback.innerHTML = `
-      💡 Answer:
-      ${currentAnswer}
-    `;
-
-    setTimeout(()=>{
-
-      generateQuestion();
-
-    },1800);
-
-    return;
-  }
-
-  feedback.innerHTML = `
-    ❌ Try Again
-    (${wrongAttempts}/3)
-  `;
-
-  updateStats();
+  animate();
 }
