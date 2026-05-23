@@ -8,6 +8,10 @@
   -webkit-tap-highlight-color:transparent;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 html,
 body{
   margin:0;
@@ -17,40 +21,68 @@ body{
 
 body{
   font-family:'Nunito',sans-serif;
-  background:radial-gradient(circle at top,#1a2242,#080b16);
+  background:
+    radial-gradient(
+      circle at top,
+      #1a2242,
+      #080b16
+    );
+
   color:white;
+
   overflow-x:hidden;
+
+  transition:
+    background 0.4s ease;
 }
 
-/* SAFE BACKGROUND */
+/* ========================= */
+/* BACKGROUND */
+/* ========================= */
 
 #confettiCanvas{
   position:fixed;
   inset:0;
   pointer-events:none;
+  z-index:0;
 }
 
 .background-glow{
   position:fixed;
+
   width:500px;
   height:500px;
+
   top:-150px;
   left:50%;
+
   transform:translateX(-50%);
+
   border-radius:50%;
-  background:rgba(124,92,255,0.18);
+
+  background:
+    rgba(124,92,255,0.18);
+
   filter:blur(120px);
+
   pointer-events:none;
+
+  z-index:0;
 }
 
+/* ========================= */
 /* APP */
+/* ========================= */
 
 .app{
   position:relative;
+  z-index:10;
   padding:20px;
 }
 
+/* ========================= */
 /* FORCE INTERACTIONS */
+/* ========================= */
 
 button,
 select,
@@ -61,7 +93,9 @@ input,
   touch-action:manipulation;
 }
 
+/* ========================= */
 /* TABS */
+/* ========================= */
 
 .app-tabs{
   display:flex;
@@ -71,24 +105,47 @@ input,
 }
 
 .tab{
+
   border:none;
+
   border-radius:20px;
+
   padding:16px 22px;
-  background:rgba(255,255,255,0.08);
+
+  background:
+    rgba(255,255,255,0.08);
+
   color:white;
+
   font-size:1rem;
+
   font-weight:800;
+
+  transition:
+    transform 0.12s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.16);
 }
 
 .tab.active{
-  background:linear-gradient(
-    135deg,
-    #7c5cff,
-    #32d583
-  );
+  background:
+    linear-gradient(
+      135deg,
+      #7c5cff,
+      #32d583
+    );
 }
 
-/* TOP ROW */
+.tab:active{
+  transform:scale(0.96);
+}
+
+/* ========================= */
+/* TOP AREA */
+/* ========================= */
 
 .top-row{
   display:flex;
@@ -111,25 +168,51 @@ input,
   flex-wrap:wrap;
 }
 
+/* ========================= */
 /* UI */
+/* ========================= */
 
 .stat-card,
 button,
 select{
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
+
+  background:
+    rgba(255,255,255,0.08);
+
+  border:
+    1px solid rgba(255,255,255,0.15);
+
   border-radius:20px;
+
   padding:14px 18px;
+
   color:white;
+
   backdrop-filter:blur(18px);
+
   font-family:'Nunito',sans-serif;
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.14);
+}
+
+button{
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.2s ease;
+}
+
+button:active{
+  transform:scale(0.96);
 }
 
 select{
   min-width:180px;
 }
 
+/* ========================= */
 /* MAIN */
+/* ========================= */
 
 .main-content{
   display:flex;
@@ -138,43 +221,54 @@ select{
   padding-top:20px;
 }
 
+/* ========================= */
+/* BANNERS */
+/* ========================= */
+
 .daily-mission,
 .story-banner,
 .achievement-banner{
+
   width:min(700px,100%);
+
   margin-bottom:14px;
+
   padding:14px 20px;
+
   border-radius:20px;
+
   text-align:center;
+
   font-weight:800;
-  background:rgba(255,255,255,0.08);
+
+  background:
+    rgba(255,255,255,0.08);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter:blur(18px);
+
+  animation:
+    fadeIn 0.3s ease;
 }
 
-/* MASCOT */
+@keyframes fadeIn{
 
-.mascot{
-  font-size:5rem;
-  animation:bounce 2s infinite;
-}
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
 
-@keyframes bounce{
-  0%,100%{
+  to{
+    opacity:1;
     transform:translateY(0);
   }
-  50%{
-    transform:translateY(-10px);
-  }
 }
 
-.mascot-speech{
-  margin-top:10px;
-  padding:12px 18px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.08);
-  text-align:center;
-}
-
+/* ========================= */
 /* QUESTION */
+/* ========================= */
 
 .question-container{
   width:100%;
@@ -182,38 +276,100 @@ select{
 }
 
 .question-card{
+
   margin-top:20px;
+
   padding:40px;
+
   border-radius:28px;
-  background:rgba(255,255,255,0.08);
+
+  background:
+    rgba(255,255,255,0.08);
+
+  animation:
+    cardEnter 0.35s ease;
+
+  transform-origin:center;
+
+  backdrop-filter:blur(18px);
+
+  border:
+    1px solid rgba(255,255,255,0.1);
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.18);
+}
+
+@keyframes cardEnter{
+
+  from{
+    opacity:0;
+
+    transform:
+      translateY(14px)
+      scale(0.98);
+  }
+
+  to{
+    opacity:1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
 }
 
 .question-text{
-  font-size:clamp(2.4rem,5vw,5rem);
+  font-size:
+    clamp(2.4rem,5vw,5rem);
+
   font-weight:900;
+
   text-align:center;
+
   margin-bottom:24px;
 }
 
 .answer-display{
+
   height:84px;
+
   border-radius:20px;
-  background:rgba(255,255,255,0.06);
+
+  background:
+    rgba(255,255,255,0.06);
+
   display:flex;
+
   justify-content:center;
   align-items:center;
+
   font-size:2.2rem;
+
   font-weight:900;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
 }
 
+/* ========================= */
 /* FEEDBACK */
+/* ========================= */
 
 .feedback{
+
   margin-top:20px;
+
   min-height:40px;
+
   font-size:1.7rem;
+
   font-weight:900;
+
   text-align:center;
+
+  animation:
+    fadeIn 0.25s ease;
 }
 
 .feedback.success{
@@ -224,76 +380,83 @@ select{
   color:var(--danger);
 }
 
+/* ========================= */
 /* KEYPAD */
+/* ========================= */
 
 .keypad{
+
   margin-top:30px;
+
   width:100%;
   max-width:460px;
+
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:14px;
 }
 
 .key{
+
   height:84px;
+
   border:none;
+
   border-radius:24px;
+
   font-size:2rem;
+
   font-weight:900;
+
   color:white;
-  background:rgba(255,255,255,0.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.12),
+      rgba(255,255,255,0.05)
+    );
+
+  transition:
+    transform 0.08s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.18);
+}
+
+.key:active{
+
+  transform:
+    scale(0.93);
+
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.25);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.18),
+      rgba(255,255,255,0.08)
+    );
 }
 
 .action{
-  background:rgba(124,92,255,0.25);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(124,92,255,0.4),
+      rgba(124,92,255,0.18)
+    );
 }
 
-/* PROGRESS */
-
-.progress-track{
-  width:100%;
-  max-width:500px;
-  margin-top:24px;
-}
-
-.progress-bar{
-  height:18px;
-  border-radius:999px;
-  overflow:hidden;
-  background:rgba(255,255,255,0.08);
-}
-
-.progress-fill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(
-    90deg,
-    #7c5cff,
-    #32d583
-  );
-}
-
-/* SETTINGS */
-
-.settings-panel{
-  position:fixed;
-  top:120px;
-  right:20px;
-  width:320px;
-  padding:24px;
-  border-radius:28px;
-  background:rgba(10,10,20,0.96);
-  border:1px solid rgba(255,255,255,0.15);
-}
-
-.settings-panel label{
-  display:flex;
-  justify-content:space-between;
-  margin:18px 0;
-}
-
+/* ========================= */
 /* STORY MODE */
+/* ========================= */
 
 .story-mode-header{
   display:flex;
@@ -313,55 +476,134 @@ select{
 }
 
 .story-progress-card{
+
   margin-top:20px;
+
   padding:16px 20px;
+
   border-radius:22px;
-  background:rgba(255,255,255,0.08);
+
+  background:
+    rgba(255,255,255,0.08);
+
   font-weight:800;
+
+  backdrop-filter:blur(18px);
 }
 
 .story-book{
+
   margin-top:24px;
-  padding:30px;
+
+  padding:34px;
+
   border-radius:32px;
+
   text-align:center;
-  background:rgba(255,255,255,0.08);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.1),
+      rgba(255,255,255,0.06)
+    );
+
+  backdrop-filter:blur(18px);
+
+  border:
+    1px solid rgba(255,255,255,0.1);
+
+  box-shadow:
+    0 12px 40px rgba(0,0,0,0.22);
+
+  animation:
+    fadeStory 0.4s ease;
 }
 
-.story-world{
-  margin-bottom:16px;
-  opacity:0.8;
+@keyframes fadeStory{
+
+  from{
+    opacity:0;
+    transform:translateY(16px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 .story-illustration{
+
   font-size:5rem;
+
   margin-bottom:24px;
+
+  animation:
+    floaty 4s ease infinite;
+
+  transition:
+    transform 0.2s ease;
+
+  filter:
+    drop-shadow(
+      0 10px 20px rgba(0,0,0,0.25)
+    );
+}
+
+@keyframes floaty{
+
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-8px);
+  }
 }
 
 .story-text{
-  font-size:clamp(1.6rem,3vw,2.4rem);
+
+  font-size:
+    clamp(1.6rem,3vw,2.4rem);
+
   line-height:1.5;
+
   font-weight:700;
 }
 
-.story-interaction{
-  margin-top:24px;
-  opacity:0.8;
-}
-
 .story-buttons{
+
   display:flex;
+
   justify-content:center;
+
   gap:16px;
+
   margin-top:30px;
 }
+
+/* ========================= */
+/* MINI CHALLENGE */
+/* ========================= */
 
 .mini-challenge{
+
   margin-top:30px;
+
   padding:24px;
+
   border-radius:28px;
+
   text-align:center;
-  background:rgba(124,92,255,0.15);
+
+  background:
+    rgba(124,92,255,0.15);
+
+  backdrop-filter:blur(18px);
+
+  animation:
+    fadeIn 0.3s ease;
 }
 
 .mini-title{
@@ -370,21 +612,31 @@ select{
 }
 
 .mini-question{
+
   margin:24px 0;
+
   font-size:2.2rem;
+
   font-weight:900;
 }
 
 .mini-buttons{
+
   display:flex;
+
   justify-content:center;
+
   gap:14px;
+
   flex-wrap:wrap;
 }
 
-/* BEDTIME */
+/* ========================= */
+/* BEDTIME MODE */
+/* ========================= */
 
 .bedtime-mode{
+
   background:
     radial-gradient(
       circle at top,
@@ -393,13 +645,17 @@ select{
     ) !important;
 }
 
-/* HIDDEN */
+/* ========================= */
+/* HELPERS */
+/* ========================= */
 
 .hidden{
   display:none !important;
 }
 
+/* ========================= */
 /* MOBILE */
+/* ========================= */
 
 @media(max-width:768px){
 
@@ -437,8 +693,12 @@ select{
     flex:1;
   }
 
-  .settings-panel{
-    width:calc(100% - 40px);
+  .question-card{
+    padding:28px;
+  }
+
+  .key{
+    height:78px;
   }
 
 }
