@@ -220,7 +220,10 @@ const BOOKS = [
     {
       art:"🏆 🧙‍♂️ 🌈 ✨ 🌟",
       text:"On the final day of wizard school, the head wizard awarded Ryan the Golden Wand of Courage for helping dragons, solving magical problems, and always showing kindness to others. The entire castle erupted into cheers while magical fireworks exploded overhead."
-    },
+    }
+
+  ]
+},
 
 {
   title:"🐠 Ocean Rescue",
@@ -230,27 +233,7 @@ const BOOKS = [
 
     {
       art:"🌊 🐠 🚤 ☀️ 🐚",
-      text:"Ryan sped across the sparkling ocean in a bright rescue boat when suddenly he spotted a baby dolphin tangled gently in seaweed near the rocks."
-    },
-
-    {
-      art:"🐬 🌊 ✨ 🪸 🐠",
-      text:"Carefully, Ryan climbed into the shallow water and untangled the frightened dolphin while colorful fish darted around his feet."
-    },
-
-    {
-      art:"🪸 🐢 🌊 ⭐ 🐠",
-      text:"The dolphin led Ryan toward a glowing coral reef filled with sea turtles, shimmering jellyfish, and giant rainbow shells."
-    },
-
-    {
-      art:"🌪️ 🌊 🚤 ⚡ 🐬",
-      text:"Dark storm clouds suddenly rolled overhead while giant waves crashed around the tiny rescue boat."
-    },
-
-    {
-      art:"🌈 🐬 ☀️ 🌊 🏆",
-      text:"After the storm passed, the dolphins leaped happily through the water beside Ryan's boat as the sunset painted the ocean gold."
+      text:"Ryan sped across the sparkling ocean in a bright yellow rescue boat while salty wind rushed through his hair. Seagulls circled overhead and giant waves shimmered beneath the afternoon sun. Suddenly, Ryan spotted something moving helplessly near the rocks."
     }
 
   ]
@@ -264,27 +247,7 @@ const BOOKS = [
 
     {
       art:"🤖 🌆 ⚡ 🚶 ✨",
-      text:"Ryan arrived in Robot City where glowing robots zipped through giant futuristic streets carrying floating packages and blinking gadgets."
-    },
-
-    {
-      art:"🛠️ 🤖 ⚡ 💡 🌃",
-      text:"Inside a huge workshop, Ryan helped a tiny robot repair its flickering light bulb eyes using sparkling energy crystals."
-    },
-
-    {
-      art:"🚄 🌆 🤖 ✨ 🌈",
-      text:"Magnetic trains zoomed silently above the city while giant holograms glowed brightly across the skyscrapers."
-    },
-
-    {
-      art:"⚠️ 🤖 🌩️ 🔋 ⚡",
-      text:"Suddenly, the city lost power and everything became dark except Ryan's glowing explorer badge."
-    },
-
-    {
-      art:"🏆 ⚡ 🤖 🌆 🌟",
-      text:"Ryan restored power to Robot City and the robots celebrated by lighting the sky with glowing fireworks."
+      text:"Ryan arrived in Robot City just as the enormous silver gates opened automatically before him. Thousands of glowing robots zipped through giant futuristic streets carrying floating packages, blinking gadgets, and sparkling batteries."
     }
 
   ]
@@ -298,27 +261,7 @@ const BOOKS = [
 
     {
       art:"⛰️ 🐉 🌫️ 🔥 ⭐",
-      text:"Ryan climbed slowly toward Dragon Mountain where warm smoke drifted gently through the clouds high above the valley."
-    },
-
-    {
-      art:"🥚 🐉 ✨ 🔥 🌙",
-      text:"Inside a glowing cave, Ryan discovered dragon eggs resting beside rivers of sparkling lava."
-    },
-
-    {
-      art:"🐉 🌈 🔥 🪄 ⭐",
-      text:"A young dragon flapped excitedly around Ryan while blowing tiny rainbow flames into the air."
-    },
-
-    {
-      art:"🌩️ ⛰️ 🐉 🌪️ ⚡",
-      text:"A giant storm surrounded the mountain while the dragons circled protectively above Ryan."
-    },
-
-    {
-      art:"🏆 🐉 🌅 ⛰️ ✨",
-      text:"At sunrise, the dragons crowned Ryan an honorary Dragon Rider before soaring into the glowing sky."
+      text:"Ryan climbed slowly toward Dragon Mountain while warm smoke drifted through the clouds high above the valley. The mountain rumbled softly beneath his boots like a sleeping giant."
     }
 
   ]
@@ -332,27 +275,7 @@ const BOOKS = [
 
     {
       art:"🚂 🌙 ✨ 🌌 🎫",
-      text:"Ryan boarded the Magic Train just before midnight and watched glowing stars race beside the windows."
-    },
-
-    {
-      art:"🍫 🚂 ☕ ✨ 🍪",
-      text:"Friendly conductors served hot chocolate and giant cookies while magical music echoed softly through the train."
-    },
-
-    {
-      art:"❄️ ⛄ 🚂 🌨️ ⭐",
-      text:"The train passed snowy mountains where glowing snowflakes drifted slowly through the night sky."
-    },
-
-    {
-      art:"🌉 🚂 🌈 🌌 ✨",
-      text:"Ryan crossed a floating rainbow bridge high above the clouds while the passengers gasped in amazement."
-    },
-
-    {
-      art:"🏆 🚂 🌅 🎫 ✨",
-      text:"As sunrise appeared, Ryan stepped off the Magic Train holding a golden ticket for future adventures."
+      text:"Ryan boarded the Magic Train just before midnight while glowing stars drifted gently through the station above him. The conductor smiled warmly and stamped Ryan's golden ticket."
     }
 
   ]
@@ -366,27 +289,42 @@ const BOOKS = [
 
     {
       art:"🌴 🦁 🍃 🌺 ☀️",
-      text:"Ryan entered a deep jungle filled with giant flowers, roaring waterfalls, and mysterious animal footprints."
+      text:"Ryan stepped into the deep jungle where giant flowers bloomed beside roaring waterfalls and mysterious animal footprints covered the muddy ground."
     },
 
     {
       art:"🐒 🍌 🌴 🦜 ✨",
-      text:"Playful monkeys swung through the trees tossing bananas while colorful parrots screeched overhead."
+      text:"Playful monkeys swung through the trees tossing bananas while colorful parrots screeched overhead. The jungle buzzed loudly with life all around him."
     },
 
     {
       art:"🦁 🌿 👀 🌴 ⭐",
-      text:"A majestic lion emerged slowly from the tall grass and stared curiously at Ryan."
+      text:"Suddenly, a majestic lion emerged slowly from the tall grass. Ryan froze nervously while the lion stared at him with enormous golden eyes."
+    },
+
+    {
+      art:"🌊 🌴 🦁 🌺 🍃",
+      text:"Instead of roaring, the lion calmly walked beside Ryan guiding him deeper into the jungle toward hidden rivers and ancient ruins."
     },
 
     {
       art:"🌧️ 🌪️ 🌴 ⚡ 🦁",
-      text:"Heavy rain poured across the jungle while Ryan and the lion searched for shelter beneath giant trees."
+      text:"Heavy rain suddenly poured across the jungle while thunder shook the trees. Ryan and the lion hurried together searching for shelter."
     },
 
     {
-      art:"🏆 🌈 🦁 ☀️ 🌴",
-      text:"After the storm ended, the jungle animals gathered together and crowned Ryan the Guardian of the Jungle."
+      art:"🔥 🌴 🦁 ⭐ 🌧️",
+      text:"Inside a hidden cave, Ryan built a warm campfire while rain crashed outside. The lion rested quietly nearby guarding the entrance."
+    },
+
+    {
+      art:"🌈 🌴 ☀️ 🦁 ✨",
+      text:"By morning, the storm had passed and beautiful sunlight streamed through the jungle leaves while birds sang loudly overhead."
+    },
+
+    {
+      art:"🏆 🦁 🌈 🌴 ⭐",
+      text:"Before leaving the jungle, the animals gathered around Ryan while the lion bowed its enormous head proudly. Ryan had become the Guardian of the Jungle."
     }
 
   ]
@@ -400,27 +338,42 @@ const BOOKS = [
 
     {
       art:"🏎️ 🌆 💨 🚦 ⭐",
-      text:"Ryan tightened his racing gloves and prepared for the biggest championship race in the world."
+      text:"Ryan tightened his racing gloves and stepped toward the starting line of the biggest championship race in the world. Giant crowds roared from glowing stadium towers above him."
     },
 
     {
       art:"🚗 💨 🏁 🌃 ⚡",
-      text:"Bright race cars zoomed around glowing city streets while giant crowds cheered from towering stadiums."
+      text:"Bright race cars blasted through neon city streets while sparks flew from the tires around dangerous corners."
     },
 
     {
       art:"🌧️ 🏎️ ⚡ 🌪️ 💨",
-      text:"Rain suddenly poured onto the slippery track forcing Ryan to steer carefully around dangerous corners."
+      text:"Suddenly, rain poured onto the slippery track forcing Ryan to steer carefully while lightning flashed overhead."
     },
 
     {
       art:"🚀 🏎️ 🌈 💨 ⭐",
-      text:"Ryan activated turbo boost and his car blasted forward like a rocket beneath sparkling lights."
+      text:"Ryan activated turbo boost and his car surged forward like a rocket leaving glowing rainbow streaks behind him."
     },
 
     {
-      art:"🏆 🏁 🌟 🚗 🎉",
-      text:"The crowd erupted into cheers as Ryan crossed the finish line and lifted the giant golden trophy high above his head."
+      art:"🛞 🌃 💨 ⚡ 🏁",
+      text:"The final lap became dangerously close as rival racers swerved beside Ryan through tight city streets."
+    },
+
+    {
+      art:"🌉 🏎️ 🌌 💨 🌟",
+      text:"Ryan sped across giant bridges high above the city skyline while fireworks exploded across the night sky."
+    },
+
+    {
+      art:"🏁 🚗 🌈 ⭐ 🎉",
+      text:"The crowd erupted into cheers as Ryan crossed the finish line in first place beneath exploding confetti cannons."
+    },
+
+    {
+      art:"🏆 🏎️ 🌟 🎉 ✨",
+      text:"Ryan lifted the giant golden trophy high above his head while cameras flashed everywhere around him. Tonight, he had become the world's youngest Speed Racer champion."
     }
 
   ]
@@ -434,27 +387,42 @@ const BOOKS = [
 
     {
       art:"❄️ 🏰 🌨️ ⭐ 👑",
-      text:"Ryan stepped carefully into the Ice Kingdom where giant frozen castles shimmered beneath the northern lights."
+      text:"Ryan stepped carefully into the Ice Kingdom where giant frozen castles shimmered beneath glowing northern lights dancing across the sky."
     },
 
     {
       art:"⛄ ❄️ 🦊 🌨️ ✨",
-      text:"Snow foxes darted playfully across the icy hills while tiny snowflakes sparkled in Ryan's hair."
+      text:"Snow foxes darted playfully across icy hills while sparkling snowflakes settled softly onto Ryan's coat."
     },
 
     {
       art:"🧊 🌌 ❄️ 🌈 ⭐",
-      text:"Deep inside an ice cave, glowing crystals reflected magical colors across the frozen walls."
+      text:"Deep inside an enormous ice cave, glowing crystals reflected magical colors across the frozen walls like shimmering mirrors."
+    },
+
+    {
+      art:"👑 ❄️ 🏰 🌨️ ✨",
+      text:"The Queen of the Ice Kingdom explained sadly that the magical Crystal Crown had disappeared during the great snowstorm."
     },
 
     {
       art:"🌨️ 🌪️ ❄️ ⚡ 🏔️",
-      text:"A giant snowstorm surrounded the kingdom while Ryan searched for the missing Crystal Crown."
+      text:"Ryan traveled through freezing winds and giant snowstorms searching across icy mountains for the missing crown."
     },
 
     {
-      art:"🏆 👑 ❄️ 🌅 ✨",
-      text:"Ryan restored peace to the Ice Kingdom and the frozen castles glowed beautifully beneath the sunrise."
+      art:"🧊 ⭐ 👑 ❄️ ✨",
+      text:"At last, Ryan discovered the Crystal Crown buried beneath glowing ice deep inside the mountain caves."
+    },
+
+    {
+      art:"🌅 ❄️ 🏰 🌈 ☀️",
+      text:"The moment the crown returned to the kingdom, warm sunlight broke through the clouds and the frozen castles glowed brilliantly."
+    },
+
+    {
+      art:"🏆 👑 ❄️ 🌟 ✨",
+      text:"The Queen thanked Ryan by naming him Royal Protector of the Ice Kingdom while snowflakes sparkled gently through the golden sunrise."
     }
 
   ]
@@ -468,33 +436,48 @@ const BOOKS = [
 
     {
       art:"🦸 🏫 ⚡ 🌟 🚀",
-      text:"Ryan arrived at Superhero Academy where students practiced flying, strength training, and laser vision inside enormous training arenas."
+      text:"Ryan arrived at Superhero Academy where students practiced flying, strength training, and laser vision inside enormous futuristic training arenas."
     },
 
     {
       art:"💥 🦸 ⚡ 🏃 🌈",
-      text:"Ryan raced through obstacle courses while robots launched foam meteors through the air."
+      text:"Ryan raced through obstacle courses while training robots launched foam meteors and spinning laser targets through the air."
     },
 
     {
       art:"🛡️ ⚡ 🌆 🚨 ⭐",
-      text:"Emergency alarms suddenly echoed across the academy after a giant training robot escaped into the city."
+      text:"Emergency alarms suddenly echoed across the academy after a giant training robot accidentally escaped into the nearby city."
+    },
+
+    {
+      art:"🌃 🤖 ⚡ 🚓 🌪️",
+      text:"Ryan sprinted through the glowing streets while the runaway robot accidentally knocked over signs, cars, and giant billboards."
     },
 
     {
       art:"🦸 🤖 ⚡ 🌃 💥",
-      text:"Ryan used quick thinking and teamwork to safely stop the runaway robot without hurting anyone."
+      text:"Instead of fighting angrily, Ryan used quick thinking and teamwork to calm the frightened robot safely."
+    },
+
+    {
+      art:"⚡ 🌈 🦸 🤝 🤖",
+      text:"The robot explained that it became scared during training and simply wanted somewhere quiet to hide."
+    },
+
+    {
+      art:"🌟 🏫 🎉 ⚡ 🦸",
+      text:"Back at the academy, the teachers praised Ryan for showing kindness, patience, and courage instead of using force."
     },
 
     {
       art:"🏆 🦸 🌟 ⚡ 🎉",
-      text:"The academy awarded Ryan the Hero Star Medal while fireworks exploded high above the superhero towers."
+      text:"The academy awarded Ryan the Hero Star Medal while giant fireworks exploded high above the superhero towers and students cheered his name."
     }
 
   ]
 }
 
-};
+];
 
 /* ========================= */
 /* BOOKSHELF */
