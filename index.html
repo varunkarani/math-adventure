@@ -9,7 +9,7 @@
     content="width=device-width, initial-scale=1.0, viewport-fit=cover"
   />
 
-  <title>Math Adventure</title>
+  <title>Math Adventure Worlds</title>
 
   <link rel="stylesheet" href="style.css" />
 
@@ -42,14 +42,19 @@
 
         <div class="left-controls">
 
-          <div class="streak-card">
+          <div class="stat-card">
             🔥 Streak:
             <span id="streak">0</span>
           </div>
 
-          <div class="streak-card">
+          <div class="stat-card">
             🏆 Solved:
             <span id="solvedCount">0</span>
+          </div>
+
+          <div class="stat-card">
+            🌍 World:
+            <span id="worldName">Space Academy</span>
           </div>
 
         </div>
@@ -82,6 +87,8 @@
           <option value="dino">🦖 Dino</option>
           <option value="jungle">🐯 Jungle</option>
           <option value="ocean">🌊 Ocean</option>
+          <option value="castle">🏰 Castle</option>
+          <option value="wizard">🧙 Wizard</option>
         </select>
 
       </div>
@@ -90,14 +97,21 @@
 
     <main class="main-content">
 
-      <div class="achievement-banner hidden" id="achievementBanner">
-        🎉 Achievement Unlocked!
+      <div class="daily-mission">
+        🚀 Today's Mission:
+        Solve 15 Questions
+      </div>
+
+      <div class="achievement-banner hidden" id="achievementBanner"></div>
+
+      <div class="story-banner" id="storyBanner">
+        🛰️ Help Dino repair the spaceship!
       </div>
 
       <div class="mascot-container">
 
         <div id="mascot" class="mascot">
-          🦖
+          🚀
         </div>
 
         <div id="mascotSpeech" class="mascot-speech">
@@ -130,6 +144,14 @@
 
       </div>
 
+      <div class="progress-track">
+
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+
+      </div>
+
       <div class="break-message" id="breakMessage"></div>
 
     </main>
@@ -159,6 +181,11 @@
       </label>
 
       <label>
+        <input type="checkbox" id="visualMathToggle" checked />
+        Visual Math
+      </label>
+
+      <label>
         <input type="checkbox" id="soundToggle" checked />
         Sounds
       </label>
@@ -171,6 +198,27 @@
       <div class="range-value">
         Max:
         <span id="rangeValue">20</span>
+      </div>
+
+      <div class="parent-stats">
+
+        <h3>Parent Dashboard</h3>
+
+        <p>
+          Accuracy:
+          <span id="accuracyStat">0%</span>
+        </p>
+
+        <p>
+          Correct:
+          <span id="correctStat">0</span>
+        </p>
+
+        <p>
+          Incorrect:
+          <span id="incorrectStat">0</span>
+        </p>
+
       </div>
 
     </div>
