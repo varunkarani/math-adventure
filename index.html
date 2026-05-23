@@ -3,7 +3,7 @@
 
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 
 <meta
   name="viewport"
@@ -12,7 +12,7 @@
 
 <title>Ryan's Adventure World</title>
 
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style.css"/>
 
 <link
   href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
@@ -165,49 +165,81 @@
     class="hidden"
   >
 
-    <div class="story-mode-header">
+    <!-- ========================= -->
+    <!-- BOOKSHELF -->
+    <!-- ========================= -->
+
+    <div id="bookshelfView">
 
       <div class="story-mode-title">
-        📚 Cozy Story Time
+        📚 Ryan's Bookshelf
       </div>
 
-      <div class="story-controls">
-
-        <button id="readStoryBtn">
-          🎙️ Read To Me
-        </button>
-
-        <button id="bedtimeBtn">
-          🌙 Bedtime Mode
-        </button>
-
-      </div>
+      <div class="bookshelf" id="bookshelf"></div>
 
     </div>
 
-    <div class="story-book">
+    <!-- ========================= -->
+    <!-- READER -->
+    <!-- ========================= -->
 
-      <div
-        class="story-illustration"
-        id="storyIllustration"
-      >
-        🚀🌕⭐
+    <div
+      id="readerView"
+      class="hidden"
+    >
+
+      <div class="story-mode-header">
+
+        <div
+          class="story-mode-title"
+          id="storyTitle"
+        >
+          🚀 Space Mission
+        </div>
+
+        <div class="story-controls">
+
+          <button id="backToBooksBtn">
+            📚 Bookshelf
+          </button>
+
+          <button id="readStoryBtn">
+            🎙️ Read To Me
+          </button>
+
+          <button id="bedtimeBtn">
+            🌙 Bedtime
+          </button>
+
+        </div>
+
       </div>
 
-      <div
-        class="story-text"
-        id="storyText"
-      ></div>
+      <div class="story-book">
 
-      <div class="story-buttons">
+        <div
+          class="story-illustration"
+          id="storyIllustration"
+        >
+          🚀🌕⭐
+        </div>
 
-        <button id="prevPageBtn">
-          ⬅️ Previous
-        </button>
+        <div
+          class="story-text"
+          id="storyText"
+        ></div>
 
-        <button id="nextPageBtn">
-          Next ➡️
-        </button>
+        <div class="story-buttons">
+
+          <button id="prevPageBtn">
+            ⬅️ Previous
+          </button>
+
+          <button id="nextPageBtn">
+            Next ➡️
+          </button>
+
+        </div>
 
       </div>
 
@@ -216,7 +248,7 @@
   </section>
 
   <!-- ========================= -->
-  <!-- PARENT ZONE -->
+  <!-- PARENT -->
   <!-- ========================= -->
 
   <section
@@ -230,8 +262,6 @@
         ⚙️ Parent Zone
       </div>
 
-      <br>
-
       <div class="settings-grid">
 
         <label class="setting-row">
@@ -240,7 +270,6 @@
 
           <input
             type="checkbox"
-            id="soundToggle"
             checked
           />
 
@@ -252,7 +281,6 @@
 
           <input
             type="checkbox"
-            id="glowToggle"
             checked
           />
 
@@ -264,7 +292,6 @@
 
           <input
             type="checkbox"
-            id="bigNumberToggle"
           />
 
         </label>
@@ -275,7 +302,6 @@
 
           <input
             type="checkbox"
-            id="hintToggle"
             checked
           />
 
