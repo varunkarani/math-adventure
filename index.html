@@ -2,98 +2,113 @@
 <html lang="en">
 <head>
 
-  <meta charset="UTF-8" />
+<meta charset="UTF-8" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+/>
 
-  <title>Math Adventure Worlds</title>
+<title>Ryan's Adventure World</title>
 
-  <link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style.css" />
 
-  <link rel="manifest" href="manifest.json" />
+<link rel="manifest" href="manifest.json" />
 
-  <meta name="theme-color" content="#0b1020" />
+<meta name="theme-color" content="#0b1020" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
-    rel="stylesheet"
-  >
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
+  rel="stylesheet"
+>
 
 </head>
 
 <body>
 
-  <canvas id="confettiCanvas"></canvas>
+<canvas id="confettiCanvas"></canvas>
 
-  <div class="background-glow"></div>
+<div class="background-glow"></div>
 
-  <div class="floating-emojis" id="floatingEmojis"></div>
+<div class="app">
 
-  <div class="app">
+  <header class="topbar">
 
-    <header class="topbar">
+    <div class="app-tabs">
 
-      <div class="top-row">
+      <button id="mathTab" class="tab active">
+        🧮 Math Adventure
+      </button>
 
-        <div class="left-controls">
+      <button id="storyTab" class="tab">
+        📚 Story Time
+      </button>
 
-          <div class="stat-card">
-            🔥 Streak:
-            <span id="streak">0</span>
-          </div>
+    </div>
 
-          <div class="stat-card">
-            🏆 Solved:
-            <span id="solvedCount">0</span>
-          </div>
+  </header>
 
-          <div class="stat-card">
-            🌍 World:
-            <span id="worldName">Space Academy</span>
-          </div>
+  <!-- ========================= -->
+  <!-- MATH SECTION -->
+  <!-- ========================= -->
 
+  <section id="mathSection">
+
+    <div class="top-row">
+
+      <div class="left-controls">
+
+        <div class="stat-card">
+          🔥 Streak:
+          <span id="streak">0</span>
         </div>
 
-        <div class="right-controls">
+        <div class="stat-card">
+          🏆 Solved:
+          <span id="solvedCount">0</span>
+        </div>
 
-          <button id="settingsBtn">
-            ⚙️ Settings
-          </button>
-
-          <button id="refreshBtn">
-            🔄 Refresh
-          </button>
-
+        <div class="stat-card">
+          🌍 World:
+          <span id="worldName">Space Academy</span>
         </div>
 
       </div>
 
-      <div class="bottom-row">
+      <div class="right-controls">
 
-        <select id="difficulty">
-          <option value="easy">🌱 Easy</option>
-          <option value="medium" selected>🚀 Medium</option>
-          <option value="hard">🔥 Hard</option>
-          <option value="expert">👑 Expert</option>
-        </select>
+        <button id="settingsBtn">
+          ⚙️ Settings
+        </button>
 
-        <select id="themeSelector">
-          <option value="space">🚀 Space</option>
-          <option value="dino">🦖 Dino</option>
-          <option value="jungle">🐯 Jungle</option>
-          <option value="ocean">🌊 Ocean</option>
-          <option value="castle">🏰 Castle</option>
-          <option value="wizard">🧙 Wizard</option>
-        </select>
+        <button id="refreshBtn">
+          🔄 Refresh
+        </button>
 
       </div>
 
-    </header>
+    </div>
+
+    <div class="bottom-row">
+
+      <select id="difficulty">
+        <option value="easy">🌱 Easy</option>
+        <option value="medium" selected>🚀 Medium</option>
+        <option value="hard">🔥 Hard</option>
+        <option value="expert">👑 Expert</option>
+      </select>
+
+      <select id="themeSelector">
+        <option value="space">🚀 Space</option>
+        <option value="dino">🦖 Dino</option>
+        <option value="ocean">🌊 Ocean</option>
+        <option value="castle">🏰 Castle</option>
+        <option value="wizard">🧙 Wizard</option>
+      </select>
+
+    </div>
 
     <main class="main-content">
 
@@ -104,9 +119,7 @@
 
       <div class="achievement-banner hidden" id="achievementBanner"></div>
 
-      <div class="story-banner" id="storyBanner">
-        🛰️ Help Dino repair the spaceship!
-      </div>
+      <div class="story-banner" id="storyBanner"></div>
 
       <div class="mascot-container">
 
@@ -152,80 +165,152 @@
 
       </div>
 
-      <div class="break-message" id="breakMessage"></div>
-
     </main>
 
-    <div class="settings-panel hidden" id="settingsPanel">
+  </section>
 
-      <h2>Parent Settings</h2>
+  <!-- ========================= -->
+  <!-- STORY SECTION -->
+  <!-- ========================= -->
 
-      <label>
-        <input type="checkbox" id="additionToggle" checked />
-        Addition
-      </label>
+  <section id="storySection" class="hidden">
 
-      <label>
-        <input type="checkbox" id="subtractionToggle" checked />
-        Subtraction
-      </label>
+    <div class="story-mode-header">
 
-      <label>
-        <input type="checkbox" id="multiplicationToggle" checked />
-        Multiplication
-      </label>
-
-      <label>
-        <input type="checkbox" id="divisionToggle" checked />
-        Division
-      </label>
-
-      <label>
-        <input type="checkbox" id="visualMathToggle" checked />
-        Visual Math
-      </label>
-
-      <label>
-        <input type="checkbox" id="soundToggle" checked />
-        Sounds
-      </label>
-
-      <label>
-        Max Number:
-        <input type="range" id="maxRange" min="10" max="100" value="20" />
-      </label>
-
-      <div class="range-value">
-        Max:
-        <span id="rangeValue">20</span>
+      <div class="story-mode-title">
+        📚 Cozy Story Time
       </div>
 
-      <div class="parent-stats">
+      <div class="story-controls">
 
-        <h3>Parent Dashboard</h3>
+        <button id="readStoryBtn">
+          🎙️ Read To Me
+        </button>
 
-        <p>
-          Accuracy:
-          <span id="accuracyStat">0%</span>
-        </p>
-
-        <p>
-          Correct:
-          <span id="correctStat">0</span>
-        </p>
-
-        <p>
-          Incorrect:
-          <span id="incorrectStat">0</span>
-        </p>
+        <button id="bedtimeBtn">
+          🌙 Bedtime Mode
+        </button>
 
       </div>
 
     </div>
 
+    <div class="story-progress-card">
+
+      ⭐ Stories Completed:
+      <span id="storiesCompleted">0</span>
+
+    </div>
+
+    <div class="story-book">
+
+      <div class="story-world">
+        🚀 Space Adventure
+      </div>
+
+      <div
+        class="story-illustration"
+        id="storyIllustration"
+      >
+        🚀🌕⭐
+      </div>
+
+      <div
+        class="story-text"
+        id="storyText"
+      >
+        Ryan heard a strange sound outside.
+      </div>
+
+      <div
+        class="story-interaction"
+        id="storyInteraction"
+      >
+        ✨ Tap the stars!
+      </div>
+
+      <div class="story-buttons">
+
+        <button id="prevPageBtn">
+          ⬅️ Previous
+        </button>
+
+        <button id="nextPageBtn">
+          Next ➡️
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="mini-challenge hidden" id="miniChallenge">
+
+      <div class="mini-title">
+        🚀 Fuel Crystal Challenge
+      </div>
+
+      <div class="mini-question" id="miniQuestion">
+        2 + 3 = ?
+      </div>
+
+      <div class="mini-buttons">
+
+        <button class="mini-answer">5</button>
+        <button class="mini-answer">4</button>
+        <button class="mini-answer">6</button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SETTINGS -->
+
+  <div class="settings-panel hidden" id="settingsPanel">
+
+    <h2>Parent Settings</h2>
+
+    <label>
+      <input type="checkbox" id="additionToggle" checked />
+      Addition
+    </label>
+
+    <label>
+      <input type="checkbox" id="subtractionToggle" checked />
+      Subtraction
+    </label>
+
+    <label>
+      <input type="checkbox" id="multiplicationToggle" checked />
+      Multiplication
+    </label>
+
+    <label>
+      <input type="checkbox" id="divisionToggle" checked />
+      Division
+    </label>
+
+    <label>
+      <input type="checkbox" id="soundToggle" checked />
+      Sounds
+    </label>
+
+    <label>
+      Max Number:
+      <input type="range" id="maxRange" min="10" max="100" value="20" />
+    </label>
+
+    <div class="range-value">
+      Max:
+      <span id="rangeValue">20</span>
+    </div>
+
   </div>
 
-  <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
