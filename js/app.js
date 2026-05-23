@@ -1,9 +1,9 @@
 document.addEventListener(
   "DOMContentLoaded",
-  () => {
+  ()=>{
 
   /* ========================= */
-  /* SAFE ELEMENT HELPER */
+  /* HELPERS */
   /* ========================= */
 
   function get(id){
@@ -38,115 +38,25 @@ document.addEventListener(
 
   const storyBanner = get("storyBanner");
 
-  /* ========================= */
-  /* STORAGE */
-  /* ========================= */
+  const settingsBtn = get("settingsBtn");
 
-  function save(key,value){
-
-    try{
-
-      localStorage.setItem(
-        key,
-        JSON.stringify(value)
-      );
-
-    }catch(err){
-
-      console.log(err);
-    }
-  }
-
-  function load(key,defaultValue){
-
-    try{
-
-      const data =
-        localStorage.getItem(key);
-
-      if(data === null){
-
-        return defaultValue;
-      }
-
-      return JSON.parse(data);
-
-    }catch(err){
-
-      console.log(err);
-
-      return defaultValue;
-    }
-  }
-
-  /* ========================= */
-  /* GLOBAL STATE */
-  /* ========================= */
-
-  solved =
-    load("solved",0);
-
-  storyPage =
-    load("storyPage",0);
-
-  const savedDifficulty =
-    load("difficulty","medium");
-
-  const bedtimeEnabled =
-    load("bedtimeMode",false);
-
-  /* ========================= */
-  /* APPLY SAVED SETTINGS */
-  /* ========================= */
-
-  if(difficulty){
-
-    difficulty.value =
-      savedDifficulty;
-  }
-
-  if(bedtimeEnabled){
-
-    document.body.classList.add(
-      "bedtime-mode"
-    );
-  }
+  const settingsPanel = get("settingsPanel");
 
   /* ========================= */
   /* INIT */
   /* ========================= */
 
-  try{
+  generateQuestion();
 
-    generateQuestion();
+  renderStory();
 
-  }catch(err){
-
-    console.log(
-      "generateQuestion failed",
-      err
-    );
-  }
-
-  try{
-
-    renderStory();
-
-  }catch(err){
-
-    console.log(
-      "renderStory failed",
-      err
-    );
-  }
-
-  updateProgress();
+  renderStats();
 
   /* ========================= */
-  /* PROGRESS */
+  /* STATS */
   /* ========================= */
 
-  function updateProgress(){
+  function renderStats(){
 
     if(!storyBanner) return;
 
@@ -156,77 +66,81 @@ document.addEventListener(
         : "MEDIUM";
 
     storyBanner.innerHTML = `
+
       🚀 Difficulty:
       ${difficultyLevel}
+
       <br>
-      🏆 Total solved:
+
+      🏆 Solved:
       ${solved}
+
+      &nbsp;&nbsp;&nbsp;
+
+      🔥 Streak:
+      ${streak}
     `;
   }
 
   /* ========================= */
-  /* TAB SYSTEM */
+  /* SETTINGS */
+  /* ========================= */
+
+  if(settingsBtn && settingsPanel){
+
+    settingsBtn.onclick = ()=>{
+
+      settingsPanel.classList.toggle(
+        "open"
+      );
+    };
+  }
+
+  /* ========================= */
+  /* TABS */
   /* ========================= */
 
   if(mathTab){
 
-    mathTab.onclick = () => {
+    mathTab.onclick = ()=>{
 
-      if(mathSection){
+      mathSection.classList.remove(
+        "hidden"
+      );
 
-        mathSection.classList.remove(
-          "hidden"
-        );
-      }
-
-      if(storySection){
-
-        storySection.classList.add(
-          "hidden"
-        );
-      }
+      storySection.classList.add(
+        "hidden"
+      );
 
       mathTab.classList.add(
         "active"
       );
 
-      if(storyTab){
-
-        storyTab.classList.remove(
-          "active"
-        );
-      }
+      storyTab.classList.remove(
+        "active"
+      );
     };
   }
 
   if(storyTab){
 
-    storyTab.onclick = () => {
+    storyTab.onclick = ()=>{
 
-      if(storySection){
+      storySection.classList.remove(
+        "hidden"
+      );
 
-        storySection.classList.remove(
-          "hidden"
-        );
-      }
-
-      if(mathSection){
-
-        mathSection.classList.add(
-          "hidden"
-        );
-      }
+      mathSection.classList.add(
+        "hidden"
+      );
 
       storyTab.classList.add(
         "active"
       );
 
-      if(mathTab){
-
-        mathTab.classList.remove(
-          "active"
-        );
-      }
+      mathTab.classList.remove(
+        "active"
+      );
     };
   }
 
@@ -236,16 +150,11 @@ document.addEventListener(
 
   if(difficulty){
 
-    difficulty.onchange = () => {
-
-      save(
-        "difficulty",
-        difficulty.value
-      );
+    difficulty.onchange = ()=>{
 
       generateQuestion();
 
-      updateProgress();
+      renderStats();
     };
   }
 
@@ -255,7 +164,7 @@ document.addEventListener(
 
   if(refreshBtn){
 
-    refreshBtn.onclick = () => {
+    refreshBtn.onclick = ()=>{
 
       generateQuestion();
     };
@@ -267,7 +176,7 @@ document.addEventListener(
 
   if(keypad){
 
-    keypad.onclick = (e) => {
+    keypad.onclick = (e)=>{
 
       if(
         !e.target.classList.contains("key")
@@ -276,50 +185,27 @@ document.addEventListener(
       const value =
         e.target.innerText;
 
-      if(value === "⌫"){
+      if(value==="⌫"){
 
         currentInput =
           currentInput.slice(0,-1);
 
-      }else if(value === "✓"){
+      }else if(value==="✓"){
 
         if(
-          parseInt(currentInput) ===
+          parseInt(currentInput)===
           currentAnswer
         ){
 
-          if(feedback){
+          handleCorrect();
 
-            feedback.className =
-              "feedback success";
-
-            feedback.innerHTML =
-              "✅ Amazing!";
-          }
-
-          solved++;
-
-          save(
-            "solved",
-            solved
-          );
-
-          updateProgress();
-
-          generateQuestion();
+          renderStats();
 
         }else{
 
-          if(feedback){
+          handleWrong();
 
-            feedback.className =
-              "feedback error";
-
-            feedback.innerHTML =
-              `❌ Answer was ${currentAnswer}`;
-          }
-
-          currentInput = "";
+          renderStats();
         }
 
       }else{
@@ -337,11 +223,11 @@ document.addEventListener(
 
   if(nextPageBtn){
 
-    nextPageBtn.onclick = () => {
+    nextPageBtn.onclick = ()=>{
 
       if(
         storyPage <
-        STORY_PAGES.length - 1
+        STORY_PAGES.length-1
       ){
 
         storyPage++;
@@ -351,27 +237,17 @@ document.addEventListener(
         storyPage = 0;
       }
 
-      save(
-        "storyPage",
-        storyPage
-      );
-
       renderStory();
     };
   }
 
   if(prevPageBtn){
 
-    prevPageBtn.onclick = () => {
+    prevPageBtn.onclick = ()=>{
 
-      if(storyPage > 0){
+      if(storyPage>0){
 
         storyPage--;
-
-        save(
-          "storyPage",
-          storyPage
-        );
 
         renderStory();
       }
@@ -384,47 +260,33 @@ document.addEventListener(
 
   if(readStoryBtn){
 
-    readStoryBtn.onclick = () => {
+    readStoryBtn.onclick = ()=>{
 
-      try{
+      speechSynthesis.cancel();
 
-        speechSynthesis.cancel();
-
-        const utterance =
-          new SpeechSynthesisUtterance(
-            STORY_PAGES[storyPage].text
-          );
-
-        utterance.rate = 0.85;
-
-        speechSynthesis.speak(
-          utterance
+      const utterance =
+        new SpeechSynthesisUtterance(
+          STORY_PAGES[storyPage].text
         );
 
-      }catch(err){
+      utterance.rate = 0.85;
 
-        console.log(err);
-      }
+      speechSynthesis.speak(
+        utterance
+      );
     };
   }
 
   /* ========================= */
-  /* BEDTIME MODE */
+  /* BEDTIME */
   /* ========================= */
 
   if(bedtimeBtn){
 
-    bedtimeBtn.onclick = () => {
+    bedtimeBtn.onclick = ()=>{
 
       document.body.classList.toggle(
         "bedtime-mode"
-      );
-
-      save(
-        "bedtimeMode",
-        document.body.classList.contains(
-          "bedtime-mode"
-        )
       );
     };
   }
