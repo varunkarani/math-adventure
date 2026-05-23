@@ -2,354 +2,529 @@ document.addEventListener(
   "DOMContentLoaded",
   ()=>{
 
-  function get(id){
-
-    return document.getElementById(id);
-  }
-
   /* ========================= */
   /* ELEMENTS */
   /* ========================= */
 
   const mathTab =
-    get("mathTab");
+    document.getElementById(
+      "mathTab"
+    );
 
   const storyTab =
-    get("storyTab");
-
-  const parentTab =
-    get("parentTab");
+    document.getElementById(
+      "storyTab"
+    );
 
   const mathSection =
-    get("mathSection");
+    document.getElementById(
+      "mathSection"
+    );
 
   const storySection =
-    get("storySection");
-
-  const parentSection =
-    get("parentSection");
+    document.getElementById(
+      "storySection"
+    );
 
   const keypad =
-    get("keypad");
+    document.getElementById(
+      "keypad"
+    );
 
-  const refreshBtn =
-    get("refreshBtn");
-
-  const difficulty =
-    get("difficulty");
+  const difficultySelect =
+    document.getElementById(
+      "difficulty"
+    );
 
   const feedback =
-    get("feedback");
+    document.getElementById(
+      "feedback"
+    );
 
-  const storyBanner =
-    get("storyBanner");
-
-  const nextPageBtn =
-    get("nextPageBtn");
-
-  const prevPageBtn =
-    get("prevPageBtn");
+  const answerDisplay =
+    document.getElementById(
+      "answerDisplay"
+    );
 
   const readStoryBtn =
-    get("readStoryBtn");
+    document.getElementById(
+      "readStoryBtn"
+    );
 
   const bedtimeBtn =
-    get("bedtimeBtn");
+    document.getElementById(
+      "bedtimeBtn"
+    );
 
-  const backToBooksBtn =
-    get("backToBooksBtn");
+  const nextPageBtn =
+    document.getElementById(
+      "nextPageBtn"
+    );
 
-  const bookshelfView =
-    get("bookshelfView");
+  const prevPageBtn =
+    document.getElementById(
+      "prevPageBtn"
+    );
 
-  const readerView =
-    get("readerView");
+  const backToLibraryBtn =
+    document.getElementById(
+      "backToLibraryBtn"
+    );
 
-  const totalSolvedStat =
-    get("totalSolvedStat");
+  /* ========================= */
+  /* GLOBAL STATE */
+  /* ========================= */
 
-  const resetProgressBtn =
-    get("resetProgressBtn");
+  let currentInput = "";
+
+  let incorrectTries = 0;
 
   /* ========================= */
   /* INIT */
   /* ========================= */
 
-  generateQuestion();
+  if(typeof generateQuestion==="function"){
+    generateQuestion();
+  }
 
-  renderBookshelf();
-
-  renderStats();
+  if(typeof renderBookshelf==="function"){
+    renderBookshelf();
+  }
 
   /* ========================= */
-  /* STATS */
+  /* ANSWER DISPLAY */
   /* ========================= */
 
-  function renderStats(){
+  function updateAnswerDisplay(){
 
-    if(storyBanner){
+    if(answerDisplay){
 
-      storyBanner.innerHTML = `
-
-        🚀 Difficulty:
-        ${difficulty.value.toUpperCase()}
-
-        <br>
-
-        🏆 Solved:
-        ${solved}
-
-        &nbsp;&nbsp;&nbsp;
-
-        🔥 Streak:
-        ${streak}
-      `;
+      answerDisplay.innerHTML =
+        currentInput || "_";
     }
+  }
 
-    if(totalSolvedStat){
+  /* ========================= */
+  /* FEEDBACK */
+  /* ========================= */
 
-      totalSolvedStat.innerText =
-        solved;
-    }
+  function showFeedback(
+    message,
+    type="success"
+  ){
+
+    if(!feedback) return;
+
+    feedback.innerHTML =
+      message;
+
+    feedback.className =
+      `feedback ${type}`;
+  }
+
+  /* ========================= */
+  /* RESET INPUT */
+  /* ========================= */
+
+  function clearInput(){
+
+    currentInput = "";
+
+    updateAnswerDisplay();
+  }
+
+  /* ========================= */
+  /* KEYPAD */
+  /* ========================= */
+
+  if(keypad){
+
+    keypad.addEventListener(
+      "click",
+      (e)=>{
+
+      if(
+        !e.target.classList.contains(
+          "key"
+        )
+      ){
+        return;
+      }
+
+      const value =
+        e.target.innerText;
+
+      /* ========================= */
+      /* DELETE */
+      /* ========================= */
+
+      if(value==="⌫"){
+
+        currentInput =
+          currentInput.slice(0,-1);
+
+        updateAnswerDisplay();
+
+        return;
+      }
+
+      /* ========================= */
+      /* SUBMIT */
+      /* ========================= */
+
+      if(value==="✓"){
+
+        if(currentInput===""){
+          return;
+        }
+
+        const answer =
+          parseInt(currentInput);
+
+        /* ========================= */
+        /* CORRECT */
+        /* ========================= */
+
+        if(answer===currentAnswer){
+
+          incorrectTries = 0;
+
+          showFeedback(
+            "✅ Amazing!",
+            "success"
+          );
+
+          if(
+            typeof solved!=="undefined"
+          ){
+            solved++;
+          }
+
+          if(
+            typeof streak!=="undefined"
+          ){
+            streak++;
+          }
+
+          if(
+            typeof updateStats==="function"
+          ){
+            updateStats();
+          }
+
+          if(
+            typeof launchConfetti==="function"
+          ){
+            launchConfetti();
+          }
+
+          clearInput();
+
+          setTimeout(()=>{
+
+            if(
+              typeof generateQuestion==="function"
+            ){
+              generateQuestion();
+            }
+
+            showFeedback("");
+
+          },1000);
+
+        }
+
+        /* ========================= */
+        /* WRONG */
+        /* ========================= */
+
+        else{
+
+          incorrectTries++;
+
+          if(
+            typeof streak!=="undefined"
+          ){
+            streak = 0;
+          }
+
+          if(
+            typeof updateStats==="function"
+          ){
+            updateStats();
+          }
+
+          /* ========================= */
+          /* SHOW ANSWER AFTER 3 TRIES */
+          /* ========================= */
+
+          if(incorrectTries>=3){
+
+            showFeedback(
+              `💡 Correct answer: ${currentAnswer}`,
+              "error"
+            );
+
+            incorrectTries = 0;
+
+            clearInput();
+
+            setTimeout(()=>{
+
+              if(
+                typeof generateQuestion==="function"
+              ){
+                generateQuestion();
+              }
+
+              showFeedback("");
+
+            },1800);
+
+          }
+
+          else{
+
+            showFeedback(
+              "❌ Try again!",
+              "error"
+            );
+
+            clearInput();
+          }
+        }
+
+        return;
+      }
+
+      /* ========================= */
+      /* NUMBER INPUT */
+      /* ========================= */
+
+      currentInput += value;
+
+      updateAnswerDisplay();
+
+    });
+
+  }
+
+  /* ========================= */
+  /* DIFFICULTY */
+  /* ========================= */
+
+  if(difficultySelect){
+
+    difficultySelect.addEventListener(
+      "change",
+      ()=>{
+
+      incorrectTries = 0;
+
+      clearInput();
+
+      if(
+        typeof generateQuestion==="function"
+      ){
+        generateQuestion();
+      }
+
+    });
+
   }
 
   /* ========================= */
   /* TABS */
   /* ========================= */
 
-  function clearTabs(){
+  if(mathTab){
 
-    mathSection.classList.add(
-      "hidden"
-    );
+    mathTab.addEventListener(
+      "click",
+      ()=>{
 
-    storySection.classList.add(
-      "hidden"
-    );
+      mathSection.classList.remove(
+        "hidden"
+      );
 
-    parentSection.classList.add(
-      "hidden"
-    );
+      storySection.classList.add(
+        "hidden"
+      );
 
-    mathTab.classList.remove(
-      "active"
-    );
+      mathTab.classList.add(
+        "active"
+      );
 
-    storyTab.classList.remove(
-      "active"
-    );
+      storyTab.classList.remove(
+        "active"
+      );
 
-    parentTab.classList.remove(
-      "active"
-    );
+    });
+
   }
 
-  mathTab.onclick = ()=>{
+  if(storyTab){
 
-    clearTabs();
+    storyTab.addEventListener(
+      "click",
+      ()=>{
 
-    mathSection.classList.remove(
-      "hidden"
-    );
+      storySection.classList.remove(
+        "hidden"
+      );
 
-    mathTab.classList.add(
-      "active"
-    );
-  };
+      mathSection.classList.add(
+        "hidden"
+      );
 
-  storyTab.onclick = ()=>{
+      storyTab.classList.add(
+        "active"
+      );
 
-    clearTabs();
+      mathTab.classList.remove(
+        "active"
+      );
 
-    storySection.classList.remove(
-      "hidden"
-    );
+    });
 
-    storyTab.classList.add(
-      "active"
-    );
-  };
-
-  parentTab.onclick = ()=>{
-
-    clearTabs();
-
-    parentSection.classList.remove(
-      "hidden"
-    );
-
-    parentTab.classList.add(
-      "active"
-    );
-  };
-
-  /* ========================= */
-  /* DIFFICULTY */
-  /* ========================= */
-
-  difficulty.onchange = ()=>{
-
-    generateQuestion();
-
-    renderStats();
-  };
-
-  /* ========================= */
-  /* REFRESH */
-  /* ========================= */
-
-  refreshBtn.onclick = ()=>{
-
-    generateQuestion();
-  };
-
-  /* ========================= */
-  /* KEYPAD */
-  /* ========================= */
-
-  keypad.onclick = (e)=>{
-
-    if(
-      !e.target.classList.contains(
-        "key"
-      )
-    ) return;
-
-    const value =
-      e.target.innerText;
-
-    if(value==="⌫"){
-
-      currentInput =
-        currentInput.slice(0,-1);
-
-    }else if(value==="✓"){
-
-      if(
-        parseInt(currentInput)===
-        currentAnswer
-      ){
-
-        handleCorrect();
-
-      }else{
-
-        handleWrong();
-      }
-
-      renderStats();
-
-    }else{
-
-      currentInput += value;
-    }
-
-    updateAnswerDisplay();
-  };
+  }
 
   /* ========================= */
   /* STORY NAVIGATION */
   /* ========================= */
 
-  nextPageBtn.onclick = ()=>{
+  if(nextPageBtn){
 
-    const totalPages =
-      BOOKS[currentBook]
-      .pages.length;
+    nextPageBtn.addEventListener(
+      "click",
+      ()=>{
 
-    if(
-      storyPage <
-      totalPages-1
-    ){
+      if(
+        storyPage <
+        BOOKS[currentBook]
+        .pages.length - 1
+      ){
 
-      storyPage++;
+        storyPage++;
 
-      renderStory();
+      }else{
 
-    }else{
+        storyPage = 0;
+      }
 
-      feedback.innerHTML =
-        "📚 Story Complete!";
-    }
-  };
+      if(
+        typeof renderStory==="function"
+      ){
+        renderStory();
+      }
 
-  prevPageBtn.onclick = ()=>{
+    });
 
-    if(storyPage>0){
+  }
 
-      storyPage--;
+  if(prevPageBtn){
 
-      renderStory();
-    }
-  };
+    prevPageBtn.addEventListener(
+      "click",
+      ()=>{
+
+      if(storyPage>0){
+
+        storyPage--;
+
+        if(
+          typeof renderStory==="function"
+        ){
+          renderStory();
+        }
+      }
+
+    });
+
+  }
 
   /* ========================= */
-  /* BOOKSHELF */
+  /* BACK TO LIBRARY */
   /* ========================= */
 
-  backToBooksBtn.onclick = ()=>{
+  if(backToLibraryBtn){
 
-    readerView.classList.add(
-      "hidden"
-    );
+    backToLibraryBtn.addEventListener(
+      "click",
+      ()=>{
 
-    bookshelfView.classList.remove(
-      "hidden"
-    );
-  };
+      document
+        .getElementById(
+          "readerView"
+        )
+        .classList.add(
+          "hidden"
+        );
+
+      document
+        .getElementById(
+          "bookshelfView"
+        )
+        .classList.remove(
+          "hidden"
+        );
+
+    });
+
+  }
 
   /* ========================= */
-  /* READ STORY */
+  /* READ TO ME */
   /* ========================= */
 
-  readStoryBtn.onclick = ()=>{
+  if(readStoryBtn){
 
-    speechSynthesis.cancel();
+    readStoryBtn.addEventListener(
+      "click",
+      ()=>{
 
-    const text =
-      BOOKS[currentBook]
-      .pages[storyPage]
-      .text;
+      const storyText =
+        document.getElementById(
+          "storyText"
+        ).innerText;
 
-    const utterance =
-      new SpeechSynthesisUtterance(
-        text
+      const speech =
+        new SpeechSynthesisUtterance(
+          storyText
+        );
+
+      speech.rate = 0.92;
+
+      speech.pitch = 1;
+
+      speech.volume = 1;
+
+      window.speechSynthesis.cancel();
+
+      window.speechSynthesis.speak(
+        speech
       );
 
-    utterance.rate = 0.82;
+    });
 
-    utterance.pitch = 1.02;
-
-    speechSynthesis.speak(
-      utterance
-    );
-  };
+  }
 
   /* ========================= */
   /* BEDTIME MODE */
   /* ========================= */
 
-  bedtimeBtn.onclick = ()=>{
+  if(bedtimeBtn){
 
-    document.body.classList.toggle(
-      "bedtime-mode"
-    );
-  };
+    bedtimeBtn.addEventListener(
+      "click",
+      ()=>{
 
-  /* ========================= */
-  /* RESET */
-  /* ========================= */
+      document.body.classList.toggle(
+        "bedtime-mode"
+      );
 
-  resetProgressBtn.onclick = ()=>{
+    });
 
-    solved = 0;
-
-    streak = 0;
-
-    renderStats();
-
-    feedback.innerHTML =
-      "🧹 Progress Reset!";
-  };
+  }
 
 });
