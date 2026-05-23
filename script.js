@@ -14,6 +14,7 @@ let correct=0;
 let incorrect=0;
 let currentInput="";
 let currentQuestion=null;
+let wrongAttempts=0;
 
 const worlds=[
   {name:"Space Academy",theme:"space",unlock:0,mascot:"🚀"},
@@ -118,6 +119,7 @@ function generateQuestion(){
   };
 
   currentInput="";
+  wrongAttempts=0;
 
   renderQuestion();
 
@@ -146,9 +148,16 @@ function renderQuestion(){
       emojiMap[themeSelector.value];
 
     visualHTML=`
-      <div class="visual-math">
+      <div class="visual-math" style="
+        font-size:2rem;
+        text-align:center;
+        margin-bottom:20px;
+        line-height:1.6;
+      ">
         ${emoji.repeat(currentQuestion.a)}
+        <br>
         ${currentQuestion.op}
+        <br>
         ${emoji.repeat(currentQuestion.b)}
       </div>
     `;
@@ -188,15 +197,20 @@ function speakQuestion(){
 
   utterance.rate=0.9;
 
+  speechSynthesis.cancel();
+
   speechSynthesis.speak(utterance);
 }
 
 function updateAnswerDisplay(){
+
   document.getElementById("answerDisplay")
     .innerText=currentInput || "?";
 }
 
 function celebrateCorrect(){
+
+  wrongAttempts=0;
 
   streak++;
   solved++;
@@ -238,22 +252,54 @@ function handleWrong(){
 
   incorrect++;
 
+  wrongAttempts++;
+
   streak=0;
 
   streakEl.innerText=0;
 
   feedback.className="feedback error";
 
-  feedback.innerHTML="Try Again!";
+  const correctAnswer=currentQuestion.answer;
 
-  mascotSpeech.innerHTML=
-    "You can do it!";
+  currentInput="";
 
-  updateStats();
+  updateAnswerDisplay();
 
-  adaptiveDifficulty();
+  if(wrongAttempts>=3){
 
-  saveState();
+    feedback.innerHTML=
+      `The correct answer was ${correctAnswer} 💡`;
+
+    mascotSpeech.innerHTML=
+      "You'll get the next one!";
+
+    wrongAttempts=0;
+
+    updateStats();
+
+    adaptiveDifficulty();
+
+    saveState();
+
+    setTimeout(()=>{
+      generateQuestion();
+    },2200);
+
+  }else{
+
+    feedback.innerHTML=
+      `Try Again! (${wrongAttempts}/3)`;
+
+    mascotSpeech.innerHTML=
+      "You can do it!";
+
+    updateStats();
+
+    adaptiveDifficulty();
+
+    saveState();
+  }
 }
 
 function adaptiveDifficulty(){
