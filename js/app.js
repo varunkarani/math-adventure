@@ -1,375 +1,485 @@
-let currentAnswer = 0;
+document.addEventListener(
+“DOMContentLoaded”,
+()=>{
 
-let solved = 0;
+/* ========================= /
+/ ELEMENTS /
+/ ========================= */
 
-let streak = 0;
+const mathTab =
+document.getElementById(
+“mathTab”
+);
 
-/* ========================= */
-/* QUESTION GENERATION */
-/* ========================= */
+const storyTab =
+document.getElementById(
+“storyTab”
+);
 
-function generateQuestion(){
+const mathSection =
+document.getElementById(
+“mathSection”
+);
 
-  const difficulty =
-    document.getElementById(
-      "difficulty"
-    )?.value || "medium";
+const storySection =
+document.getElementById(
+“storySection”
+);
 
-  let num1;
-  let num2;
-  let operator;
+const keypad =
+document.getElementById(
+“keypad”
+);
 
-  /* ========================= */
-  /* EASY */
-  /* ========================= */
+const difficultySelect =
+document.getElementById(
+“difficulty”
+);
 
-  if(difficulty==="easy"){
+const feedback =
+document.getElementById(
+“feedback”
+);
 
-    num1 =
-      random(1,10);
+const answerDisplay =
+document.getElementById(
+“answerDisplay”
+);
 
-    num2 =
-      random(1,10);
+const readStoryBtn =
+document.getElementById(
+“readStoryBtn”
+);
 
-    operator = "+";
-  }
+const bedtimeBtn =
+document.getElementById(
+“bedtimeBtn”
+);
 
-  /* ========================= */
-  /* MEDIUM */
-  /* ========================= */
+const nextPageBtn =
+document.getElementById(
+“nextPageBtn”
+);
 
-  else if(
-    difficulty==="medium"
-  ){
+const prevPageBtn =
+document.getElementById(
+“prevPageBtn”
+);
 
-    num1 =
-      random(5,20);
+const backToLibraryBtn =
+document.getElementById(
+“backToLibraryBtn”
+);
 
-    num2 =
-      random(5,20);
+/* ========================= /
+/ STATE /
+/ ========================= */
 
-    operator =
-      randomChoice([
-        "+",
-        "-"
-      ]);
-  }
+let currentInput = “”;
 
-  /* ========================= */
-  /* HARD */
-  /* ========================= */
+let incorrectTries = 0;
 
-  else if(
-    difficulty==="hard"
-  ){
+/* ========================= /
+/ INIT /
+/ ========================= */
 
-    num1 =
-      random(2,12);
+if(
+typeof generateQuestion ===
+“function”
+){
+generateQuestion();
+}
 
-    num2 =
-      random(2,12);
+if(
+typeof renderBookshelf ===
+“function”
+){
+renderBookshelf();
+}
 
-    operator =
-      randomChoice([
-        "+",
-        "-",
-        "×"
-      ]);
-  }
+/* ========================= /
+/ DISPLAY /
+/ ========================= */
 
-  /* ========================= */
-  /* EXPERT */
-  /* ========================= */
+function updateAnswerDisplay(){
 
-  else{
+if(answerDisplay){
+  answerDisplay.innerHTML =
+    currentInput || "_";
+}
 
-    operator =
-      randomChoice([
-        "+",
-        "-",
-        "×",
-        "÷"
-      ]);
+}
 
-    /* ========================= */
-    /* LARGE ADDITION/SUBTRACTION */
-    /* ========================= */
+function clearInput(){
 
-    if(
-      operator==="+" ||
-      operator==="-"
-    ){
+currentInput = "";
+updateAnswerDisplay();
 
-      num1 =
-        random(100,999);
+}
 
-      num2 =
-        random(100,999);
-    }
+function showFeedback(
+message,
+type=“success”
+){
 
-    /* ========================= */
-    /* MULTIPLICATION */
-    /* ========================= */
+if(!feedback) return;
+feedback.innerHTML =
+  message;
+feedback.className =
+  `feedback ${type}`;
 
-    else if(
-      operator==="×"
-    ){
+}
 
-      num1 =
-        random(10,30);
+/* ========================= /
+/ KEYPAD /
+/ ========================= */
 
-      num2 =
-        random(2,12);
-    }
+if(keypad){
 
-    /* ========================= */
-    /* DIVISION */
-    /* ========================= */
-
-    else{
-
-      num2 =
-        random(2,12);
-
-      currentAnswer =
-        random(2,12);
-
-      num1 =
-        num2 *
-        currentAnswer;
-    }
-  }
-
-  /* ========================= */
-  /* PREVENT NEGATIVE ANSWERS */
-  /* ========================= */
-
+keypad.addEventListener(
+  "click",
+  (e)=>{
   if(
-    operator === "-" &&
-    num2 > num1
-  ){
-
-    let temp = num1;
-
-    num1 = num2;
-
-    num2 = temp;
-  }
-
-  /* ========================= */
-  /* ANSWER */
-  /* ========================= */
-
-  if(operator === "+"){
-
-    currentAnswer =
-      num1 + num2;
-  }
-
-  else if(
-    operator === "-"
-  ){
-
-    currentAnswer =
-      num1 - num2;
-  }
-
-  else if(
-    operator === "×"
-  ){
-
-    currentAnswer =
-      num1 * num2;
-  }
-
-  else if(
-    operator === "÷"
-  ){
-
-    currentAnswer =
-      num1 / num2;
-  }
-
-  /* ========================= */
-  /* DISPLAY QUESTION */
-  /* ========================= */
-
-  const question =
-    document.getElementById(
-      "question"
-    );
-
-  if(question){
-
-    question.innerHTML =
-      `${num1} ${operator} ${num2}`;
-  }
-
-  /* ========================= */
-  /* RESET ANSWER DISPLAY */
-  /* ========================= */
-
-  const answerDisplay =
-    document.getElementById(
-      "answerDisplay"
-    );
-
-  if(answerDisplay){
-
-    answerDisplay.innerHTML =
-      "_";
-  }
-}
-
-/* ========================= */
-/* RANDOM HELPERS */
-/* ========================= */
-
-function random(min,max){
-
-  return Math.floor(
-    Math.random() *
-    (max-min+1)
-  ) + min;
-}
-
-function randomChoice(arr){
-
-  return arr[
-    Math.floor(
-      Math.random() *
-      arr.length
+    !e.target.classList.contains(
+      "key"
     )
-  ];
+  ){
+    return;
+  }
+  const value =
+    e.target.innerText;
+  /* DELETE */
+  if(value==="⌫"){
+    currentInput =
+      currentInput.slice(0,-1);
+    updateAnswerDisplay();
+    return;
+  }
+  /* SUBMIT */
+  if(value==="✓"){
+    if(currentInput===""){
+      return;
+    }
+    const answer =
+      parseInt(currentInput);
+    /* CORRECT */
+    if(answer===currentAnswer){
+      incorrectTries = 0;
+      solved++;
+      streak++;
+      updateStats();
+      showFeedback(
+        "✅ Amazing!",
+        "success"
+      );
+      clearInput();
+      if(
+        typeof launchConfetti ===
+        "function"
+      ){
+        launchConfetti();
+      }
+      setTimeout(()=>{
+        if(
+          typeof generateQuestion ===
+          "function"
+        ){
+          generateQuestion();
+        }
+        showFeedback("");
+      },1000);
+    }
+    /* WRONG */
+    else{
+      incorrectTries++;
+      streak = 0;
+      updateStats();
+      /* SECOND WRONG = HINT */
+      if(incorrectTries===2){
+        const questionText =
+          document.getElementById(
+            "question"
+          ).innerText;
+        const parts =
+          questionText.split(" ");
+        const num1 =
+          parseInt(parts[0]);
+        const operator =
+          parts[1];
+        const num2 =
+          parseInt(parts[2]);
+        let hint = "";
+        if(operator === "+"){
+          hint =
+            `💡 Hint: Start at ${num1} and count forward ${num2} steps.`;
+        }
+        else if(
+          operator === "-"
+        ){
+          hint =
+            `💡 Hint: Count backwards ${num2} numbers from ${num1}.`;
+        }
+        else if(
+          operator === "×"
+        ){
+          hint =
+            `💡 Hint: ${num1} × ${num2} means ${num1} added ${num2} times.`;
+        }
+        else if(
+          operator === "÷"
+        ){
+          hint =
+            `💡 Hint: If ${num1} candies are shared equally between ${num2} people, how many does each person get?`;
+        }
+        showFeedback(
+          hint,
+          "error"
+        );
+        clearInput();
+      }
+      /* THIRD WRONG */
+      else if(
+        incorrectTries >= 3
+      ){
+        showFeedback(
+          `💡 Correct answer: ${currentAnswer}`,
+          "error"
+        );
+        incorrectTries = 0;
+        clearInput();
+        setTimeout(()=>{
+          if(
+            typeof generateQuestion ===
+            "function"
+          ){
+            generateQuestion();
+          }
+          showFeedback("");
+        },1800);
+      }
+      /* FIRST WRONG */
+      else{
+        showFeedback(
+          "❌ Try again!",
+          "error"
+        );
+        clearInput();
+      }
+    }
+    return;
+  }
+  /* NUMBER INPUT */
+  currentInput += value;
+  updateAnswerDisplay();
+});
+
 }
 
-/* ========================= */
-/* CONFETTI */
-/* ========================= */
+/* ========================= /
+/ DIFFICULTY /
+/ ========================= */
 
-function launchConfetti(){
+if(difficultySelect){
 
-  const canvas =
-    document.getElementById(
-      "confettiCanvas"
-    );
-
-  if(!canvas) return;
-
-  const ctx =
-    canvas.getContext("2d");
-
-  canvas.width =
-    window.innerWidth;
-
-  canvas.height =
-    window.innerHeight;
-
-  const pieces = [];
-
-  for(let i=0;i<120;i++){
-
-    pieces.push({
-
-      x:
-        Math.random() *
-        canvas.width,
-
-      y:
-        Math.random() *
-        canvas.height -
-        canvas.height,
-
-      size:
-        Math.random()*8 + 4,
-
-      speed:
-        Math.random()*3 + 2,
-
-      color:
-        randomChoice([
-          "#7c5cff",
-          "#32d583",
-          "#ffd166",
-          "#ff5c7c",
-          "#00c2ff"
-        ])
-    });
+difficultySelect.addEventListener(
+  "change",
+  ()=>{
+  incorrectTries = 0;
+  clearInput();
+  if(
+    typeof generateQuestion ===
+    "function"
+  ){
+    generateQuestion();
   }
+});
 
-  let frame = 0;
+}
 
-  function animate(){
+/* ========================= /
+/ TABS /
+/ ========================= */
 
-    frame++;
+if(mathTab){
 
-    ctx.clearRect(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+mathTab.addEventListener(
+  "click",
+  ()=>{
+  mathSection.classList.remove(
+    "hidden"
+  );
+  storySection.classList.add(
+    "hidden"
+  );
+  mathTab.classList.add(
+    "active"
+  );
+  storyTab.classList.remove(
+    "active"
+  );
+});
 
-    pieces.forEach(piece=>{
+}
 
-      piece.y += piece.speed;
+if(storyTab){
 
-      ctx.fillStyle =
-        piece.color;
+storyTab.addEventListener(
+  "click",
+  ()=>{
+  storySection.classList.remove(
+    "hidden"
+  );
+  mathSection.classList.add(
+    "hidden"
+  );
+  storyTab.classList.add(
+    "active"
+  );
+  mathTab.classList.remove(
+    "active"
+  );
+});
 
-      ctx.fillRect(
-        piece.x,
-        piece.y,
-        piece.size,
-        piece.size
-      );
-    });
+}
 
-    if(frame < 120){
+/* ========================= /
+/ STORY NAVIGATION /
+/ ========================= */
 
-      requestAnimationFrame(
-        animate
-      );
+if(nextPageBtn){
 
-    }else{
+nextPageBtn.addEventListener(
+  "click",
+  ()=>{
+  if(
+    storyPage <
+    BOOKS[currentBook]
+    .pages.length - 1
+  ){
+    storyPage++;
+  }else{
+    storyPage = 0;
+  }
+  if(
+    typeof renderStory ===
+    "function"
+  ){
+    renderStory();
+  }
+});
 
-      ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
+}
+
+if(prevPageBtn){
+
+prevPageBtn.addEventListener(
+  "click",
+  ()=>{
+  if(storyPage>0){
+    storyPage--;
+    if(
+      typeof renderStory ===
+      "function"
+    ){
+      renderStory();
     }
   }
+});
 
-  animate();
 }
 
-/* ========================= */
-/* STATS */
-/* ========================= */
+/* ========================= /
+/ BACK TO LIBRARY /
+/ ========================= */
 
-function updateStats(){
+if(backToLibraryBtn){
 
-  const solvedEl =
-    document.getElementById(
-      "solvedCount"
+backToLibraryBtn.addEventListener(
+  "click",
+  ()=>{
+  document
+    .getElementById(
+      "readerView"
+    )
+    .classList.add(
+      "hidden"
     );
-
-  const streakEl =
-    document.getElementById(
-      "streakCount"
+  document
+    .getElementById(
+      "bookshelfView"
+    )
+    .classList.remove(
+      "hidden"
     );
+});
 
-  if(solvedEl){
-
-    solvedEl.innerHTML =
-      solved;
-  }
-
-  if(streakEl){
-
-    streakEl.innerHTML =
-      streak;
-  }
 }
+
+/* ========================= /
+/ READ TO ME /
+/ ========================= */
+
+if(readStoryBtn){
+
+readStoryBtn.addEventListener(
+  "click",
+  ()=>{
+  const storyText =
+    document.getElementById(
+      "storyText"
+    ).innerText;
+  const speech =
+    new SpeechSynthesisUtterance(
+      storyText
+    );
+  speech.rate = 0.92;
+  speech.pitch = 1;
+  speech.volume = 1;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(
+    speech
+  );
+});
+
+}
+
+/* ========================= /
+/ BEDTIME MODE /
+/ ========================= */
+
+if(bedtimeBtn){
+
+bedtimeBtn.addEventListener(
+  "click",
+  ()=>{
+  document.body.classList.toggle(
+    "bedtime-mode"
+  );
+});
+
+}
+
+/* ========================= /
+/ PREVENT IOS DOUBLE TAP /
+/ ========================= */
+
+let lastTouchEnd = 0;
+
+document.addEventListener(
+“touchend”,
+(event)=>{
+
+  const now =
+    Date.now();
+  if(
+    now - lastTouchEnd <= 300
+  ){
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+},
+{ passive:false }
+
+);
+
+});
