@@ -234,6 +234,41 @@ const BOOKS = [
     {
       art:"🌊 🐠 🚤 ☀️ 🐚",
       text:"Ryan sped across the sparkling ocean in a bright yellow rescue boat while salty wind rushed through his hair. Seagulls circled overhead and giant waves shimmered beneath the afternoon sun. Suddenly, Ryan spotted something moving helplessly near the rocks."
+    },
+
+    {
+      art:"🐬 🌊 ✨ 🪸 🐠",
+      text:"A baby dolphin was tangled gently in long seaweed drifting through the water. Ryan carefully climbed into the shallow ocean and slowly untangled the frightened dolphin while colorful fish darted around his feet."
+    },
+
+    {
+      art:"🪸 🐢 🌊 ⭐ 🐠",
+      text:"Once free, the dolphin chirped excitedly and swam in playful circles around Ryan before leading him toward a glowing coral reef hidden beneath the waves."
+    },
+
+    {
+      art:"🌈 🐠 🪸 ✨ 🌊",
+      text:"The reef shimmered with every color imaginable. Sea turtles floated gracefully nearby while tiny glowing jellyfish drifted through the clear blue water like underwater lanterns."
+    },
+
+    {
+      art:"🌪️ 🌊 🚤 ⚡ 🐬",
+      text:"Suddenly, dark storm clouds rolled overhead and giant waves began crashing violently around the tiny rescue boat. Ryan gripped the steering wheel tightly as thunder echoed across the ocean."
+    },
+
+    {
+      art:"⚓ 🌊 🌧️ 🐬 ⭐",
+      text:"The dolphins surrounded Ryan's boat protectively, guiding him safely between dangerous rocks while rain poured from the sky. Ryan could hardly believe they were helping him."
+    },
+
+    {
+      art:"🌅 🌈 🐬 ☀️ ✨",
+      text:"At last, the storm faded away and sunlight poured across the calm ocean once more. The dolphins leaped joyfully through the glowing sunset while Ryan smiled proudly from the boat."
+    },
+
+    {
+      art:"🏆 🐬 🌊 🌈 ⭐",
+      text:"Before swimming away, the baby dolphin nudged a beautiful rainbow shell into Ryan's hands. Ryan carefully placed it in his pocket knowing he would always remember the magical Ocean Rescue adventure."
     }
 
   ]
@@ -248,6 +283,41 @@ const BOOKS = [
     {
       art:"🤖 🌆 ⚡ 🚶 ✨",
       text:"Ryan arrived in Robot City just as the enormous silver gates opened automatically before him. Thousands of glowing robots zipped through giant futuristic streets carrying floating packages, blinking gadgets, and sparkling batteries."
+    },
+
+    {
+      art:"🚄 🌃 ⚡ 🤖 🌈",
+      text:"Magnetic trains shot silently between skyscrapers high above the city while giant holograms flashed colorful advertisements across the night sky."
+    },
+
+    {
+      art:"🛠️ 🤖 ⚡ 💡 🌃",
+      text:"Inside a busy repair workshop, Ryan met a tiny robot whose glowing eyes flickered sadly on and off. Ryan carefully helped repair the robot using bright energy crystals and tiny silver tools."
+    },
+
+    {
+      art:"🤖 🎵 ⚡ 🌟 ✨",
+      text:"As thanks, the little robot invited Ryan to the city's Grand Light Festival where musical robots danced beneath glowing neon towers."
+    },
+
+    {
+      art:"⚠️ 🤖 🌩️ 🔋 ⚡",
+      text:"Suddenly, every light in Robot City flickered out at once. The trains stopped. The holograms disappeared. The entire city became silent and dark."
+    },
+
+    {
+      art:"🌌 ⚡ 🤖 🛠️ 🌃",
+      text:"Ryan discovered that the city's main energy crystal had cracked deep beneath the central tower. Working alongside the robots, he carefully rebuilt the glowing power core piece by piece."
+    },
+
+    {
+      art:"🌈 🌆 ⚡ 🤖 🎆",
+      text:"The moment the crystal restarted, bright waves of colorful light exploded across the city. Towers glowed brilliantly once again while fireworks burst overhead."
+    },
+
+    {
+      art:"🏆 🤖 ⚡ 🌟 🌃",
+      text:"The robots lifted Ryan high into the air cheering loudly as Robot City's newest Honorary Engineer. Even the tiny robot spun happily in circles beside him."
     }
 
   ]
@@ -262,6 +332,41 @@ const BOOKS = [
     {
       art:"⛰️ 🐉 🌫️ 🔥 ⭐",
       text:"Ryan climbed slowly toward Dragon Mountain while warm smoke drifted through the clouds high above the valley. The mountain rumbled softly beneath his boots like a sleeping giant."
+    },
+
+    {
+      art:"🥚 🐉 ✨ 🔥 🌙",
+      text:"Inside a glowing cave, Ryan discovered enormous dragon eggs resting beside rivers of sparkling lava. The walls shimmered orange and gold from the heat."
+    },
+
+    {
+      art:"🐉 🌈 🔥 🪄 ⭐",
+      text:"One tiny dragon suddenly hatched and flapped excitedly around Ryan's head while sneezing harmless rainbow flames into the air."
+    },
+
+    {
+      art:"🌌 🐉 ⭐ ⛰️ 🌙",
+      text:"The baby dragon guided Ryan deeper into the mountain where giant ancient dragons slept peacefully inside crystal chambers."
+    },
+
+    {
+      art:"⚔️ 🌩️ 🐉 🌪️ ⚡",
+      text:"Suddenly, thunder shook the mountain as fierce storm winds surrounded the peaks. The dragons circled protectively above Ryan while lightning flashed across the sky."
+    },
+
+    {
+      art:"🔥 🐉 ⛰️ 🌈 ⭐",
+      text:"Ryan bravely helped the dragons move glowing crystal stones that protected the mountain from collapsing during the storm."
+    },
+
+    {
+      art:"🌅 🐉 ✨ 🌄 ⭐",
+      text:"As sunrise finally appeared, the storm clouds faded away revealing golden light stretching across the mountain valleys below."
+    },
+
+    {
+      art:"🏆 🐉 🌈 ⛰️ ✨",
+      text:"Before Ryan left Dragon Mountain, the dragons crowned him an Honorary Dragon Rider and gifted him a glowing crystal scale for bravery."
     }
 
   ]
@@ -276,6 +381,41 @@ const BOOKS = [
     {
       art:"🚂 🌙 ✨ 🌌 🎫",
       text:"Ryan boarded the Magic Train just before midnight while glowing stars drifted gently through the station above him. The conductor smiled warmly and stamped Ryan's golden ticket."
+    },
+
+    {
+      art:"🍫 🚂 ☕ ✨ 🍪",
+      text:"Inside the train, soft music played while friendly conductors served giant cookies and steaming hot chocolate topped with marshmallows."
+    },
+
+    {
+      art:"❄️ ⛄ 🚂 🌨️ ⭐",
+      text:"The train raced across snowy mountains where glowing snowflakes drifted slowly through the night sky like floating feathers."
+    },
+
+    {
+      art:"🌉 🚂 🌈 🌌 ✨",
+      text:"Ryan gasped as the train crossed a floating rainbow bridge suspended high above the clouds. Far below, entire cities sparkled like tiny stars."
+    },
+
+    {
+      art:"🎠 🚂 ⭐ 🎵 🌙",
+      text:"In one magical train car, glowing carousel horses floated gently through the air while children laughed and played beneath hanging lanterns."
+    },
+
+    {
+      art:"🌌 🚂 💤 ✨ 🌠",
+      text:"Ryan curled into a soft velvet seat and watched shooting stars streak across the windows while the train glided silently through the sleeping world."
+    },
+
+    {
+      art:"🌅 🚂 ☀️ 🎫 🌈",
+      text:"As sunrise appeared, golden light poured through the train windows painting everything warm orange and pink."
+    },
+
+    {
+      art:"🏆 🚂 ✨ 🌟 🎫",
+      text:"Before leaving, the conductor handed Ryan a magical golden ticket stamped with the words: 'For Future Adventures.' Ryan smiled knowing the Magic Train would one day return."
     }
 
   ]
