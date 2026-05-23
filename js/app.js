@@ -185,7 +185,11 @@ document.addEventListener(
             "✅ Amazing!",
             "success"
           );
+solved++;
 
+streak++;
+
+updateStats();
           clearInput();
 
           if(
@@ -215,7 +219,9 @@ document.addEventListener(
         else{
 
           incorrectTries++;
+streak = 0;
 
+updateStats();
           if(incorrectTries>=3){
 
             showFeedback(
