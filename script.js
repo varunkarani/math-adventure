@@ -175,6 +175,7 @@ function updateStory(){
   storyBanner.innerHTML=`
     🚀 Spaceship Status
     <br><br>
+
     <div style="
       width:100%;
       height:16px;
@@ -183,13 +184,17 @@ function updateStory(){
       overflow:hidden;
       margin-top:10px;
     ">
+
       <div style="
         width:${percent}%;
         height:100%;
         background:linear-gradient(90deg,#7c5cff,#32d583);
       "></div>
+
     </div>
+
     <br>
+
     ${currentStage.text}
   `;
 }
@@ -279,6 +284,148 @@ function generateQuestion(){
   speakQuestion();
 }
 
+function getVisualEmoji(){
+
+  const emojiMap={
+    space:"🚀",
+    dino:"🦖",
+    ocean:"🐠",
+    jungle:"🐯",
+    castle:"🏰",
+    wizard:"🧙"
+  };
+
+  return emojiMap[themeSelector.value] || "⭐";
+}
+
+function shouldUseVisualMath(){
+
+  if(!visualMathToggle.checked){
+    return false;
+  }
+
+  if(difficulty.value==="hard" ||
+     difficulty.value==="expert"){
+    return false;
+  }
+
+  return true;
+}
+
+function renderQuestion(){
+
+  let visualHTML="";
+
+  if(shouldUseVisualMath()){
+
+    const emoji=getVisualEmoji();
+
+    const a=currentQuestion.a;
+    const b=currentQuestion.b;
+    const op=currentQuestion.op;
+
+    if(op === "+"){
+
+      visualHTML=`
+        <div class="visual-math">
+
+          <div class="emoji-row">
+            ${emoji.repeat(a)}
+          </div>
+
+          <div class="visual-symbol">+</div>
+
+          <div class="emoji-row">
+            ${emoji.repeat(b)}
+          </div>
+
+        </div>
+      `;
+    }
+
+    else if(op === "-"){
+
+      visualHTML=`
+        <div class="visual-math">
+
+          <div class="emoji-row">
+            ${emoji.repeat(a)}
+          </div>
+
+          <div class="visual-symbol">−</div>
+
+          <div class="emoji-row">
+            ${emoji.repeat(b)}
+          </div>
+
+        </div>
+      `;
+    }
+
+    else if(op === "×"){
+
+      let groups="";
+
+      for(let i=0;i<b;i++){
+
+        groups += `
+          <div class="emoji-row">
+            ${emoji.repeat(a)}
+          </div>
+        `;
+      }
+
+      visualHTML=`
+        <div class="visual-math">
+
+          <div class="visual-label">
+            ${b} groups of ${a}
+          </div>
+
+          ${groups}
+
+        </div>
+      `;
+    }
+
+    else if(op === "÷"){
+
+      visualHTML=`
+        <div class="visual-math">
+
+          <div class="emoji-row">
+            ${emoji.repeat(a)}
+          </div>
+
+          <div class="visual-label">
+            Shared into ${b} groups
+          </div>
+
+        </div>
+      `;
+    }
+  }
+
+  questionContainer.innerHTML=`
+    <div class="question-card" id="card">
+
+      ${visualHTML}
+
+      <div class="question-text">
+        ${currentQuestion.a}
+        ${currentQuestion.op}
+        ${currentQuestion.b}
+        = ?
+      </div>
+
+      <div class="answer-display" id="answerDisplay">
+        ?
+      </div>
+
+    </div>
+  `;
+}
+
 function getHint(){
 
   const q=currentQuestion;
@@ -297,26 +444,6 @@ function getHint(){
     case "÷":
       return `Hint: What times ${q.b} equals ${q.a}?`;
   }
-}
-
-function renderQuestion(){
-
-  questionContainer.innerHTML=`
-    <div class="question-card" id="card">
-
-      <div class="question-text">
-        ${currentQuestion.a}
-        ${currentQuestion.op}
-        ${currentQuestion.b}
-        = ?
-      </div>
-
-      <div class="answer-display" id="answerDisplay">
-        ?
-      </div>
-
-    </div>
-  `;
 }
 
 function speakQuestion(){
@@ -537,7 +664,7 @@ function updateProgress(){
 function saveState(){
 
   localStorage.setItem(
-    "mathAdventureV4",
+    "mathAdventureV5",
     JSON.stringify({
       streak,
       solved,
@@ -554,7 +681,7 @@ function loadState(){
 
   const saved=
     JSON.parse(
-      localStorage.getItem("mathAdventureV4")
+      localStorage.getItem("mathAdventureV5")
     );
 
   if(!saved) return;
