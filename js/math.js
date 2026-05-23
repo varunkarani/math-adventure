@@ -83,18 +83,61 @@ function generateQuestion(){
 
   else{
 
-    num1 =
-      random(10,30);
-
-    num2 =
-      random(2,12);
-
     operator =
       randomChoice([
         "+",
         "-",
-        "×"
+        "×",
+        "÷"
       ]);
+
+    /* ========================= */
+    /* LARGE ADDITION/SUBTRACTION */
+    /* ========================= */
+
+    if(
+      operator==="+" ||
+      operator==="-"
+    ){
+
+      num1 =
+        random(100,999);
+
+      num2 =
+        random(100,999);
+    }
+
+    /* ========================= */
+    /* MULTIPLICATION */
+    /* ========================= */
+
+    else if(
+      operator==="×"
+    ){
+
+      num1 =
+        random(10,30);
+
+      num2 =
+        random(2,12);
+    }
+
+    /* ========================= */
+    /* DIVISION */
+    /* ========================= */
+
+    else{
+
+      num2 =
+        random(2,12);
+
+      currentAnswer =
+        random(2,12);
+
+      num1 =
+        num2 *
+        currentAnswer;
+    }
   }
 
   /* ========================= */
@@ -131,10 +174,20 @@ function generateQuestion(){
       num1 - num2;
   }
 
-  else{
+  else if(
+    operator === "×"
+  ){
 
     currentAnswer =
       num1 * num2;
+  }
+
+  else if(
+    operator === "÷"
+  ){
+
+    currentAnswer =
+      num1 / num2;
   }
 
   /* ========================= */
