@@ -1,9 +1,4 @@
 :root{
-  --bg:#0b1020;
-  --card:rgba(255,255,255,0.08);
-  --border:rgba(255,255,255,0.15);
-  --text:#fff;
-  --accent:#7c5cff;
   --success:#32d583;
   --danger:#ff5c7c;
 }
@@ -25,93 +20,64 @@ body{
   background:radial-gradient(circle at top,#1a2242,#080b16);
   color:white;
   overflow-x:hidden;
-  position:relative;
 }
 
-/* ========================= */
-/* FIXED LAYERS */
-/* ========================= */
+/* SAFE BACKGROUND */
 
 #confettiCanvas{
   position:fixed;
   inset:0;
-  pointer-events:none !important;
-  z-index:0;
+  pointer-events:none;
 }
 
 .background-glow{
   position:fixed;
   width:500px;
   height:500px;
-  background:rgba(124,92,255,0.25);
-  border-radius:50%;
-  filter:blur(120px);
   top:-150px;
   left:50%;
   transform:translateX(-50%);
-  pointer-events:none !important;
-  z-index:0;
+  border-radius:50%;
+  background:rgba(124,92,255,0.18);
+  filter:blur(120px);
+  pointer-events:none;
 }
 
-/* ========================= */
 /* APP */
-/* ========================= */
 
 .app{
   position:relative;
-  z-index:10;
-  min-height:100vh;
   padding:20px;
 }
 
-/* ========================= */
-/* INTERACTIVE FIX */
-/* ========================= */
+/* FORCE INTERACTIONS */
 
 button,
 select,
-input{
-  position:relative;
-  z-index:20;
-  pointer-events:auto;
+input,
+.key,
+.tab{
+  pointer-events:auto !important;
+  touch-action:manipulation;
 }
 
-button{
-  cursor:pointer;
-  transition:0.15s ease;
-}
-
-button:hover{
-  transform:translateY(-1px);
-}
-
-button:active{
-  transform:scale(0.97);
-}
-
-/* ========================= */
 /* TABS */
-/* ========================= */
 
 .app-tabs{
   display:flex;
-  gap:14px;
   justify-content:center;
+  gap:14px;
   margin-bottom:20px;
-  position:relative;
-  z-index:1000;
 }
 
 .tab{
-  padding:16px 24px;
-  border-radius:20px;
   border:none;
-  font-size:1rem;
-  font-weight:800;
+  border-radius:20px;
+  padding:16px 22px;
   background:rgba(255,255,255,0.08);
   color:white;
-  position:relative;
-  z-index:1001;
+  font-size:1rem;
+  font-weight:800;
 }
 
 .tab.active{
@@ -122,20 +88,11 @@ button:active{
   );
 }
 
-/* ========================= */
-/* TOPBAR */
-/* ========================= */
-
-.topbar{
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-}
+/* TOP ROW */
 
 .top-row{
   display:flex;
   justify-content:space-between;
-  align-items:center;
   gap:16px;
   flex-wrap:wrap;
 }
@@ -143,10 +100,8 @@ button:active{
 .bottom-row{
   display:flex;
   justify-content:center;
-  align-items:center;
   gap:16px;
-  flex-wrap:nowrap;
-  width:100%;
+  margin-top:16px;
 }
 
 .left-controls,
@@ -154,12 +109,9 @@ button:active{
   display:flex;
   gap:12px;
   flex-wrap:wrap;
-  align-items:center;
 }
 
-/* ========================= */
-/* UI ELEMENTS */
-/* ========================= */
+/* UI */
 
 .stat-card,
 button,
@@ -175,13 +127,9 @@ select{
 
 select{
   min-width:180px;
-  flex:1;
-  max-width:260px;
 }
 
-/* ========================= */
-/* MAIN CONTENT */
-/* ========================= */
+/* MAIN */
 
 .main-content{
   display:flex;
@@ -193,19 +141,16 @@ select{
 .daily-mission,
 .story-banner,
 .achievement-banner{
+  width:min(700px,100%);
   margin-bottom:14px;
   padding:14px 20px;
   border-radius:20px;
+  text-align:center;
   font-weight:800;
   background:rgba(255,255,255,0.08);
-  width:min(700px,100%);
-  text-align:center;
-  border:1px solid rgba(255,255,255,0.12);
 }
 
-/* ========================= */
 /* MASCOT */
-/* ========================= */
 
 .mascot{
   font-size:5rem;
@@ -223,16 +168,13 @@ select{
 
 .mascot-speech{
   margin-top:10px;
-  background:rgba(255,255,255,0.08);
   padding:12px 18px;
   border-radius:20px;
+  background:rgba(255,255,255,0.08);
   text-align:center;
-  border:1px solid rgba(255,255,255,0.12);
 }
 
-/* ========================= */
-/* QUESTIONS */
-/* ========================= */
+/* QUESTION */
 
 .question-container{
   width:100%;
@@ -240,24 +182,10 @@ select{
 }
 
 .question-card{
-  background:rgba(255,255,255,0.08);
-  border-radius:28px;
-  padding:40px;
   margin-top:20px;
-  transition:0.3s ease;
-  animation:slideIn 0.4s ease;
-  border:1px solid rgba(255,255,255,0.12);
-}
-
-@keyframes slideIn{
-  from{
-    opacity:0;
-    transform:translateY(20px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+  padding:40px;
+  border-radius:28px;
+  background:rgba(255,255,255,0.08);
 }
 
 .question-text{
@@ -276,12 +204,9 @@ select{
   align-items:center;
   font-size:2.2rem;
   font-weight:900;
-  border:1px solid rgba(255,255,255,0.08);
 }
 
-/* ========================= */
 /* FEEDBACK */
-/* ========================= */
 
 .feedback{
   margin-top:20px;
@@ -299,9 +224,7 @@ select{
   color:var(--danger);
 }
 
-/* ========================= */
 /* KEYPAD */
-/* ========================= */
 
 .keypad{
   margin-top:30px;
@@ -320,16 +243,13 @@ select{
   font-weight:900;
   color:white;
   background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.1);
 }
 
 .action{
   background:rgba(124,92,255,0.25);
 }
 
-/* ========================= */
 /* PROGRESS */
-/* ========================= */
 
 .progress-track{
   width:100%;
@@ -340,32 +260,31 @@ select{
 .progress-bar{
   height:18px;
   border-radius:999px;
-  background:rgba(255,255,255,0.08);
   overflow:hidden;
+  background:rgba(255,255,255,0.08);
 }
 
 .progress-fill{
   height:100%;
   width:0%;
-  background:linear-gradient(90deg,#7c5cff,#32d583);
-  transition:0.4s ease;
+  background:linear-gradient(
+    90deg,
+    #7c5cff,
+    #32d583
+  );
 }
 
-/* ========================= */
 /* SETTINGS */
-/* ========================= */
 
 .settings-panel{
   position:fixed;
   top:120px;
   right:20px;
   width:320px;
-  background:rgba(10,10,20,0.96);
-  border-radius:28px;
   padding:24px;
+  border-radius:28px;
+  background:rgba(10,10,20,0.96);
   border:1px solid rgba(255,255,255,0.15);
-  z-index:5000;
-  backdrop-filter:blur(20px);
 }
 
 .settings-panel label{
@@ -374,14 +293,11 @@ select{
   margin:18px 0;
 }
 
-/* ========================= */
 /* STORY MODE */
-/* ========================= */
 
 .story-mode-header{
   display:flex;
   justify-content:space-between;
-  align-items:center;
   gap:16px;
   flex-wrap:wrap;
 }
@@ -398,55 +314,39 @@ select{
 
 .story-progress-card{
   margin-top:20px;
-  background:rgba(255,255,255,0.08);
-  border-radius:22px;
   padding:16px 20px;
+  border-radius:22px;
+  background:rgba(255,255,255,0.08);
   font-weight:800;
 }
 
 .story-book{
   margin-top:24px;
-  background:rgba(255,255,255,0.08);
-  border-radius:32px;
   padding:30px;
+  border-radius:32px;
   text-align:center;
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.08);
 }
 
 .story-world{
-  font-size:1.2rem;
-  opacity:0.8;
   margin-bottom:16px;
+  opacity:0.8;
 }
 
 .story-illustration{
   font-size:5rem;
   margin-bottom:24px;
-  animation:floaty 4s ease infinite;
-  transition:0.2s ease;
-}
-
-@keyframes floaty{
-  0%,100%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-8px);
-  }
 }
 
 .story-text{
   font-size:clamp(1.6rem,3vw,2.4rem);
   line-height:1.5;
   font-weight:700;
-  max-width:700px;
-  margin:auto;
 }
 
 .story-interaction{
   margin-top:24px;
   opacity:0.8;
-  font-weight:700;
 }
 
 .story-buttons{
@@ -458,10 +358,10 @@ select{
 
 .mini-challenge{
   margin-top:30px;
-  background:rgba(124,92,255,0.15);
-  border-radius:28px;
   padding:24px;
+  border-radius:28px;
   text-align:center;
+  background:rgba(124,92,255,0.15);
 }
 
 .mini-title{
@@ -470,8 +370,8 @@ select{
 }
 
 .mini-question{
-  font-size:2.2rem;
   margin:24px 0;
+  font-size:2.2rem;
   font-weight:900;
 }
 
@@ -482,9 +382,7 @@ select{
   flex-wrap:wrap;
 }
 
-.mini-answer{
-  min-width:90px;
-}
+/* BEDTIME */
 
 .bedtime-mode{
   background:
@@ -495,67 +393,40 @@ select{
     ) !important;
 }
 
-.bedtime-mode .story-book{
-  background:rgba(255,255,255,0.05);
-}
-
-/* ========================= */
-/* HELPERS */
-/* ========================= */
+/* HIDDEN */
 
 .hidden{
   display:none !important;
 }
 
-/* ========================= */
 /* MOBILE */
-/* ========================= */
 
 @media(max-width:768px){
 
   .top-row{
     flex-direction:column;
-    align-items:stretch;
   }
 
   .left-controls,
   .right-controls{
-    width:100%;
     justify-content:center;
   }
 
   .bottom-row{
     flex-direction:row;
-    justify-content:center;
-    align-items:center;
-    gap:12px;
   }
 
   select{
+    flex:1;
     min-width:0;
-    flex:1;
-    max-width:none;
-  }
-
-  button{
-    flex:1;
-  }
-
-  .settings-panel{
-    width:calc(100% - 40px);
-  }
-
-  .question-card{
-    padding:28px;
-  }
-
-  .key{
-    height:78px;
   }
 
   .story-mode-header{
     flex-direction:column;
-    align-items:stretch;
+  }
+
+  .story-buttons{
+    flex-direction:column;
   }
 
   .story-controls{
@@ -566,8 +437,8 @@ select{
     flex:1;
   }
 
-  .story-buttons{
-    flex-direction:column;
+  .settings-panel{
+    width:calc(100% - 40px);
   }
 
 }
