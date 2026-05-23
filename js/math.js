@@ -98,18 +98,13 @@ function generateQuestion(){
   }
 
   /* ========================= */
-  /* ANSWER */
+  /* PREVENT NEGATIVE ANSWERS */
   /* ========================= */
 
-  if(operator==="+"){
-
-    currentAnswer =
-      num1 + num2;
-  }
-
-  else if(operator==="-"){
-
-  if(num2>num1){
+  if(
+    operator === "-" &&
+    num2 > num1
+  ){
 
     let temp = num1;
 
@@ -118,9 +113,24 @@ function generateQuestion(){
     num2 = temp;
   }
 
-  currentAnswer =
-    num1 - num2;
-}
+  /* ========================= */
+  /* ANSWER */
+  /* ========================= */
+
+  if(operator === "+"){
+
+    currentAnswer =
+      num1 + num2;
+  }
+
+  else if(
+    operator === "-"
+  ){
+
+    currentAnswer =
+      num1 - num2;
+  }
+
   else{
 
     currentAnswer =
@@ -128,7 +138,7 @@ function generateQuestion(){
   }
 
   /* ========================= */
-  /* DISPLAY */
+  /* DISPLAY QUESTION */
   /* ========================= */
 
   const question =
@@ -141,6 +151,10 @@ function generateQuestion(){
     question.innerHTML =
       `${num1} ${operator} ${num2}`;
   }
+
+  /* ========================= */
+  /* RESET ANSWER DISPLAY */
+  /* ========================= */
 
   const answerDisplay =
     document.getElementById(
@@ -155,7 +169,7 @@ function generateQuestion(){
 }
 
 /* ========================= */
-/* RANDOM */
+/* RANDOM HELPERS */
 /* ========================= */
 
 function random(min,max){
@@ -258,7 +272,7 @@ function launchConfetti(){
       );
     });
 
-    if(frame<120){
+    if(frame < 120){
 
       requestAnimationFrame(
         animate
@@ -276,7 +290,13 @@ function launchConfetti(){
   }
 
   animate();
-  function updateStats(){
+}
+
+/* ========================= */
+/* STATS */
+/* ========================= */
+
+function updateStats(){
 
   const solvedEl =
     document.getElementById(
