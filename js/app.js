@@ -1,522 +1,375 @@
-document.addEventListener(
-  "DOMContentLoaded",
-  ()=>{
+let currentAnswer = 0;
 
-  /* ========================= */
-  /* ELEMENTS */
-  /* ========================= */
+let solved = 0;
 
-  const mathTab =
-    document.getElementById(
-      "mathTab"
-    );
+let streak = 0;
 
-  const storyTab =
-    document.getElementById(
-      "storyTab"
-    );
+/* ========================= */
+/* QUESTION GENERATION */
+/* ========================= */
 
-  const mathSection =
-    document.getElementById(
-      "mathSection"
-    );
+function generateQuestion(){
 
-  const storySection =
-    document.getElementById(
-      "storySection"
-    );
-
-  const keypad =
-    document.getElementById(
-      "keypad"
-    );
-
-  const difficultySelect =
+  const difficulty =
     document.getElementById(
       "difficulty"
+    )?.value || "medium";
+
+  let num1;
+  let num2;
+  let operator;
+
+  /* ========================= */
+  /* EASY */
+  /* ========================= */
+
+  if(difficulty==="easy"){
+
+    num1 =
+      random(1,10);
+
+    num2 =
+      random(1,10);
+
+    operator = "+";
+  }
+
+  /* ========================= */
+  /* MEDIUM */
+  /* ========================= */
+
+  else if(
+    difficulty==="medium"
+  ){
+
+    num1 =
+      random(5,20);
+
+    num2 =
+      random(5,20);
+
+    operator =
+      randomChoice([
+        "+",
+        "-"
+      ]);
+  }
+
+  /* ========================= */
+  /* HARD */
+  /* ========================= */
+
+  else if(
+    difficulty==="hard"
+  ){
+
+    num1 =
+      random(2,12);
+
+    num2 =
+      random(2,12);
+
+    operator =
+      randomChoice([
+        "+",
+        "-",
+        "×"
+      ]);
+  }
+
+  /* ========================= */
+  /* EXPERT */
+  /* ========================= */
+
+  else{
+
+    operator =
+      randomChoice([
+        "+",
+        "-",
+        "×",
+        "÷"
+      ]);
+
+    /* ========================= */
+    /* LARGE ADDITION/SUBTRACTION */
+    /* ========================= */
+
+    if(
+      operator==="+" ||
+      operator==="-"
+    ){
+
+      num1 =
+        random(100,999);
+
+      num2 =
+        random(100,999);
+    }
+
+    /* ========================= */
+    /* MULTIPLICATION */
+    /* ========================= */
+
+    else if(
+      operator==="×"
+    ){
+
+      num1 =
+        random(10,30);
+
+      num2 =
+        random(2,12);
+    }
+
+    /* ========================= */
+    /* DIVISION */
+    /* ========================= */
+
+    else{
+
+      num2 =
+        random(2,12);
+
+      currentAnswer =
+        random(2,12);
+
+      num1 =
+        num2 *
+        currentAnswer;
+    }
+  }
+
+  /* ========================= */
+  /* PREVENT NEGATIVE ANSWERS */
+  /* ========================= */
+
+  if(
+    operator === "-" &&
+    num2 > num1
+  ){
+
+    let temp = num1;
+
+    num1 = num2;
+
+    num2 = temp;
+  }
+
+  /* ========================= */
+  /* ANSWER */
+  /* ========================= */
+
+  if(operator === "+"){
+
+    currentAnswer =
+      num1 + num2;
+  }
+
+  else if(
+    operator === "-"
+  ){
+
+    currentAnswer =
+      num1 - num2;
+  }
+
+  else if(
+    operator === "×"
+  ){
+
+    currentAnswer =
+      num1 * num2;
+  }
+
+  else if(
+    operator === "÷"
+  ){
+
+    currentAnswer =
+      num1 / num2;
+  }
+
+  /* ========================= */
+  /* DISPLAY QUESTION */
+  /* ========================= */
+
+  const question =
+    document.getElementById(
+      "question"
     );
 
-  const feedback =
-    document.getElementById(
-      "feedback"
-    );
+  if(question){
+
+    question.innerHTML =
+      `${num1} ${operator} ${num2}`;
+  }
+
+  /* ========================= */
+  /* RESET ANSWER DISPLAY */
+  /* ========================= */
 
   const answerDisplay =
     document.getElementById(
       "answerDisplay"
     );
 
-  const readStoryBtn =
+  if(answerDisplay){
+
+    answerDisplay.innerHTML =
+      "_";
+  }
+}
+
+/* ========================= */
+/* RANDOM HELPERS */
+/* ========================= */
+
+function random(min,max){
+
+  return Math.floor(
+    Math.random() *
+    (max-min+1)
+  ) + min;
+}
+
+function randomChoice(arr){
+
+  return arr[
+    Math.floor(
+      Math.random() *
+      arr.length
+    )
+  ];
+}
+
+/* ========================= */
+/* CONFETTI */
+/* ========================= */
+
+function launchConfetti(){
+
+  const canvas =
     document.getElementById(
-      "readStoryBtn"
+      "confettiCanvas"
     );
 
-  const bedtimeBtn =
-    document.getElementById(
-      "bedtimeBtn"
-    );
+  if(!canvas) return;
 
-  const nextPageBtn =
-    document.getElementById(
-      "nextPageBtn"
-    );
+  const ctx =
+    canvas.getContext("2d");
 
-  const prevPageBtn =
-    document.getElementById(
-      "prevPageBtn"
-    );
+  canvas.width =
+    window.innerWidth;
 
-  const backToLibraryBtn =
-    document.getElementById(
-      "backToLibraryBtn"
-    );
+  canvas.height =
+    window.innerHeight;
 
-  /* ========================= */
-  /* STATE */
-  /* ========================= */
+  const pieces = [];
 
-  let currentInput = "";
+  for(let i=0;i<120;i++){
 
-  let incorrectTries = 0;
+    pieces.push({
 
-  /* ========================= */
-  /* INIT */
-  /* ========================= */
+      x:
+        Math.random() *
+        canvas.width,
 
-  if(
-    typeof generateQuestion ===
-    "function"
-  ){
-    generateQuestion();
+      y:
+        Math.random() *
+        canvas.height -
+        canvas.height,
+
+      size:
+        Math.random()*8 + 4,
+
+      speed:
+        Math.random()*3 + 2,
+
+      color:
+        randomChoice([
+          "#7c5cff",
+          "#32d583",
+          "#ffd166",
+          "#ff5c7c",
+          "#00c2ff"
+        ])
+    });
   }
 
-  if(
-    typeof renderBookshelf ===
-    "function"
-  ){
-    renderBookshelf();
-  }
+  let frame = 0;
 
-  /* ========================= */
-  /* DISPLAY */
-  /* ========================= */
+  function animate(){
 
-  function updateAnswerDisplay(){
+    frame++;
 
-    if(answerDisplay){
+    ctx.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
 
-      answerDisplay.innerHTML =
-        currentInput || "_";
+    pieces.forEach(piece=>{
+
+      piece.y += piece.speed;
+
+      ctx.fillStyle =
+        piece.color;
+
+      ctx.fillRect(
+        piece.x,
+        piece.y,
+        piece.size,
+        piece.size
+      );
+    });
+
+    if(frame < 120){
+
+      requestAnimationFrame(
+        animate
+      );
+
+    }else{
+
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
     }
   }
 
-  function clearInput(){
+  animate();
+}
 
-    currentInput = "";
+/* ========================= */
+/* STATS */
+/* ========================= */
 
-    updateAnswerDisplay();
+function updateStats(){
+
+  const solvedEl =
+    document.getElementById(
+      "solvedCount"
+    );
+
+  const streakEl =
+    document.getElementById(
+      "streakCount"
+    );
+
+  if(solvedEl){
+
+    solvedEl.innerHTML =
+      solved;
   }
 
-  function showFeedback(
-    message,
-    type="success"
-  ){
+  if(streakEl){
 
-    if(!feedback) return;
-
-    feedback.innerHTML =
-      message;
-
-    feedback.className =
-      `feedback ${type}`;
+    streakEl.innerHTML =
+      streak;
   }
-
-  /* ========================= */
-  /* KEYPAD */
-  /* ========================= */
-
-  if(keypad){
-
-    keypad.addEventListener(
-      "click",
-      (e)=>{
-
-      if(
-        !e.target.classList.contains(
-          "key"
-        )
-      ){
-        return;
-      }
-
-      const value =
-        e.target.innerText;
-
-      /* DELETE */
-
-      if(value==="⌫"){
-
-        currentInput =
-          currentInput.slice(0,-1);
-
-        updateAnswerDisplay();
-
-        return;
-      }
-
-      /* SUBMIT */
-
-      if(value==="✓"){
-
-        if(currentInput===""){
-          return;
-        }
-
-        const answer =
-          parseInt(currentInput);
-
-        /* CORRECT */
-
-        if(answer===currentAnswer){
-
-          incorrectTries = 0;
-
-          showFeedback(
-            "✅ Amazing!",
-            "success"
-          );
-solved++;
-
-streak++;
-
-updateStats();
-          clearInput();
-
-          if(
-            typeof launchConfetti ===
-            "function"
-          ){
-            launchConfetti();
-          }
-
-          setTimeout(()=>{
-
-            if(
-              typeof generateQuestion ===
-              "function"
-            ){
-              generateQuestion();
-            }
-
-            showFeedback("");
-
-          },1000);
-
-        }
-
-        /* WRONG */
-
-        else{
-
-          incorrectTries++;
-streak = 0;
-
-updateStats();
-          if(incorrectTries>=3){
-
-            showFeedback(
-              `💡 Correct answer: ${currentAnswer}`,
-              "error"
-            );
-
-            incorrectTries = 0;
-
-            clearInput();
-
-            setTimeout(()=>{
-
-              if(
-                typeof generateQuestion ===
-                "function"
-              ){
-                generateQuestion();
-              }
-
-              showFeedback("");
-
-            },1800);
-
-          }
-
-          else{
-
-            showFeedback(
-              "❌ Try again!",
-              "error"
-            );
-
-            clearInput();
-          }
-        }
-
-        return;
-      }
-
-      /* NUMBER */
-
-      currentInput += value;
-
-      updateAnswerDisplay();
-
-    });
-
-  }
-
-  /* ========================= */
-  /* DIFFICULTY */
-  /* ========================= */
-
-  if(difficultySelect){
-
-    difficultySelect.addEventListener(
-      "change",
-      ()=>{
-
-      incorrectTries = 0;
-
-      clearInput();
-
-      if(
-        typeof generateQuestion ===
-        "function"
-      ){
-        generateQuestion();
-      }
-
-    });
-
-  }
-
-  /* ========================= */
-  /* TABS */
-  /* ========================= */
-
-  if(mathTab){
-
-    mathTab.addEventListener(
-      "click",
-      ()=>{
-
-      mathSection.classList.remove(
-        "hidden"
-      );
-
-      storySection.classList.add(
-        "hidden"
-      );
-
-      mathTab.classList.add(
-        "active"
-      );
-
-      storyTab.classList.remove(
-        "active"
-      );
-
-    });
-
-  }
-
-  if(storyTab){
-
-    storyTab.addEventListener(
-      "click",
-      ()=>{
-
-      storySection.classList.remove(
-        "hidden"
-      );
-
-      mathSection.classList.add(
-        "hidden"
-      );
-
-      storyTab.classList.add(
-        "active"
-      );
-
-      mathTab.classList.remove(
-        "active"
-      );
-
-    });
-
-  }
-
-  /* ========================= */
-  /* STORY NAVIGATION */
-  /* ========================= */
-
-  if(nextPageBtn){
-
-    nextPageBtn.addEventListener(
-      "click",
-      ()=>{
-
-      if(
-        storyPage <
-        BOOKS[currentBook]
-        .pages.length - 1
-      ){
-
-        storyPage++;
-
-      }
-
-      else{
-
-        storyPage = 0;
-      }
-
-      if(
-        typeof renderStory ===
-        "function"
-      ){
-        renderStory();
-      }
-
-    });
-
-  }
-
-  if(prevPageBtn){
-
-    prevPageBtn.addEventListener(
-      "click",
-      ()=>{
-
-      if(storyPage>0){
-
-        storyPage--;
-
-        if(
-          typeof renderStory ===
-          "function"
-        ){
-          renderStory();
-        }
-      }
-
-    });
-
-  }
-
-  /* ========================= */
-  /* BACK TO LIBRARY */
-  /* ========================= */
-
-  if(backToLibraryBtn){
-
-    backToLibraryBtn.addEventListener(
-      "click",
-      ()=>{
-
-      document
-        .getElementById(
-          "readerView"
-        )
-        .classList.add(
-          "hidden"
-        );
-
-      document
-        .getElementById(
-          "bookshelfView"
-        )
-        .classList.remove(
-          "hidden"
-        );
-
-    });
-
-  }
-
-  /* ========================= */
-  /* READ TO ME */
-  /* ========================= */
-
-  if(readStoryBtn){
-
-    readStoryBtn.addEventListener(
-      "click",
-      ()=>{
-
-      const storyText =
-        document.getElementById(
-          "storyText"
-        ).innerText;
-
-      const speech =
-        new SpeechSynthesisUtterance(
-          storyText
-        );
-
-      speech.rate = 0.92;
-
-      speech.pitch = 1;
-
-      speech.volume = 1;
-
-      window.speechSynthesis.cancel();
-
-      window.speechSynthesis.speak(
-        speech
-      );
-
-    });
-
-  }
-
-  /* ========================= */
-  /* BEDTIME MODE */
-  /* ========================= */
-
-  if(bedtimeBtn){
-
-    bedtimeBtn.addEventListener(
-      "click",
-      ()=>{
-
-      document.body.classList.toggle(
-        "bedtime-mode"
-      );
-
-    });
-
-  }
-  /* ========================= */
-  /* PREVENT IOS DOUBLE TAP */
-  /* ========================= */
-
-  let lastTouchEnd = 0;
-
-  document.addEventListener(
-    "touchend",
-    (event)=>{
-
-      const now =
-        Date.now();
-
-      if(
-        now - lastTouchEnd <= 300
-      ){
-
-        event.preventDefault();
-      }
-
-      lastTouchEnd = now;
-
-    },
-    { passive:false }
-  );
-});
+}
