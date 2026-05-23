@@ -51,6 +51,13 @@
         📚 Story Time
       </button>
 
+      <button
+        id="parentTab"
+        class="tab"
+      >
+        ⚙️ Parent Zone
+      </button>
+
     </div>
 
   </header>
@@ -64,10 +71,6 @@
     <div class="top-row">
 
       <div class="right-controls">
-
-        <button id="settingsBtn">
-          ⚙️ Settings
-        </button>
 
         <button id="refreshBtn">
           🔄 Refresh
@@ -119,10 +122,6 @@
         class="feedback"
         id="feedback"
       ></div>
-
-      <!-- ========================= -->
-      <!-- KEYPAD -->
-      <!-- ========================= -->
 
       <div
         class="keypad"
@@ -217,66 +216,93 @@
   </section>
 
   <!-- ========================= -->
-  <!-- SETTINGS PANEL -->
+  <!-- PARENT ZONE -->
   <!-- ========================= -->
 
-  <div
-    class="settings-panel"
-    id="settingsPanel"
+  <section
+    id="parentSection"
+    class="hidden"
   >
 
-    <h2>
-      Parent Settings
-    </h2>
+    <div class="story-book">
 
-    <label>
+      <div class="story-mode-title">
+        ⚙️ Parent Zone
+      </div>
 
-      Sound Effects
+      <br>
 
-      <input
-        type="checkbox"
-        id="soundToggle"
-        checked
-      />
+      <div class="settings-grid">
 
-    </label>
+        <label class="setting-row">
 
-    <label>
+          🔊 Sound Effects
 
-      Bedtime Glow
+          <input
+            type="checkbox"
+            id="soundToggle"
+            checked
+          />
 
-      <input
-        type="checkbox"
-        id="glowToggle"
-        checked
-      />
+        </label>
 
-    </label>
+        <label class="setting-row">
 
-    <label>
+          🌙 Bedtime Glow
 
-      Bigger Numbers
+          <input
+            type="checkbox"
+            id="glowToggle"
+            checked
+          />
 
-      <input
-        type="checkbox"
-        id="bigNumberToggle"
-      />
+        </label>
 
-    </label>
+        <label class="setting-row">
 
-    <label>
+          🔢 Bigger Numbers
 
-      Show Hints
+          <input
+            type="checkbox"
+            id="bigNumberToggle"
+          />
 
-      <input
-        type="checkbox"
-        id="hintToggle"
-        checked
-      />
+        </label>
 
-    </label>
+        <label class="setting-row">
 
-  </div>
+          💡 Show Hints
+
+          <input
+            type="checkbox"
+            id="hintToggle"
+            checked
+          />
+
+        </label>
+
+      </div>
+
+      <br><br>
+
+      <div class="story-banner">
+
+        🏆 Total Solved:
+        <span id="totalSolvedStat">
+          0
+        </span>
+
+      </div>
+
+      <button id="resetProgressBtn">
+
+        🗑️ Reset Progress
+
+      </button>
+
+    </div>
+
+  </section>
 
 </div>
 
