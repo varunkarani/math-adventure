@@ -1,44 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8" />
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0, viewport-fit=cover"
   />
+
   <title>Math Adventure</title>
 
   <link rel="stylesheet" href="style.css" />
 
+  <link rel="manifest" href="manifest.json" />
+
+  <meta name="theme-color" content="#0b1020" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link
     href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
     rel="stylesheet"
   >
+
 </head>
 
 <body>
 
+  <canvas id="confettiCanvas"></canvas>
+
   <div class="background-glow"></div>
+
+  <div class="floating-emojis" id="floatingEmojis"></div>
 
   <div class="app">
 
     <header class="topbar">
-      <div class="left-controls">
-        <div class="streak-card">
-          🔥 Streak:
-          <span id="streak">0</span>
+
+      <div class="top-row">
+
+        <div class="left-controls">
+
+          <div class="streak-card">
+            🔥 Streak:
+            <span id="streak">0</span>
+          </div>
+
+          <div class="streak-card">
+            🏆 Solved:
+            <span id="solvedCount">0</span>
+          </div>
+
         </div>
 
-        <select id="difficulty">
-          <option value="easy">Easy</option>
-          <option value="medium" selected>Medium</option>
-          <option value="hard">Hard</option>
-          <option value="expert">Expert</option>
-        </select>
+        <div class="right-controls">
+
+          <button id="settingsBtn">
+            ⚙️ Settings
+          </button>
+
+          <button id="refreshBtn">
+            🔄 Refresh
+          </button>
+
+        </div>
+
       </div>
 
-      <div class="right-controls">
+      <div class="bottom-row">
+
+        <select id="difficulty">
+          <option value="easy">🌱 Easy</option>
+          <option value="medium" selected>🚀 Medium</option>
+          <option value="hard">🔥 Hard</option>
+          <option value="expert">👑 Expert</option>
+        </select>
+
         <select id="themeSelector">
           <option value="space">🚀 Space</option>
           <option value="dino">🦖 Dino</option>
@@ -46,17 +84,26 @@
           <option value="ocean">🌊 Ocean</option>
         </select>
 
-        <button id="refreshBtn">
-          🔄 New Questions
-        </button>
       </div>
+
     </header>
 
     <main class="main-content">
 
-      <div class="progress-text">
-        Questions Solved:
-        <span id="solvedCount">0</span>
+      <div class="achievement-banner hidden" id="achievementBanner">
+        🎉 Achievement Unlocked!
+      </div>
+
+      <div class="mascot-container">
+
+        <div id="mascot" class="mascot">
+          🦖
+        </div>
+
+        <div id="mascotSpeech" class="mascot-speech">
+          Let's do some math!
+        </div>
+
       </div>
 
       <div id="questionContainer" class="question-container"></div>
@@ -64,6 +111,7 @@
       <div id="feedback" class="feedback"></div>
 
       <div class="keypad" id="keypad">
+
         <button class="key">1</button>
         <button class="key">2</button>
         <button class="key">3</button>
@@ -79,15 +127,12 @@
         <button class="key action">⌫</button>
         <button class="key">0</button>
         <button class="key action">✓</button>
+
       </div>
 
       <div class="break-message" id="breakMessage"></div>
 
     </main>
-
-    <button class="settings-btn" id="settingsBtn">
-      ⚙️
-    </button>
 
     <div class="settings-panel hidden" id="settingsPanel">
 
@@ -111,6 +156,11 @@
       <label>
         <input type="checkbox" id="divisionToggle" checked />
         Division
+      </label>
+
+      <label>
+        <input type="checkbox" id="soundToggle" checked />
+        Sounds
       </label>
 
       <label>
