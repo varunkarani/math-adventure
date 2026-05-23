@@ -2,7 +2,7 @@ self.addEventListener("install", (e) => {
 
   e.waitUntil(
 
-    caches.open("math-adventure").then((cache) => {
+    caches.open("math-adventure-v3").then((cache) => {
 
       return cache.addAll([
         "./",
