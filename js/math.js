@@ -1,204 +1,84 @@
-let currentAnswer=0;
-let currentInput="";
-let streak=0;
-let solved=0;
+let currentAnswer = 0;
+let currentInput = "";
+let solved = 0;
 
-function random(min,max){
-
-  return Math.floor(
-    Math.random()*(max-min+1)
-  )+min;
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function getDifficultySettings(){
+function generateQuestion() {
 
-  const difficultySelect=
-    document.getElementById(
-      "difficulty"
-    );
+  const difficulty =
+    document.getElementById("difficulty")?.value || "medium";
 
-  const difficulty=
-    difficultySelect
-      ? difficultySelect.value
-      : "medium";
+  let max = 20;
+  let operations = ["+"];
 
-  switch(difficulty){
-
-    case "easy":
-      return {
-        min:1,
-        max:10,
-        operations:["+"]
-      };
-
-    case "medium":
-      return {
-        min:1,
-        max:20,
-        operations:["+","-"]
-      };
-
-    case "hard":
-      return {
-        min:1,
-        max:50,
-        operations:["+","-","×"]
-      };
-
-    case "expert":
-      return {
-        min:1,
-        max:100,
-        operations:["+","-","×","÷"]
-      };
-
-    default:
-      return {
-        min:1,
-        max:20,
-        operations:["+","-"]
-      };
-  }
-}
-
-function generateQuestion(){
-
-  const settings=
-    getDifficultySettings();
-
-  const op=
-    settings.operations[
-      random(
-        0,
-        settings.operations.length-1
-      )
-    ];
-
-  let a,b;
-
-  switch(op){
-
-    case "+":
-
-      a=random(
-        settings.min,
-        settings.max
-      );
-
-      b=random(
-        settings.min,
-        settings.max
-      );
-
-      currentAnswer=a+b;
-
-      break;
-
-    case "-":
-
-      a=random(
-        settings.min,
-        settings.max
-      );
-
-      b=random(
-        settings.min,
-        a
-      );
-
-      currentAnswer=a-b;
-
-      break;
-
-    case "×":
-
-      a=random(1,12);
-
-      b=random(1,12);
-
-      currentAnswer=a*b;
-
-      break;
-
-    case "÷":
-
-      b=random(1,12);
-
-      currentAnswer=random(1,12);
-
-      a=b*currentAnswer;
-
-      break;
+  if (difficulty === "medium") {
+    max = 20;
+    operations = ["+", "-"];
   }
 
-  currentInput="";
+  if (difficulty === "hard") {
+    max = 50;
+    operations = ["+", "-", "×"];
+  }
 
-  const container=
-    document.getElementById(
-      "questionContainer"
-    );
+  if (difficulty === "expert") {
+    max = 100;
+    operations = ["+", "-", "×", "÷"];
+  }
 
-  if(!container) return;
+  const op =
+    operations[random(0, operations.length - 1)];
 
-  container.innerHTML=`
+  let a, b;
 
-    <div class="question-card fade-card">
+  if (op === "+") {
+    a = random(1, max);
+    b = random(1, max);
+    currentAnswer = a + b;
+  }
 
+  if (op === "-") {
+    a = random(1, max);
+    b = random(1, a);
+    currentAnswer = a - b;
+  }
+
+  if (op === "×") {
+    a = random(1, 12);
+    b = random(1, 12);
+    currentAnswer = a * b;
+  }
+
+  if (op === "÷") {
+    b = random(1, 12);
+    currentAnswer = random(1, 12);
+    a = b * currentAnswer;
+  }
+
+  currentInput = "";
+
+  document.getElementById("questionContainer").innerHTML = `
+    <div class="question-card">
       <div class="question-text">
         ${a} ${op} ${b} = ?
       </div>
 
-      <div
-        class="answer-display"
-        id="answerDisplay"
-      >
+      <div class="answer-display" id="answerDisplay">
         ?
       </div>
-
     </div>
   `;
-
-  updateProgress();
 }
 
-function updateAnswerDisplay(){
+function updateAnswerDisplay() {
 
-  const display=
-    document.getElementById(
-      "answerDisplay"
-    );
+  const display =
+    document.getElementById("answerDisplay");
 
-  if(display){
-
-    display.innerText=
-      currentInput || "?";
+  if (display) {
+    display.innerText = currentInput || "?";
   }
-}
-
-function updateProgress(){
-
-  const progress=
-    document.getElementById(
-      "storyBanner"
-    );
-
-  if(!progress) return;
-
-  const difficultySelect=
-    document.getElementById(
-      "difficulty"
-    );
-
-  const difficulty=
-    difficultySelect
-      ? difficultySelect.value
-      : "medium";
-
-  progress.innerHTML=`
-    🚀 Difficulty:
-    ${difficulty.toUpperCase()}
-    <br>
-    🏆 Solved:
-    ${solved}
-  `;
 }
