@@ -1,0 +1,264 @@
+:root {
+  --bg: #0b1020;
+  --card: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.15);
+  --text: #ffffff;
+  --accent: #7c5cff;
+  --success: #32d583;
+  --danger: #ff5c7c;
+  --shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background: radial-gradient(circle at top, #1a2242, #080b16);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+.background-glow {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  background: rgba(124,92,255,0.25);
+  border-radius: 50%;
+  filter: blur(120px);
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.left-controls,
+.right-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.streak-card {
+  background: var(--card);
+  padding: 14px 18px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  backdrop-filter: blur(12px);
+}
+
+select,
+button {
+  border: none;
+  border-radius: 18px;
+  padding: 14px 18px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--card);
+  color: white;
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+button {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.progress-text {
+  margin-bottom: 20px;
+  opacity: 0.8;
+  font-size: 1.1rem;
+}
+
+.question-container {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.question-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 30px;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow);
+  transition: 0.3s ease;
+}
+
+.question-card.correct {
+  border-color: var(--success);
+  box-shadow: 0 0 30px rgba(50,213,131,0.4);
+}
+
+.question-card.wrong {
+  animation: shake 0.35s ease;
+}
+
+.question-text {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.answer-display {
+  height: 72px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.feedback {
+  margin-top: 20px;
+  min-height: 40px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.feedback.success {
+  color: var(--success);
+}
+
+.feedback.error {
+  color: var(--danger);
+}
+
+.keypad {
+  margin-top: 30px;
+  width: 100%;
+  max-width: 450px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.key {
+  height: 82px;
+  font-size: 2rem;
+  font-weight: 800;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.08);
+}
+
+.action {
+  background: rgba(124,92,255,0.25);
+}
+
+.break-message {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.settings-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  font-size: 1.8rem;
+}
+
+.settings-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  width: 280px;
+  background: rgba(15,15,25,0.95);
+  border-radius: 28px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+}
+
+.settings-panel h2 {
+  margin-top: 0;
+}
+
+.settings-panel label {
+  display: flex;
+  justify-content: space-between;
+  margin: 18px 0;
+  gap: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
+@media (max-width: 768px) {
+
+  .topbar {
+    flex-direction: column;
+  }
+
+  .left-controls,
+  .right-controls {
+    width: 100%;
+  }
+
+  select,
+  button {
+    flex: 1;
+  }
+
+  .question-card {
+    padding: 24px;
+  }
+
+  .key {
+    height: 76px;
+  }
+
+}
