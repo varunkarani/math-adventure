@@ -3,75 +3,84 @@ document.addEventListener(
   () => {
 
   /* ========================= */
+  /* SAFE ELEMENT HELPER */
+  /* ========================= */
+
+  function get(id){
+
+    return document.getElementById(id);
+  }
+
+  /* ========================= */
   /* ELEMENTS */
   /* ========================= */
 
-  const mathTab =
-    document.getElementById("mathTab");
+  const mathTab = get("mathTab");
+  const storyTab = get("storyTab");
 
-  const storyTab =
-    document.getElementById("storyTab");
+  const mathSection = get("mathSection");
+  const storySection = get("storySection");
 
-  const mathSection =
-    document.getElementById("mathSection");
+  const keypad = get("keypad");
 
-  const storySection =
-    document.getElementById("storySection");
+  const refreshBtn = get("refreshBtn");
 
-  const keypad =
-    document.getElementById("keypad");
+  const nextPageBtn = get("nextPageBtn");
+  const prevPageBtn = get("prevPageBtn");
 
-  const refreshBtn =
-    document.getElementById("refreshBtn");
+  const difficulty = get("difficulty");
 
-  const nextPageBtn =
-    document.getElementById("nextPageBtn");
+  const bedtimeBtn = get("bedtimeBtn");
 
-  const prevPageBtn =
-    document.getElementById("prevPageBtn");
+  const readStoryBtn = get("readStoryBtn");
 
-  const difficulty =
-    document.getElementById("difficulty");
+  const feedback = get("feedback");
 
-  const bedtimeBtn =
-    document.getElementById("bedtimeBtn");
-
-  const readStoryBtn =
-    document.getElementById("readStoryBtn");
-
-  const feedback =
-    document.getElementById("feedback");
-
-  const storyBanner =
-    document.getElementById("storyBanner");
+  const storyBanner = get("storyBanner");
 
   /* ========================= */
-  /* STORAGE HELPERS */
+  /* STORAGE */
   /* ========================= */
 
   function save(key,value){
 
-    localStorage.setItem(
-      key,
-      JSON.stringify(value)
-    );
+    try{
+
+      localStorage.setItem(
+        key,
+        JSON.stringify(value)
+      );
+
+    }catch(err){
+
+      console.log(err);
+    }
   }
 
   function load(key,defaultValue){
 
-    const data =
-      localStorage.getItem(key);
+    try{
 
-    if(data === null){
+      const data =
+        localStorage.getItem(key);
+
+      if(data === null){
+
+        return defaultValue;
+      }
+
+      return JSON.parse(data);
+
+    }catch(err){
+
+      console.log(err);
 
       return defaultValue;
     }
-
-    return JSON.parse(data);
   }
 
   /* ========================= */
-  /* LOAD SAVED STATE */
+  /* GLOBAL STATE */
   /* ========================= */
 
   solved =
@@ -107,41 +116,39 @@ document.addEventListener(
   /* INIT */
   /* ========================= */
 
-  generateQuestion();
+  try{
 
-  renderStory();
+    generateQuestion();
 
-  updateWelcome();
+  }catch(err){
+
+    console.log(
+      "generateQuestion failed",
+      err
+    );
+  }
+
+  try{
+
+    renderStory();
+
+  }catch(err){
+
+    console.log(
+      "renderStory failed",
+      err
+    );
+  }
 
   updateProgress();
-
-  /* ========================= */
-  /* WELCOME */
-  /* ========================= */
-
-  function updateWelcome(){
-
-    if(solved === 0){
-
-      storyBanner.innerHTML =
-        "🚀 Welcome Ryan! Let's begin today's adventure!";
-
-      return;
-    }
-
-    storyBanner.innerHTML = `
-      🚀 Welcome back Ryan!
-      <br>
-      🏆 Total solved:
-      ${solved}
-    `;
-  }
 
   /* ========================= */
   /* PROGRESS */
   /* ========================= */
 
   function updateProgress(){
+
+    if(!storyBanner) return;
 
     const difficultyLevel =
       difficulty
@@ -158,164 +165,191 @@ document.addEventListener(
   }
 
   /* ========================= */
-  /* TABS */
+  /* TAB SYSTEM */
   /* ========================= */
 
-  mathTab.onclick = () => {
+  if(mathTab){
 
-    mathSection.classList.remove(
-      "hidden"
-    );
+    mathTab.onclick = () => {
 
-    storySection.classList.add(
-      "hidden"
-    );
+      if(mathSection){
 
-    mathTab.classList.add(
-      "active"
-    );
+        mathSection.classList.remove(
+          "hidden"
+        );
+      }
 
-    storyTab.classList.remove(
-      "active"
-    );
-  };
+      if(storySection){
 
-  storyTab.onclick = () => {
+        storySection.classList.add(
+          "hidden"
+        );
+      }
 
-    storySection.classList.remove(
-      "hidden"
-    );
+      mathTab.classList.add(
+        "active"
+      );
 
-    mathSection.classList.add(
-      "hidden"
-    );
+      if(storyTab){
 
-    storyTab.classList.add(
-      "active"
-    );
+        storyTab.classList.remove(
+          "active"
+        );
+      }
+    };
+  }
 
-    mathTab.classList.remove(
-      "active"
-    );
-  };
+  if(storyTab){
+
+    storyTab.onclick = () => {
+
+      if(storySection){
+
+        storySection.classList.remove(
+          "hidden"
+        );
+      }
+
+      if(mathSection){
+
+        mathSection.classList.add(
+          "hidden"
+        );
+      }
+
+      storyTab.classList.add(
+        "active"
+      );
+
+      if(mathTab){
+
+        mathTab.classList.remove(
+          "active"
+        );
+      }
+    };
+  }
 
   /* ========================= */
   /* DIFFICULTY */
   /* ========================= */
 
-  difficulty.onchange = () => {
+  if(difficulty){
 
-    save(
-      "difficulty",
-      difficulty.value
-    );
+    difficulty.onchange = () => {
 
-    generateQuestion();
+      save(
+        "difficulty",
+        difficulty.value
+      );
 
-    updateProgress();
-  };
+      generateQuestion();
+
+      updateProgress();
+    };
+  }
 
   /* ========================= */
   /* REFRESH */
   /* ========================= */
 
-  refreshBtn.onclick = () => {
+  if(refreshBtn){
 
-    generateQuestion();
-  };
+    refreshBtn.onclick = () => {
+
+      generateQuestion();
+    };
+  }
 
   /* ========================= */
   /* KEYPAD */
   /* ========================= */
 
-  keypad.onclick = (e) => {
+  if(keypad){
 
-    if(
-      !e.target.classList.contains("key")
-    ) return;
-
-    const value =
-      e.target.innerText;
-
-    if(value === "⌫"){
-
-      currentInput =
-        currentInput.slice(0,-1);
-
-    }else if(value === "✓"){
+    keypad.onclick = (e) => {
 
       if(
-        parseInt(currentInput) ===
-        currentAnswer
-      ){
+        !e.target.classList.contains("key")
+      ) return;
 
-        feedback.className =
-          "feedback success";
+      const value =
+        e.target.innerText;
 
-        feedback.innerHTML =
-          "✅ Amazing!";
+      if(value === "⌫"){
 
-        solved++;
+        currentInput =
+          currentInput.slice(0,-1);
 
-        save(
-          "solved",
-          solved
-        );
+      }else if(value === "✓"){
 
-        updateProgress();
+        if(
+          parseInt(currentInput) ===
+          currentAnswer
+        ){
 
-        generateQuestion();
+          if(feedback){
+
+            feedback.className =
+              "feedback success";
+
+            feedback.innerHTML =
+              "✅ Amazing!";
+          }
+
+          solved++;
+
+          save(
+            "solved",
+            solved
+          );
+
+          updateProgress();
+
+          generateQuestion();
+
+        }else{
+
+          if(feedback){
+
+            feedback.className =
+              "feedback error";
+
+            feedback.innerHTML =
+              `❌ Answer was ${currentAnswer}`;
+          }
+
+          currentInput = "";
+        }
 
       }else{
 
-        feedback.className =
-          "feedback error";
-
-        feedback.innerHTML =
-          `❌ Answer was ${currentAnswer}`;
-
-        currentInput = "";
+        currentInput += value;
       }
 
-    }else{
-
-      currentInput += value;
-    }
-
-    updateAnswerDisplay();
-  };
+      updateAnswerDisplay();
+    };
+  }
 
   /* ========================= */
   /* STORY NAVIGATION */
   /* ========================= */
 
-  nextPageBtn.onclick = () => {
+  if(nextPageBtn){
 
-    if(
-      storyPage <
-      STORY_PAGES.length - 1
-    ){
+    nextPageBtn.onclick = () => {
 
-      storyPage++;
+      if(
+        storyPage <
+        STORY_PAGES.length - 1
+      ){
 
-    }else{
+        storyPage++;
 
-      storyPage = 0;
-    }
+      }else{
 
-    save(
-      "storyPage",
-      storyPage
-    );
-
-    renderStory();
-  };
-
-  prevPageBtn.onclick = () => {
-
-    if(storyPage > 0){
-
-      storyPage--;
+        storyPage = 0;
+      }
 
       save(
         "storyPage",
@@ -323,45 +357,76 @@ document.addEventListener(
       );
 
       renderStory();
-    }
-  };
+    };
+  }
+
+  if(prevPageBtn){
+
+    prevPageBtn.onclick = () => {
+
+      if(storyPage > 0){
+
+        storyPage--;
+
+        save(
+          "storyPage",
+          storyPage
+        );
+
+        renderStory();
+      }
+    };
+  }
 
   /* ========================= */
   /* READ STORY */
   /* ========================= */
 
-  readStoryBtn.onclick = () => {
+  if(readStoryBtn){
 
-    speechSynthesis.cancel();
+    readStoryBtn.onclick = () => {
 
-    const utterance =
-      new SpeechSynthesisUtterance(
-        STORY_PAGES[storyPage].text
-      );
+      try{
 
-    utterance.rate = 0.85;
+        speechSynthesis.cancel();
 
-    speechSynthesis.speak(
-      utterance
-    );
-  };
+        const utterance =
+          new SpeechSynthesisUtterance(
+            STORY_PAGES[storyPage].text
+          );
+
+        utterance.rate = 0.85;
+
+        speechSynthesis.speak(
+          utterance
+        );
+
+      }catch(err){
+
+        console.log(err);
+      }
+    };
+  }
 
   /* ========================= */
   /* BEDTIME MODE */
   /* ========================= */
 
-  bedtimeBtn.onclick = () => {
+  if(bedtimeBtn){
 
-    document.body.classList.toggle(
-      "bedtime-mode"
-    );
+    bedtimeBtn.onclick = () => {
 
-    save(
-      "bedtimeMode",
-      document.body.classList.contains(
+      document.body.classList.toggle(
         "bedtime-mode"
-      )
-    );
-  };
+      );
+
+      save(
+        "bedtimeMode",
+        document.body.classList.contains(
+          "bedtime-mode"
+        )
+      );
+    };
+  }
 
 });
