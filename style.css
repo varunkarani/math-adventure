@@ -47,7 +47,7 @@ body{
 }
 
 /* ========================= */
-/* CLICKABLE ELEMENTS */
+/* CLICKABLE */
 /* ========================= */
 
 button,
@@ -155,6 +155,8 @@ select{
 
   font-weight:900;
 
+  font-size:1rem;
+
   background:
     rgba(255,255,255,0.08);
 
@@ -173,23 +175,6 @@ button:active{
 }
 
 /* ========================= */
-/* SELECT */
-/* ========================= */
-
-select{
-
-  width:auto;
-
-  min-width:170px;
-
-  max-width:220px;
-
-  font-size:1rem;
-
-  flex:0 0 auto;
-}
-
-/* ========================= */
 /* TABS */
 /* ========================= */
 
@@ -199,16 +184,11 @@ select{
 
   justify-content:center;
 
-  flex-wrap:wrap;
-
   gap:14px;
 
+  flex-wrap:wrap;
+
   margin-bottom:24px;
-}
-
-.tab{
-
-  font-size:1rem;
 }
 
 .tab.active{
@@ -222,7 +202,7 @@ select{
 }
 
 /* ========================= */
-/* TOP ROW */
+/* TOP CONTROLS */
 /* ========================= */
 
 .top-row{
@@ -237,24 +217,25 @@ select{
 
   gap:12px;
 
-  flex-wrap:nowrap;
-
-  width:100%;
-
   margin-bottom:16px;
 }
 
-/* ========================= */
-/* BOTTOM ROW */
-/* ========================= */
+.top-row select{
 
-.bottom-row{
+  width:170px;
 
-  display:flex;
+  min-width:170px;
 
-  justify-content:center;
+  max-width:170px;
 
-  margin-bottom:18px;
+  flex:none;
+}
+
+.top-row button{
+
+  flex:none;
+
+  white-space:nowrap;
 }
 
 /* ========================= */
@@ -286,7 +267,7 @@ select{
 
   text-align:center;
 
-  font-size:1.3rem;
+  font-size:1.2rem;
 
   font-weight:900;
 
@@ -476,15 +457,6 @@ select{
 
   box-shadow:
     0 12px 40px rgba(0,0,0,0.22);
-
-  transition:
-    transform 0.2s ease;
-}
-
-.book-card:hover{
-
-  transform:
-    translateY(-6px);
 }
 
 .book-title{
@@ -540,7 +512,7 @@ select{
 .story-text{
 
   font-size:
-    clamp(1.7rem,3vw,2.6rem);
+    clamp(1.7rem,3vw,2.5rem);
 
   line-height:1.6;
 
@@ -615,24 +587,6 @@ select{
 /* ========================= */
 
 @media(max-width:768px){
-
-  .top-row{
-
-    flex-direction:row;
-
-    flex-wrap:nowrap;
-
-    justify-content:center;
-
-    align-items:center;
-  }
-
-  .top-row select{
-
-    min-width:150px;
-
-    max-width:170px;
-  }
 
   .question-card{
 
