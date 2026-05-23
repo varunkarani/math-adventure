@@ -36,6 +36,9 @@ document.addEventListener(
   const prevPageBtn=
     document.getElementById("prevPageBtn");
 
+  const difficultySelect=
+    document.getElementById("difficulty");
+
   /* ========================= */
   /* INIT */
   /* ========================= */
@@ -45,10 +48,26 @@ document.addEventListener(
   renderStory();
 
   /* ========================= */
+  /* DIFFICULTY */
+  /* ========================= */
+
+  if(difficultySelect){
+
+    difficultySelect.addEventListener(
+      "change",
+      ()=>{
+        generateQuestion();
+      }
+    );
+  }
+
+  /* ========================= */
   /* KEYPAD */
   /* ========================= */
 
-  keypad.addEventListener("click",(e)=>{
+  keypad.addEventListener(
+    "click",
+    (e)=>{
 
     if(!e.target.classList.contains("key"))
       return;
@@ -107,20 +126,7 @@ document.addEventListener(
     ()=>{
       generateQuestion();
     }
-    const difficultySelect=
-  document.getElementById(
-    "difficulty"
   );
-
-if(difficultySelect){
-
-  difficultySelect.addEventListener(
-    "change",
-    ()=>{
-      generateQuestion();
-    }
-  );
-}
 
   /* ========================= */
   /* TABS */
