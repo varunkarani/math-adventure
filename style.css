@@ -490,5 +490,20 @@ select{
   font-weight:900;
 
   font-size:1rem;
+html,
+body{
 
+  touch-action:
+    manipulation;
+
+  overscroll-behavior:
+    contain;
+}
+
+button,
+.key{
+
+  touch-action:
+    manipulation;
+}
 }
