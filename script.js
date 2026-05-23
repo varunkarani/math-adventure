@@ -1,494 +1,513 @@
-const questionContainer = document.getElementById("questionContainer");
-const feedback = document.getElementById("feedback");
-const streakEl = document.getElementById("streak");
-const solvedCountEl = document.getElementById("solvedCount");
-const refreshBtn = document.getElementById("refreshBtn");
-const keypad = document.getElementById("keypad");
-const difficulty = document.getElementById("difficulty");
-const settingsBtn = document.getElementById("settingsBtn");
-const settingsPanel = document.getElementById("settingsPanel");
-const breakMessage = document.getElementById("breakMessage");
-const maxRange = document.getElementById("maxRange");
-const rangeValue = document.getElementById("rangeValue");
-const themeSelector = document.getElementById("themeSelector");
-const mascot = document.getElementById("mascot");
-const mascotSpeech = document.getElementById("mascotSpeech");
-const achievementBanner = document.getElementById("achievementBanner");
+const questionContainer=document.getElementById("questionContainer");
+const feedback=document.getElementById("feedback");
+const streakEl=document.getElementById("streak");
+const solvedCountEl=document.getElementById("solvedCount");
+const worldName=document.getElementById("worldName");
+const progressFill=document.getElementById("progressFill");
+const mascot=document.getElementById("mascot");
+const mascotSpeech=document.getElementById("mascotSpeech");
+const achievementBanner=document.getElementById("achievementBanner");
 
-let streak = 0;
-let solved = 0;
-let currentInput = "";
-let currentQuestion = null;
+let streak=0;
+let solved=0;
+let correct=0;
+let incorrect=0;
+let currentInput="";
+let currentQuestion=null;
 
-const mascotMessages = [
-  "Let's do some math!",
-  "You're super smart!",
-  "I believe in you!",
-  "Math power activated!",
-  "You're crushing it!"
+const worlds=[
+  {name:"Space Academy",theme:"space",unlock:0,mascot:"🚀"},
+  {name:"Dino Land",theme:"dino",unlock:10,mascot:"🦖"},
+  {name:"Ocean World",theme:"ocean",unlock:25,mascot:"🐳"},
+  {name:"Castle Kingdom",theme:"castle",unlock:40,mascot:"🏰"},
+  {name:"Wizard Realm",theme:"wizard",unlock:60,mascot:"🧙"}
 ];
 
-const positiveMessages = [
-  "Awesome!",
-  "Great Job!",
-  "Math Wizard!",
-  "Boom!",
-  "Brilliant!"
-];
-
-const emojis = {
-  space: ["🚀","🪐","🌕","⭐"],
-  dino: ["🦖","🌴","🥚","🦕"],
-  jungle: ["🐯","🌿","🦜","🍌"],
-  ocean: ["🐠","🌊","🐳","🪸"]
-};
-
-function playTone(freq, duration) {
-
-  if (!soundToggle.checked) return;
-
-  const ctx = new(window.AudioContext || window.webkitAudioContext)();
-
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-
-  osc.frequency.value = freq;
-  osc.type = "sine";
-
-  osc.start();
-
-  gain.gain.exponentialRampToValueAtTime(
-    0.0001,
-    ctx.currentTime + duration
-  );
-
-  osc.stop(ctx.currentTime + duration);
+function random(min,max){
+  return Math.floor(Math.random()*(max-min+1))+min;
 }
 
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function getCurrentWorld(){
+
+  let current=worlds[0];
+
+  worlds.forEach(world=>{
+    if(solved>=world.unlock){
+      current=world;
+    }
+  });
+
+  return current;
 }
 
-function saveState() {
+function updateWorld(){
 
-  localStorage.setItem("mathAdventureState", JSON.stringify({
-    streak,
-    solved,
-    difficulty: difficulty.value,
-    theme: themeSelector.value,
-    max: maxRange.value
-  }));
-}
+  const world=getCurrentWorld();
 
-function loadState() {
+  worldName.innerText=world.name;
 
-  const saved = JSON.parse(
-    localStorage.getItem("mathAdventureState")
-  );
+  mascot.innerHTML=world.mascot;
 
-  if (!saved) return;
-
-  streak = saved.streak || 0;
-  solved = saved.solved || 0;
-
-  difficulty.value = saved.difficulty || "medium";
-  themeSelector.value = saved.theme || "space";
-  maxRange.value = saved.max || 20;
-
-  streakEl.innerText = streak;
-  solvedCountEl.innerText = solved;
-
-  rangeValue.innerText = maxRange.value;
+  themeSelector.value=world.theme;
 
   applyTheme();
+
+  if(
+    solved===10 ||
+    solved===25 ||
+    solved===40 ||
+    solved===60
+  ){
+
+    achievementBanner.classList.remove("hidden");
+
+    achievementBanner.innerHTML=
+      `🌍 New World Unlocked: ${world.name}!`;
+
+    setTimeout(()=>{
+      achievementBanner.classList.add("hidden");
+    },4000);
+  }
 }
 
-function getOperations() {
+function generateQuestion(){
 
-  const ops = [];
+  const max=parseInt(maxRange.value);
 
-  if (additionToggle.checked) ops.push("+");
-  if (subtractionToggle.checked) ops.push("-");
-  if (multiplicationToggle.checked) ops.push("×");
-  if (divisionToggle.checked) ops.push("÷");
+  const operations=[];
 
-  return ops;
-}
+  if(additionToggle.checked) operations.push("+");
+  if(subtractionToggle.checked) operations.push("-");
+  if(multiplicationToggle.checked) operations.push("×");
+  if(divisionToggle.checked) operations.push("÷");
 
-function generateQuestion() {
+  const op=
+    operations[random(0,operations.length-1)];
 
-  const max = parseInt(maxRange.value);
+  let a,b,answer;
 
-  const ops = getOperations();
-
-  const op = ops[random(0, ops.length - 1)];
-
-  let a, b, answer;
-
-  switch(op) {
+  switch(op){
 
     case "+":
-      a = random(1, max);
-      b = random(1, max);
-      answer = a + b;
+      a=random(1,max);
+      b=random(1,max);
+      answer=a+b;
       break;
 
     case "-":
-      a = random(1, max);
-      b = random(1, a);
-      answer = a - b;
+      a=random(1,max);
+      b=random(1,a);
+      answer=a-b;
       break;
 
     case "×":
-      a = random(1, 12);
-      b = random(1, 12);
-      answer = a * b;
+      a=random(1,12);
+      b=random(1,12);
+      answer=a*b;
       break;
 
     case "÷":
-      b = random(1, 12);
-      answer = random(1, 12);
-      a = b * answer;
+      b=random(1,12);
+      answer=random(1,12);
+      a=b*answer;
       break;
   }
 
-  currentQuestion = {
-    text: `${a} ${op} ${b}`,
-    answer
+  currentQuestion={
+    a,b,op,answer
   };
 
-  currentInput = "";
+  currentInput="";
 
   renderQuestion();
 
   speakQuestion();
 }
 
-function speakQuestion() {
+function renderQuestion(){
 
-  const utterance = new SpeechSynthesisUtterance(
-    `${currentQuestion.text.replace("×","times").replace("÷","divided by")}`
-  );
+  let visualHTML="";
 
-  utterance.rate = 0.9;
+  if(
+    visualMathToggle.checked &&
+    difficulty.value==="easy"
+  ){
 
-  speechSynthesis.speak(utterance);
-}
+    const emojiMap={
+      space:"🚀",
+      dino:"🦖",
+      ocean:"🐠",
+      jungle:"🐯",
+      castle:"🏰",
+      wizard:"🧙"
+    };
 
-function renderQuestion() {
+    const emoji=
+      emojiMap[themeSelector.value];
 
-  questionContainer.innerHTML = `
+    visualHTML=`
+      <div class="visual-math">
+        ${emoji.repeat(currentQuestion.a)}
+        ${currentQuestion.op}
+        ${emoji.repeat(currentQuestion.b)}
+      </div>
+    `;
+  }
+
+  questionContainer.innerHTML=`
     <div class="question-card" id="card">
 
+      ${visualHTML}
+
       <div class="question-text">
-        ${currentQuestion.text} = ?
+        ${currentQuestion.a}
+        ${currentQuestion.op}
+        ${currentQuestion.b}
+        = ?
       </div>
 
       <div class="answer-display" id="answerDisplay">
-        ${currentInput || "?"}
+        ?
       </div>
 
     </div>
   `;
 }
 
-function updateAnswerDisplay() {
+function speakQuestion(){
 
-  document.getElementById("answerDisplay").innerText =
-    currentInput || "?";
+  const text=
+    `${currentQuestion.a}
+    ${currentQuestion.op === "×" ? "times" :
+      currentQuestion.op === "÷" ? "divided by" :
+      currentQuestion.op}
+    ${currentQuestion.b}`;
+
+  const utterance=
+    new SpeechSynthesisUtterance(text);
+
+  utterance.rate=0.9;
+
+  speechSynthesis.speak(utterance);
 }
 
-function launchConfetti() {
-
-  const canvas = document.getElementById("confettiCanvas");
-  const ctx = canvas.getContext("2d");
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  const pieces = [];
-
-  for (let i = 0; i < 150; i++) {
-
-    pieces.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height - canvas.height,
-      r: Math.random() * 6 + 2,
-      d: Math.random() * 50
-    });
-  }
-
-  let angle = 0;
-
-  function draw() {
-
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    pieces.forEach((p) => {
-
-      ctx.beginPath();
-
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-
-      ctx.fillStyle =
-        `hsl(${Math.random()*360},100%,60%)`;
-
-      ctx.fill();
-
-      p.y += Math.cos(angle + p.d) + 3;
-      p.x += Math.sin(angle);
-
-      if (p.y > canvas.height) {
-        p.y = -10;
-      }
-    });
-
-    angle += 0.01;
-  }
-
-  let frames = 0;
-
-  const interval = setInterval(() => {
-
-    draw();
-
-    frames++;
-
-    if (frames > 80) {
-      clearInterval(interval);
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-    }
-
-  }, 16);
+function updateAnswerDisplay(){
+  document.getElementById("answerDisplay")
+    .innerText=currentInput || "?";
 }
 
-function celebrateCorrect() {
-
-  playTone(700, 0.15);
-  playTone(900, 0.15);
+function celebrateCorrect(){
 
   streak++;
   solved++;
+  correct++;
 
-  streakEl.innerText = streak;
-  solvedCountEl.innerText = solved;
+  streakEl.innerText=streak;
+  solvedCountEl.innerText=solved;
 
-  saveState();
+  updateStats();
 
   launchConfetti();
 
-  const card = document.getElementById("card");
+  feedback.className="feedback success";
 
-  card.classList.add("correct");
+  feedback.innerHTML=
+    ["Awesome!","Brilliant!","Math Wizard!"]
+    [random(0,2)];
 
-  feedback.className = "feedback success";
+  mascotSpeech.innerHTML=
+    ["You're amazing!",
+    "Super smart!",
+    "Math power activated!"]
+    [random(0,2)];
 
-  feedback.innerHTML =
-    positiveMessages[random(0, positiveMessages.length - 1)];
+  adaptiveDifficulty();
 
-  mascotSpeech.innerHTML =
-    mascotMessages[random(0, mascotMessages.length - 1)];
+  updateWorld();
 
-  if (solved === 10 || solved === 25 || solved === 50) {
-
-    achievementBanner.classList.remove("hidden");
-
-    achievementBanner.innerHTML =
-      `🏆 ${solved} Questions Solved!`;
-
-    setTimeout(() => {
-      achievementBanner.classList.add("hidden");
-    }, 3000);
-  }
-
-  setTimeout(() => {
-    generateQuestion();
-  }, 1400);
-}
-
-function handleWrong() {
-
-  playTone(180, 0.3);
-
-  streak = 0;
-
-  streakEl.innerText = streak;
+  updateProgress();
 
   saveState();
 
-  const card = document.getElementById("card");
-
-  card.classList.add("wrong");
-
-  feedback.className = "feedback error";
-
-  feedback.innerHTML = "Try Again!";
-
-  setTimeout(() => {
-    card.classList.remove("wrong");
-  }, 400);
+  setTimeout(()=>{
+    generateQuestion();
+  },1400);
 }
 
-function submitAnswer() {
+function handleWrong(){
 
-  if (parseInt(currentInput) === currentQuestion.answer) {
+  incorrect++;
+
+  streak=0;
+
+  streakEl.innerText=0;
+
+  feedback.className="feedback error";
+
+  feedback.innerHTML="Try Again!";
+
+  mascotSpeech.innerHTML=
+    "You can do it!";
+
+  updateStats();
+
+  adaptiveDifficulty();
+
+  saveState();
+}
+
+function adaptiveDifficulty(){
+
+  if(correct>0){
+
+    const accuracy=
+      Math.round(
+        (correct/(correct+incorrect))*100
+      );
+
+    if(
+      accuracy>90 &&
+      parseInt(maxRange.value)<100
+    ){
+      maxRange.value=
+        parseInt(maxRange.value)+2;
+    }
+
+    if(
+      accuracy<60 &&
+      parseInt(maxRange.value)>10
+    ){
+      maxRange.value=
+        parseInt(maxRange.value)-2;
+    }
+
+    rangeValue.innerText=maxRange.value;
+  }
+}
+
+function updateStats(){
+
+  const total=correct+incorrect;
+
+  const accuracy=
+    total===0 ? 0 :
+    Math.round((correct/total)*100);
+
+  accuracyStat.innerText=
+    accuracy + "%";
+
+  correctStat.innerText=correct;
+
+  incorrectStat.innerText=incorrect;
+}
+
+function updateProgress(){
+
+  const progress=
+    (solved % 15)/15*100;
+
+  progressFill.style.width=
+    progress + "%";
+}
+
+function saveState(){
+
+  localStorage.setItem(
+    "mathAdventureV3",
+    JSON.stringify({
+      streak,
+      solved,
+      correct,
+      incorrect,
+      difficulty:difficulty.value,
+      max:maxRange.value
+    })
+  );
+}
+
+function loadState(){
+
+  const saved=
+    JSON.parse(
+      localStorage.getItem("mathAdventureV3")
+    );
+
+  if(!saved) return;
+
+  streak=saved.streak || 0;
+  solved=saved.solved || 0;
+  correct=saved.correct || 0;
+  incorrect=saved.incorrect || 0;
+
+  difficulty.value=
+    saved.difficulty || "medium";
+
+  maxRange.value=
+    saved.max || 20;
+
+  streakEl.innerText=streak;
+  solvedCountEl.innerText=solved;
+
+  updateStats();
+  updateProgress();
+  updateWorld();
+}
+
+function submitAnswer(){
+
+  if(
+    parseInt(currentInput)===
+    currentQuestion.answer
+  ){
     celebrateCorrect();
-  } else {
+  }else{
     handleWrong();
   }
 }
 
-keypad.addEventListener("click", (e) => {
+keypad.addEventListener("click",(e)=>{
 
-  if (!e.target.classList.contains("key")) return;
+  if(!e.target.classList.contains("key")) return;
 
-  const value = e.target.innerText;
+  const value=e.target.innerText;
 
-  if (value === "⌫") {
-
-    currentInput = currentInput.slice(0,-1);
+  if(value==="⌫"){
+    currentInput=currentInput.slice(0,-1);
   }
-  else if (value === "✓") {
+  else if(value==="✓"){
 
-    if (currentInput.length > 0) {
+    if(currentInput.length>0){
       submitAnswer();
     }
 
     return;
   }
-  else {
+  else{
 
-    if (currentInput.length < 4) {
-      currentInput += value;
+    if(currentInput.length<4){
+      currentInput+=value;
     }
   }
 
   updateAnswerDisplay();
 });
 
-settingsBtn.addEventListener("click", () => {
+settingsBtn.addEventListener("click",()=>{
   settingsPanel.classList.toggle("hidden");
 });
 
-refreshBtn.addEventListener("click", () => {
+refreshBtn.addEventListener("click",()=>{
   generateQuestion();
 });
 
-maxRange.addEventListener("input", () => {
-  rangeValue.innerText = maxRange.value;
-  saveState();
-});
+function applyTheme(){
 
-difficulty.addEventListener("change", () => {
+  const value=themeSelector.value;
 
-  switch(difficulty.value) {
-
-    case "easy":
-      maxRange.value = 10;
-      break;
-
-    case "medium":
-      maxRange.value = 20;
-      break;
-
-    case "hard":
-      maxRange.value = 50;
-      break;
-
-    case "expert":
-      maxRange.value = 100;
-      break;
-  }
-
-  rangeValue.innerText = maxRange.value;
-
-  saveState();
-
-  generateQuestion();
-});
-
-function applyTheme() {
-
-  const value = themeSelector.value;
-
-  const body = document.body;
-
-  switch(value) {
+  switch(value){
 
     case "space":
-      body.style.background =
+      document.body.style.background=
         "radial-gradient(circle at top,#1a2242,#080b16)";
-      mascot.innerHTML = "🚀";
       break;
 
     case "dino":
-      body.style.background =
-        "radial-gradient(circle at top,#204022,#08110b)";
-      mascot.innerHTML = "🦖";
-      break;
-
-    case "jungle":
-      body.style.background =
-        "radial-gradient(circle at top,#305532,#08110b)";
-      mascot.innerHTML = "🐯";
+      document.body.style.background=
+        "radial-gradient(circle at top,#214221,#08110b)";
       break;
 
     case "ocean":
-      body.style.background =
-        "radial-gradient(circle at top,#12465c,#071018)";
-      mascot.innerHTML = "🐳";
+      document.body.style.background=
+        "radial-gradient(circle at top,#11455b,#071018)";
+      break;
+
+    case "castle":
+      document.body.style.background=
+        "radial-gradient(circle at top,#433060,#12081b)";
+      break;
+
+    case "wizard":
+      document.body.style.background=
+        "radial-gradient(circle at top,#35224d,#100816)";
+      break;
+
+    case "jungle":
+      document.body.style.background=
+        "radial-gradient(circle at top,#355d2f,#08110b)";
       break;
   }
-
-  generateFloatingEmojis();
-
-  saveState();
 }
 
-themeSelector.addEventListener("change", applyTheme);
+themeSelector.addEventListener("change",applyTheme);
 
-function generateFloatingEmojis() {
+function launchConfetti(){
 
-  const container =
-    document.getElementById("floatingEmojis");
+  const canvas=
+    document.getElementById("confettiCanvas");
 
-  container.innerHTML = "";
+  const ctx=canvas.getContext("2d");
 
-  const selected =
-    emojis[themeSelector.value];
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
 
-  for (let i = 0; i < 18; i++) {
+  const pieces=[];
 
-    const emoji = document.createElement("div");
+  for(let i=0;i<120;i++){
 
-    emoji.className = "floating-emoji";
-
-    emoji.innerHTML =
-      selected[random(0, selected.length - 1)];
-
-    emoji.style.left =
-      Math.random() * 100 + "%";
-
-    emoji.style.animationDuration =
-      random(12, 30) + "s";
-
-    emoji.style.fontSize =
-      random(24, 54) + "px";
-
-    container.appendChild(emoji);
+    pieces.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height-canvas.height,
+      r:Math.random()*6+2,
+      d:Math.random()*50
+    });
   }
-}
 
-if ("serviceWorker" in navigator) {
+  let angle=0;
 
-  navigator.serviceWorker.register("sw.js");
+  function draw(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    pieces.forEach((p)=>{
+
+      ctx.beginPath();
+
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+
+      ctx.fillStyle=
+        `hsl(${Math.random()*360},100%,60%)`;
+
+      ctx.fill();
+
+      p.y+=Math.cos(angle+p.d)+3;
+      p.x+=Math.sin(angle);
+
+      if(p.y>canvas.height){
+        p.y=-10;
+      }
+    });
+
+    angle+=0.01;
+  }
+
+  let frames=0;
+
+  const interval=setInterval(()=>{
+
+    draw();
+
+    frames++;
+
+    if(frames>80){
+      clearInterval(interval);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+
+  },16);
 }
 
 loadState();
 
-generateQuestion();
+updateWorld();
 
-generateFloatingEmojis();
+generateQuestion();
