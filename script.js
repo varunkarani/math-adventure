@@ -7,6 +7,7 @@ const progressFill=document.getElementById("progressFill");
 const mascot=document.getElementById("mascot");
 const mascotSpeech=document.getElementById("mascotSpeech");
 const achievementBanner=document.getElementById("achievementBanner");
+const storyBanner=document.getElementById("storyBanner");
 
 let streak=0;
 let solved=0;
@@ -16,6 +17,13 @@ let currentInput="";
 let currentQuestion=null;
 let wrongAttempts=0;
 
+const operationStats={
+  "+":{correct:0,wrong:0},
+  "-":{correct:0,wrong:0},
+  "×":{correct:0,wrong:0},
+  "÷":{correct:0,wrong:0}
+};
+
 const worlds=[
   {name:"Space Academy",theme:"space",unlock:0,mascot:"🚀"},
   {name:"Dino Land",theme:"dino",unlock:10,mascot:"🦖"},
@@ -24,8 +32,76 @@ const worlds=[
   {name:"Wizard Realm",theme:"wizard",unlock:60,mascot:"🧙"}
 ];
 
+const storyStages=[
+  {progress:0,text:"🛸 Spaceship damaged!"},
+  {progress:5,text:"🔧 Engine repaired!"},
+  {progress:10,text:"⛽ Fuel restored!"},
+  {progress:15,text:"🪽 Wings repaired!"},
+  {progress:20,text:"🚀 Launch systems online!"},
+  {progress:25,text:"🌌 BLAST OFF!"}
+];
+
 function random(min,max){
   return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+function vibrate(duration){
+
+  if(navigator.vibrate){
+    navigator.vibrate(duration);
+  }
+}
+
+function playSuccessSound(){
+
+  if(!soundToggle.checked) return;
+
+  const ctx=new(window.AudioContext||window.webkitAudioContext)();
+
+  [523,659,784].forEach((freq,index)=>{
+
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.frequency.value=freq;
+    osc.type="triangle";
+
+    osc.start(ctx.currentTime+(index*0.08));
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      ctx.currentTime+0.4
+    );
+
+    osc.stop(ctx.currentTime+0.4);
+  });
+}
+
+function playFailSound(){
+
+  if(!soundToggle.checked) return;
+
+  const ctx=new(window.AudioContext||window.webkitAudioContext)();
+
+  const osc=ctx.createOscillator();
+  const gain=ctx.createGain();
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.frequency.value=180;
+
+  osc.start();
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.0001,
+    ctx.currentTime+0.3
+  );
+
+  osc.stop(ctx.currentTime+0.3);
 }
 
 function getCurrentWorld(){
@@ -39,6 +115,23 @@ function getCurrentWorld(){
   });
 
   return current;
+}
+
+function showWorldUnlock(world){
+
+  achievementBanner.classList.remove("hidden");
+
+  achievementBanner.innerHTML=`
+    🌍 NEW WORLD UNLOCKED
+    <br><br>
+    ${world.name}
+  `;
+
+  vibrate([120,60,120]);
+
+  setTimeout(()=>{
+    achievementBanner.classList.add("hidden");
+  },4000);
 }
 
 function updateWorld(){
@@ -59,16 +152,71 @@ function updateWorld(){
     solved===40 ||
     solved===60
   ){
+    showWorldUnlock(world);
 
-    achievementBanner.classList.remove("hidden");
-
-    achievementBanner.innerHTML=
-      `🌍 New World Unlocked: ${world.name}!`;
-
-    setTimeout(()=>{
-      achievementBanner.classList.add("hidden");
-    },4000);
+    mascotSpeech.innerHTML=
+      `Welcome to ${world.name}!`;
   }
+}
+
+function updateStory(){
+
+  let currentStage=storyStages[0];
+
+  storyStages.forEach(stage=>{
+    if(solved>=stage.progress){
+      currentStage=stage;
+    }
+  });
+
+  const percent=
+    Math.min((solved/25)*100,100);
+
+  storyBanner.innerHTML=`
+    🚀 Spaceship Status
+    <br><br>
+    <div style="
+      width:100%;
+      height:16px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.1);
+      overflow:hidden;
+      margin-top:10px;
+    ">
+      <div style="
+        width:${percent}%;
+        height:100%;
+        background:linear-gradient(90deg,#7c5cff,#32d583);
+      "></div>
+    </div>
+    <br>
+    ${currentStage.text}
+  `;
+}
+
+function getWeakestOperation(){
+
+  let weakest="+";
+  let lowestAccuracy=999;
+
+  Object.keys(operationStats).forEach(op=>{
+
+    const stats=operationStats[op];
+
+    const total=stats.correct+stats.wrong;
+
+    if(total===0) return;
+
+    const accuracy=
+      (stats.correct/total)*100;
+
+    if(accuracy<lowestAccuracy){
+      lowestAccuracy=accuracy;
+      weakest=op;
+    }
+  });
+
+  return weakest;
 }
 
 function generateQuestion(){
@@ -82,8 +230,13 @@ function generateQuestion(){
   if(multiplicationToggle.checked) operations.push("×");
   if(divisionToggle.checked) operations.push("÷");
 
-  const op=
-    operations[random(0,operations.length-1)];
+  let op;
+
+  if(random(1,100)<=35){
+    op=getWeakestOperation();
+  }else{
+    op=operations[random(0,operations.length-1)];
+  }
 
   let a,b,answer;
 
@@ -126,47 +279,30 @@ function generateQuestion(){
   speakQuestion();
 }
 
-function renderQuestion(){
+function getHint(){
 
-  let visualHTML="";
+  const q=currentQuestion;
 
-  if(
-    visualMathToggle.checked &&
-    difficulty.value==="easy"
-  ){
+  switch(q.op){
 
-    const emojiMap={
-      space:"🚀",
-      dino:"🦖",
-      ocean:"🐠",
-      jungle:"🐯",
-      castle:"🏰",
-      wizard:"🧙"
-    };
+    case "+":
+      return `Hint: Start with ${q.a} and count up ${q.b}!`;
 
-    const emoji=
-      emojiMap[themeSelector.value];
+    case "-":
+      return `Hint: Take ${q.b} away from ${q.a}`;
 
-    visualHTML=`
-      <div class="visual-math" style="
-        font-size:2rem;
-        text-align:center;
-        margin-bottom:20px;
-        line-height:1.6;
-      ">
-        ${emoji.repeat(currentQuestion.a)}
-        <br>
-        ${currentQuestion.op}
-        <br>
-        ${emoji.repeat(currentQuestion.b)}
-      </div>
-    `;
+    case "×":
+      return `Hint: ${q.a} + ${q.a} + ${q.a}`;
+
+    case "÷":
+      return `Hint: What times ${q.b} equals ${q.a}?`;
   }
+}
+
+function renderQuestion(){
 
   questionContainer.innerHTML=`
     <div class="question-card" id="card">
-
-      ${visualHTML}
 
       <div class="question-text">
         ${currentQuestion.a}
@@ -187,17 +323,17 @@ function speakQuestion(){
 
   const text=
     `${currentQuestion.a}
-    ${currentQuestion.op === "×" ? "times" :
-      currentQuestion.op === "÷" ? "divided by" :
+    ${currentQuestion.op==="×" ? "times" :
+      currentQuestion.op==="÷" ? "divided by" :
       currentQuestion.op}
     ${currentQuestion.b}`;
+
+  speechSynthesis.cancel();
 
   const utterance=
     new SpeechSynthesisUtterance(text);
 
   utterance.rate=0.9;
-
-  speechSynthesis.cancel();
 
   speechSynthesis.speak(utterance);
 }
@@ -216,6 +352,9 @@ function celebrateCorrect(){
   solved++;
   correct++;
 
+  operationStats[currentQuestion.op]
+    .correct++;
+
   streakEl.innerText=streak;
   solvedCountEl.innerText=solved;
 
@@ -223,17 +362,45 @@ function celebrateCorrect(){
 
   launchConfetti();
 
+  playSuccessSound();
+
+  vibrate(60);
+
   feedback.className="feedback success";
 
   feedback.innerHTML=
-    ["Awesome!","Brilliant!","Math Wizard!"]
-    [random(0,2)];
+    ["Awesome!",
+    "Brilliant!",
+    "Math Wizard!",
+    "Super Smart!",
+    "Amazing!"]
+    [random(0,4)];
 
-  mascotSpeech.innerHTML=
-    ["You're amazing!",
-    "Super smart!",
-    "Math power activated!"]
-    [random(0,2)];
+  if(streak>=10){
+
+    mascotSpeech.innerHTML=
+      "🔥 WOW! You're unstoppable!";
+
+  }else{
+
+    mascotSpeech.innerHTML=
+      ["You're amazing!",
+      "Great job captain!",
+      "Math power activated!"]
+      [random(0,2)];
+  }
+
+  if(solved===15){
+
+    achievementBanner.classList.remove("hidden");
+
+    achievementBanner.innerHTML=
+      "🎯 DAILY MISSION COMPLETE!";
+
+    setTimeout(()=>{
+      achievementBanner.classList.add("hidden");
+    },4000);
+  }
 
   adaptiveDifficulty();
 
@@ -241,16 +408,21 @@ function celebrateCorrect(){
 
   updateProgress();
 
+  updateStory();
+
   saveState();
 
   setTimeout(()=>{
     generateQuestion();
-  },1400);
+  },1500);
 }
 
 function handleWrong(){
 
   incorrect++;
+
+  operationStats[currentQuestion.op]
+    .wrong++;
 
   wrongAttempts++;
 
@@ -258,33 +430,39 @@ function handleWrong(){
 
   streakEl.innerText=0;
 
-  feedback.className="feedback error";
+  playFailSound();
 
-  const correctAnswer=currentQuestion.answer;
+  vibrate(30);
+
+  feedback.className="feedback error";
 
   currentInput="";
 
   updateAnswerDisplay();
 
-  if(wrongAttempts>=3){
+  if(wrongAttempts===2){
+
+    feedback.innerHTML=`
+      ${getHint()}
+    `;
+
+    mascotSpeech.innerHTML=
+      "Let's solve it together!";
+
+  }else if(wrongAttempts>=3){
 
     feedback.innerHTML=
-      `The correct answer was ${correctAnswer} 💡`;
+      `The correct answer was
+      ${currentQuestion.answer} 💡`;
 
     mascotSpeech.innerHTML=
       "You'll get the next one!";
 
     wrongAttempts=0;
 
-    updateStats();
-
-    adaptiveDifficulty();
-
-    saveState();
-
     setTimeout(()=>{
       generateQuestion();
-    },2200);
+    },2400);
 
   }else{
 
@@ -293,13 +471,13 @@ function handleWrong(){
 
     mascotSpeech.innerHTML=
       "You can do it!";
-
-    updateStats();
-
-    adaptiveDifficulty();
-
-    saveState();
   }
+
+  updateStats();
+
+  adaptiveDifficulty();
+
+  saveState();
 }
 
 function adaptiveDifficulty(){
@@ -316,7 +494,7 @@ function adaptiveDifficulty(){
       parseInt(maxRange.value)<100
     ){
       maxRange.value=
-        parseInt(maxRange.value)+2;
+        parseInt(maxRange.value)+1;
     }
 
     if(
@@ -324,7 +502,7 @@ function adaptiveDifficulty(){
       parseInt(maxRange.value)>10
     ){
       maxRange.value=
-        parseInt(maxRange.value)-2;
+        parseInt(maxRange.value)-1;
     }
 
     rangeValue.innerText=maxRange.value;
@@ -359,12 +537,13 @@ function updateProgress(){
 function saveState(){
 
   localStorage.setItem(
-    "mathAdventureV3",
+    "mathAdventureV4",
     JSON.stringify({
       streak,
       solved,
       correct,
       incorrect,
+      operationStats,
       difficulty:difficulty.value,
       max:maxRange.value
     })
@@ -375,7 +554,7 @@ function loadState(){
 
   const saved=
     JSON.parse(
-      localStorage.getItem("mathAdventureV3")
+      localStorage.getItem("mathAdventureV4")
     );
 
   if(!saved) return;
@@ -384,6 +563,11 @@ function loadState(){
   solved=saved.solved || 0;
   correct=saved.correct || 0;
   incorrect=saved.incorrect || 0;
+
+  Object.assign(
+    operationStats,
+    saved.operationStats || {}
+  );
 
   difficulty.value=
     saved.difficulty || "medium";
@@ -397,6 +581,7 @@ function loadState(){
   updateStats();
   updateProgress();
   updateWorld();
+  updateStory();
 }
 
 function submitAnswer(){
@@ -555,5 +740,7 @@ function launchConfetti(){
 loadState();
 
 updateWorld();
+
+updateStory();
 
 generateQuestion();
