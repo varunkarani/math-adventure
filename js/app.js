@@ -107,6 +107,14 @@ document.addEventListener(
     ()=>{
       generateQuestion();
     }
+    document.getElementById(
+  "difficulty"
+).addEventListener(
+  "change",
+  ()=>{
+    generateQuestion();
+  }
+);
   );
 
   /* ========================= */
