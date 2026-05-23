@@ -2,11 +2,51 @@ document.addEventListener(
   "DOMContentLoaded",
   ()=>{
 
-  generateQuestion();
-  renderStory();
+  /* ========================= */
+  /* ELEMENTS */
+  /* ========================= */
+
+  const mathTab=
+    document.getElementById("mathTab");
+
+  const storyTab=
+    document.getElementById("storyTab");
+
+  const mathSection=
+    document.getElementById("mathSection");
+
+  const storySection=
+    document.getElementById("storySection");
 
   const keypad=
     document.getElementById("keypad");
+
+  const refreshBtn=
+    document.getElementById("refreshBtn");
+
+  const readStoryBtn=
+    document.getElementById("readStoryBtn");
+
+  const bedtimeBtn=
+    document.getElementById("bedtimeBtn");
+
+  const nextPageBtn=
+    document.getElementById("nextPageBtn");
+
+  const prevPageBtn=
+    document.getElementById("prevPageBtn");
+
+  /* ========================= */
+  /* INIT */
+  /* ========================= */
+
+  generateQuestion();
+
+  renderStory();
+
+  /* ========================= */
+  /* KEYPAD */
+  /* ========================= */
 
   keypad.addEventListener("click",(e)=>{
 
@@ -58,81 +98,145 @@ document.addEventListener(
     updateAnswerDisplay();
   });
 
-  document.getElementById(
-    "mathTab"
-  ).onclick=()=>{
+  /* ========================= */
+  /* REFRESH */
+  /* ========================= */
 
-    mathSection.classList.remove("hidden");
-    storySection.classList.add("hidden");
+  refreshBtn.addEventListener(
+    "click",
+    ()=>{
+      generateQuestion();
+    }
+  );
 
-    mathTab.classList.add("active");
-    storyTab.classList.remove("active");
-  };
+  /* ========================= */
+  /* TABS */
+  /* ========================= */
 
-  document.getElementById(
-    "storyTab"
-  ).onclick=()=>{
+  mathTab.addEventListener(
+    "click",
+    ()=>{
 
-    storySection.classList.remove("hidden");
-    mathSection.classList.add("hidden");
+    mathSection.classList.remove(
+      "hidden"
+    );
 
-    storyTab.classList.add("active");
-    mathTab.classList.remove("active");
-  };
+    storySection.classList.add(
+      "hidden"
+    );
 
-  document.getElementById(
-    "nextPageBtn"
-  ).onclick=()=>{
+    mathTab.classList.add(
+      "active"
+    );
 
-    if(storyPage<STORY_PAGES.length-1){
+    storyTab.classList.remove(
+      "active"
+    );
+
+  });
+
+  storyTab.addEventListener(
+    "click",
+    ()=>{
+
+    storySection.classList.remove(
+      "hidden"
+    );
+
+    mathSection.classList.add(
+      "hidden"
+    );
+
+    storyTab.classList.add(
+      "active"
+    );
+
+    mathTab.classList.remove(
+      "active"
+    );
+
+  });
+
+  /* ========================= */
+  /* STORY NAVIGATION */
+  /* ========================= */
+
+  nextPageBtn.addEventListener(
+    "click",
+    ()=>{
+
+    if(
+      storyPage<
+      STORY_PAGES.length-1
+    ){
 
       storyPage++;
 
     }else{
 
       storyPage=0;
+
       storiesCompleted++;
     }
 
-    saveData("storyPage",storyPage);
+    saveData(
+      "storyPage",
+      storyPage
+    );
+
     saveData(
       "storiesCompleted",
       storiesCompleted
     );
 
     renderStory();
-  };
 
-  document.getElementById(
-    "prevPageBtn"
-  ).onclick=()=>{
+  });
+
+  prevPageBtn.addEventListener(
+    "click",
+    ()=>{
 
     if(storyPage>0){
 
       storyPage--;
 
-      saveData("storyPage",storyPage);
+      saveData(
+        "storyPage",
+        storyPage
+      );
 
       renderStory();
     }
-  };
 
-  document.getElementById(
-    "readStoryBtn"
-  ).onclick=()=>{
+  });
+
+  /* ========================= */
+  /* READ TO ME */
+  /* ========================= */
+
+  readStoryBtn.addEventListener(
+    "click",
+    ()=>{
 
     speak(
       STORY_PAGES[storyPage].text
     );
-  };
 
-  document.getElementById(
-    "bedtimeBtn"
-  ).onclick=()=>{
+  });
+
+  /* ========================= */
+  /* BEDTIME MODE */
+  /* ========================= */
+
+  bedtimeBtn.addEventListener(
+    "click",
+    ()=>{
 
     document.body.classList.toggle(
       "bedtime-mode"
     );
-  };
+
+  });
 
 });
