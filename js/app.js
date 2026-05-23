@@ -194,51 +194,7 @@ keypad.addEventListener(
       incorrectTries++;
       streak = 0;
       updateStats();
-      /* SECOND WRONG = HINT */
-      if(incorrectTries===2){
-        const questionText =
-          document.getElementById(
-            "question"
-          ).innerText;
-        const parts =
-          questionText.split(" ");
-        const num1 =
-          parseInt(parts[0]);
-        const operator =
-          parts[1];
-        const num2 =
-          parseInt(parts[2]);
-        let hint = "";
-        if(operator === "+"){
-          hint =
-            `💡 Hint: Start at ${num1} and count forward ${num2} steps.`;
-        }
-        else if(
-          operator === "-"
-        ){
-          hint =
-            `💡 Hint: Count backwards ${num2} numbers from ${num1}.`;
-        }
-        else if(
-          operator === "×"
-        ){
-          hint =
-            `💡 Hint: ${num1} × ${num2} means ${num1} added ${num2} times.`;
-        }
-        else if(
-          operator === "÷"
-        ){
-          hint =
-            `💡 Hint: If ${num1} candies are shared equally between ${num2} people, how many does each person get?`;
-        }
-        showFeedback(
-          hint,
-          "error"
-        );
-        clearInput();
-      }
-      /* THIRD WRONG */
-      else if(
+      if(
         incorrectTries >= 3
       ){
         showFeedback(
@@ -256,9 +212,7 @@ keypad.addEventListener(
           }
           showFeedback("");
         },1800);
-      }
-      /* FIRST WRONG */
-      else{
+      }else{
         showFeedback(
           "❌ Try again!",
           "error"
