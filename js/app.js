@@ -107,15 +107,20 @@ document.addEventListener(
     ()=>{
       generateQuestion();
     }
-    document.getElementById(
-  "difficulty"
-).addEventListener(
-  "change",
-  ()=>{
-    generateQuestion();
-  }
-);
+    const difficultySelect=
+  document.getElementById(
+    "difficulty"
   );
+
+if(difficultySelect){
+
+  difficultySelect.addEventListener(
+    "change",
+    ()=>{
+      generateQuestion();
+    }
+  );
+}
 
   /* ========================= */
   /* TABS */
