@@ -260,5 +260,32 @@ button{
   .settings-panel{
     width:calc(100% - 40px);
   }
+.visual-math{
+  margin-bottom:24px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
 
+.emoji-row{
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  text-align:center;
+  line-height:1.5;
+  word-break:break-word;
+  max-width:100%;
+}
+
+.visual-symbol{
+  font-size:2rem;
+  font-weight:900;
+  opacity:0.8;
+}
+
+.visual-label{
+  font-size:1.1rem;
+  font-weight:700;
+  opacity:0.85;
+  text-align:center;
+}
 }
