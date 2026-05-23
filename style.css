@@ -20,6 +20,14 @@ body {
   background: radial-gradient(circle at top, #1a2242, #080b16);
   color: var(--text);
   overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#confettiCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
 }
 
 .background-glow {
@@ -35,6 +43,30 @@ body {
   z-index: -1;
 }
 
+.floating-emojis {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.floating-emoji {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0.08;
+  animation: floatEmoji linear infinite;
+}
+
+@keyframes floatEmoji {
+  from {
+    transform: translateY(120vh) rotate(0deg);
+  }
+  to {
+    transform: translateY(-20vh) rotate(360deg);
+  }
+}
+
 .app {
   min-height: 100vh;
   padding: 20px;
@@ -43,6 +75,13 @@ body {
 }
 
 .topbar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.top-row,
+.bottom-row {
   display: flex;
   justify-content: space-between;
   gap: 16px;
@@ -53,7 +92,6 @@ body {
 .right-controls {
   display: flex;
   gap: 12px;
-  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -62,8 +100,8 @@ body {
   padding: 14px 18px;
   border-radius: 18px;
   border: 1px solid var(--border);
-  font-size: 1rem;
   backdrop-filter: blur(12px);
+  font-weight: 800;
 }
 
 select,
@@ -81,7 +119,7 @@ button {
 
 button {
   cursor: pointer;
-  transition: transform 0.15s ease;
+  transition: 0.15s ease;
 }
 
 button:active {
@@ -97,33 +135,48 @@ button:active {
   padding-top: 20px;
 }
 
-.progress-text {
+.mascot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
-  opacity: 0.8;
-  font-size: 1.1rem;
+}
+
+.mascot {
+  font-size: 5rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.mascot-speech {
+  margin-top: 10px;
+  background: rgba(255,255,255,0.08);
+  padding: 12px 18px;
+  border-radius: 18px;
+  font-weight: 700;
 }
 
 .question-container {
   width: 100%;
   max-width: 700px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
 }
 
 .question-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 28px;
-  padding: 30px;
+  padding: 36px;
   backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
-  transition: 0.3s ease;
 }
 
 .question-card.correct {
   border-color: var(--success);
-  box-shadow: 0 0 30px rgba(50,213,131,0.4);
+  box-shadow: 0 0 30px rgba(50,213,131,0.5);
 }
 
 .question-card.wrong {
@@ -131,28 +184,28 @@ button:active {
 }
 
 .question-text {
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
   font-weight: 900;
   text-align: center;
   margin-bottom: 24px;
 }
 
 .answer-display {
-  height: 72px;
+  height: 80px;
   background: rgba(255,255,255,0.06);
   border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 2.2rem;
+  font-weight: 800;
 }
 
 .feedback {
   margin-top: 20px;
   min-height: 40px;
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: 1.6rem;
+  font-weight: 900;
   text-align: center;
 }
 
@@ -191,41 +244,41 @@ button:active {
   opacity: 0.9;
 }
 
-.settings-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  font-size: 1.8rem;
-}
-
 .settings-panel {
   position: fixed;
+  top: 120px;
   right: 20px;
-  bottom: 100px;
-  width: 280px;
-  background: rgba(15,15,25,0.95);
+  width: 300px;
+  background: rgba(10,10,20,0.96);
   border-radius: 28px;
   padding: 24px;
   border: 1px solid var(--border);
   backdrop-filter: blur(18px);
-}
-
-.settings-panel h2 {
-  margin-top: 0;
+  z-index: 100;
 }
 
 .settings-panel label {
   display: flex;
   justify-content: space-between;
   margin: 18px 0;
-  gap: 12px;
+}
+
+.achievement-banner {
+  margin-bottom: 20px;
+  background: linear-gradient(135deg,#7c5cff,#32d583);
+  padding: 14px 22px;
+  border-radius: 20px;
+  font-weight: 900;
+  animation: pulse 1s infinite;
 }
 
 .hidden {
   display: none;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
 }
 
 @keyframes shake {
@@ -239,7 +292,8 @@ button:active {
 
 @media (max-width: 768px) {
 
-  .topbar {
+  .top-row,
+  .bottom-row {
     flex-direction: column;
   }
 
@@ -253,12 +307,8 @@ button:active {
     flex: 1;
   }
 
-  .question-card {
-    padding: 24px;
-  }
-
-  .key {
-    height: 76px;
+  .settings-panel {
+    width: calc(100% - 40px);
   }
 
 }
