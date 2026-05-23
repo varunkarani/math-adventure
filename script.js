@@ -928,7 +928,6 @@ document.querySelectorAll(".mini-answer")
 });
 
 renderStoryPage();
-}
 
 loadState();
 
