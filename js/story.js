@@ -121,54 +121,88 @@ const BOOKS = [
   title:"🏴‍☠️ Pirate Treasure",
   theme:"pirate",
 
-  pages:[
+   {
 
-    {
       art:"🌊 ⛵ 🏴‍☠️ ☀️ 🦜",
-      text:"Captain Ryan stood proudly at the front of his pirate ship while giant ocean waves splashed around them. His colorful parrot balanced perfectly on his shoulder while the crew searched for the legendary rainbow treasure hidden somewhere beyond the misty horizon."
+
+      text:"Captain Ryan stood proudly at the front of his pirate ship while giant waves crashed against the wooden hull beneath him. His colorful parrot balanced perfectly on his shoulder while salty wind whipped through the sails. Somewhere beyond the endless ocean waited the legendary Rainbow Treasure."
+
     },
 
     {
-      art:"🗺️ ✨ 🪙 🌴 🌊",
-      text:"One stormy evening, the parrot discovered a secret treasure map hidden beneath Captain Ryan's old pirate hat. The mysterious map glowed softly in the moonlight and pointed toward an island marked with a giant golden X."
+
+      art:"🗺️ ✨ 🌴 💰 🌊",
+
+      text:"Late one stormy evening, Ryan’s parrot discovered a glowing treasure map hidden beneath an old pirate chest inside the captain’s cabin. Strange symbols shimmered faintly across the paper while a giant golden X marked an island no sailor had ever seen before."
+
     },
 
     {
-      art:"⚓ 🌧️ 🌊 ⛵ 🌩️",
-      text:"As the ship sailed deeper into unknown waters, thunder rumbled overhead while giant waves rocked the ship from side to side. Ryan held tightly onto the steering wheel while rain splashed across the deck."
+
+      art:"⚓ 🌧️ 🌊 🌩️ ⛵",
+
+      text:"As the ship sailed deeper into dangerous waters, thunder rumbled overhead while enormous waves rocked the deck from side to side. Ryan gripped the steering wheel tightly while rain crashed against the sails."
+
     },
 
     {
-      art:"🌊 🐋 ⛵ 🌈 ☀️",
-      text:"The next morning, enormous whales surfaced beside the pirate ship spraying water high into the air. Dolphins leaped through the waves while sunlight sparkled brightly across the sea."
+
+      art:"🐋 🌊 🌈 ☀️ ⛵",
+
+      text:"The next morning, the storm clouds disappeared completely. Giant whales surfaced beside the pirate ship spraying water high into the air while dolphins leaped through the sparkling waves around them."
+
     },
 
     {
-      art:"🏝️ 🌴 💰 ✨ 🦀",
-      text:"At sunrise, the treasure island finally appeared through the fog. Golden sand glittered along the beach while tiny crabs hurried across the shore carrying colorful shells in their claws."
+
+      art:"🏝️ 🌴 ✨ 🦀 ☀️",
+
+      text:"At sunrise, the treasure island finally appeared through the mist. Golden sand glittered along the beach while giant palm trees swayed slowly in the warm breeze. Tiny crabs hurried across the shore carrying colorful shells."
+
     },
 
     {
-      art:"🪙 💎 🏴‍☠️ 🌈 ⭐",
-      text:"Deep inside a hidden cave, Ryan discovered giant treasure chests overflowing with gold coins, sparkling jewels, glowing rainbow crystals, and ancient crowns covered in emeralds."
+
+      art:"🌴 🗿 🌿 ✨ ⭐",
+
+      text:"Deep inside the island jungle, Ryan discovered enormous stone statues covered in vines and ancient pirate symbols. Hidden torches suddenly burst into blue flames as the jungle path slowly opened before him."
+
     },
 
     {
-      art:"🦀 ⚔️ 🏝️ 🌊 ✨",
-      text:"Suddenly, enormous crabs guarded the treasure path snapping their giant claws loudly. Ryan calmly offered them fruit from the ship's kitchen. The crabs happily shuffled aside and allowed the crew to continue."
+
+      art:"💎 🪙 🌈 ✨ 🏴‍☠️",
+
+      text:"Inside a hidden cave beneath the cliffs, Ryan discovered giant treasure chests overflowing with gold coins, sparkling jewels, glowing rainbow crystals, and ancient crowns covered in emeralds."
+
     },
 
     {
+
+      art:"🦀 ⚔️ 🌊 🏝️ ✨",
+
+      text:"Suddenly, enormous crabs guarded the treasure path snapping their giant claws loudly. Instead of fighting, Ryan calmly offered them fruit from the ship’s kitchen. The crabs happily shuffled aside allowing the crew to continue safely."
+
+    },
+
+    {
+
       art:"🌅 ⛵ 💰 🌊 ☀️",
-      text:"As the pirate ship sailed home beneath the orange sunset sky, the crew celebrated with music, dancing, and pirate songs. Ryan made sure every sailor received an equal share of treasure."
+
+      text:"As the pirate ship sailed home beneath the orange sunset sky, the crew celebrated with music, dancing, and pirate songs echoing across the sea. Ryan made sure every sailor received an equal share of treasure."
+
     },
 
     {
-      art:"🏆 🌈 🏴‍☠️ ⭐ ☀️",
-      text:"Back at the harbor, Captain Ryan became famous across the seven seas as the pirate who found the legendary rainbow treasure and shared it kindly with everyone. Even the parrot puffed out its chest proudly while crowds cheered from the docks."
+
+      art:"🏆 🌈 🏴‍☠️ ⭐ ✨",
+
+      text:"Back at the harbor, Captain Ryan became famous across the seven seas as the pirate who discovered the legendary Rainbow Treasure and shared it kindly with everyone. Even the parrot puffed out its chest proudly while crowds cheered from the docks."
+
     }
 
   ]
+
 },
 
 {
