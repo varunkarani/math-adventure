@@ -1,3 +1,18 @@
+window.onerror = function(
+  message,
+  source,
+  lineno,
+  colno
+){
+
+  console.log(
+    "JS ERROR:",
+    message,
+    source,
+    lineno,
+    colno
+  );
+};
 document.addEventListener(
   "DOMContentLoaded",
   function(){
