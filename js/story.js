@@ -2217,26 +2217,27 @@ playThemeAudio();
 
 }
 
-/* ========================= /
-/ THEMES /
-/ ========================= */
+/* ========================= */
+/* THEMES */
+/* ========================= */
 
 function renderTheme(){
 
-const body =
-document.body;
+  const body =
+    document.body;
 
-body.classList.remove(
-"theme-space",
-"theme-dino",
-"theme-pirate",
-"theme-wizard",
-"theme-ice",
-"theme-train"
-);
-body.classList.add(
-`theme-${BOOKS[currentBook].theme}`
-);
+  body.classList.remove(
+    "theme-space",
+    "theme-dino",
+    "theme-pirate",
+    "theme-wizard",
+    "theme-ice",
+    "theme-train"
+  );
+
+  body.classList.add(
+    `theme-${BOOKS[currentBook].theme}`
+  );
 
 }
 );
