@@ -479,7 +479,15 @@ select{
     brightness(0.82)
     saturate(0.88);
 }
+button,
+.key{
 
+  user-select:none;
+
+  -webkit-user-select:none;
+
+  -webkit-touch-callout:none;
+}
 /* ========================= */
 /* MOBILE */
 /* ========================= */
