@@ -20,31 +20,31 @@ function playThemeAudio(){
 
   if(currentTheme === "space"){
 
-    audioSrc = "audio/space.mp3";
+    audioSrc = "audio/Space.mp3";
 
   }else if(currentTheme === "dino"){
 
-    audioSrc = "audio/dino.mp3";
+    audioSrc = "audio/Dino.mp3";
 
   }else if(currentTheme === "pirate"){
 
-    audioSrc = "audio/pirate.mp3";
+    audioSrc = "audio/Pirate.mp3";
 
   }else if(currentTheme === "wizard"){
 
-    audioSrc = "audio/wizard.mp3";
+    audioSrc = "audio/Wizard.mp3";
 
   }else if(currentTheme === "ice"){
 
-    audioSrc = "audio/ice.mp3";
+    audioSrc = "audio/Ice.mp3";
 
   }else if(currentTheme === "train"){
 
-    audioSrc = "audio/train.mp3";
+    audioSrc = "audio/Train.mp3";
 
   }else{
 
-    audioSrc = "audio/space.mp3";
+    audioSrc = "audio/Space.mp3";
 
   }
 
