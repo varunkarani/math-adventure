@@ -694,65 +694,62 @@ const BOOKS = [
 
 ];
 
-/* ========================= */
-/* BOOKSHELF */
-/* ========================= */
+/* ========================= /
+/ BOOKSHELF /
+/ ========================= */
 
 function renderBookshelf(){
 
-  const container =
-    document.getElementById(
-      "bookshelf"
+const container =
+document.getElementById(
+“bookshelf”
+);
+
+if(!container) return;
+
+container.innerHTML = “”;
+
+BOOKS.forEach((book,index)=>{
+
+const card =
+  document.createElement(
+    "button"
+  );
+card.className =
+  "book-card";
+card.innerHTML = `
+  <div class="book-title">
+    ${book.title}
+  </div>
+  <div class="book-subtitle">
+    ${book.pages.length} pages
+  </div>
+`;
+card.onclick = ()=>{
+  currentBook = index;
+  storyPage = 0;
+  renderStory();
+  document
+    .getElementById(
+      "bookshelfView"
+    )
+    .classList.add(
+      "hidden"
     );
+  document
+    .getElementById(
+      "readerView"
+    )
+    .classList.remove(
+      "hidden"
+    );
+};
+container.appendChild(
+  card
+);
 
-  if(!container) return;
+});
 
-  container.innerHTML = "";
-
-  BOOKS.forEach((book,index)=>{
-
-    const card =
-      document.createElement(
-        "button"
-      );
-
-    card.className =
-      "book-card";
-
-    card.innerHTML = `
-
-      <div class="book-title">
-        ${book.title}
-      </div>
-
-      <div class="book-subtitle">
-        ${book.pages.length} pages
-      </div>
-    `;
-
-    card.onclick = ()=>{
-
-      currentBook = index;
-
-      storyPage = 0;
-
-      renderStory();
-      playThemeAudio();
-      document
-        .getElementById(
-          "bookshelfView"
-        )
-        .classList.add("hidden");
-
-      document
-        .getElementById(
-          "readerView"
-        )
-        .classList.remove("hidden");
-    };
-
-    container.appendChild(card);
-  });
 }
 
 /* ========================= */
@@ -795,6 +792,7 @@ function renderStory(){
   }
 
   renderTheme();
+  playThemeAudio();
 }
 
 /* ========================= */
