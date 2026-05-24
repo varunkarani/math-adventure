@@ -2,13 +2,15 @@ self.addEventListener("install", (e) => {
 
   e.waitUntil(
 
-    caches.open("math-adventure-v15").then((cache) => {
+    caches.open("math-adventure-v16").then((cache) => {
 
       return cache.addAll([
         "./",
         "./index.html",
         "./style.css",
-        "./script.js"
+        "./js/app.js",
+        "./js/math.js",
+        "./js/story.js"
       ]);
 
     })
