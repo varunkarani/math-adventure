@@ -379,46 +379,87 @@ const BOOKS = [
   pages:[
 
     {
+
       art:"🚂 🌙 ✨ 🌌 🎫",
-      text:"Ryan boarded the Magic Train just before midnight while glowing stars drifted gently through the station above him. The conductor smiled warmly and stamped Ryan's golden ticket."
+
+      text:"Ryan arrived at the old train station just before midnight while cold silver fog drifted slowly across the empty tracks. Above him, glowing stars twinkled through the darkness while giant clocks ticked softly from the station walls. Then, somewhere far away in the night, Ryan heard the long magical whistle of a train approaching."
+
     },
 
     {
-      art:"🍫 🚂 ☕ ✨ 🍪",
-      text:"Inside the train, soft music played while friendly conductors served giant cookies and steaming hot chocolate topped with marshmallows."
+
+      art:"🚂 💨 🌟 🌙 ⭐",
+
+      text:"The Magic Train burst through the fog surrounded by swirling golden sparks and glowing clouds of steam. Its windows shimmered with warm golden light while strange magical symbols glowed softly across the dark blue metal. Ryan stared in amazement as the train slowly stopped beside him."
+
     },
 
     {
-      art:"❄️ ⛄ 🚂 🌨️ ⭐",
-      text:"The train raced across snowy mountains where glowing snowflakes drifted slowly through the night sky like floating feathers."
+
+      art:"🎩 🚂 ✨ 🎫 🌌",
+
+      text:"A tall conductor wearing a midnight-blue coat stepped onto the platform and smiled warmly at Ryan. 'Right on time,' he whispered while stamping Ryan’s glowing golden ticket. The moment the ticket clicked, the station lights flickered softly and the train doors slowly opened by themselves."
+
     },
 
     {
-      art:"🌉 🚂 🌈 🌌 ✨",
-      text:"Ryan gasped as the train crossed a floating rainbow bridge suspended high above the clouds. Far below, entire cities sparkled like tiny stars."
+
+      art:"🍫 ☕ 🚂 ✨ 🌙",
+
+      text:"Inside the train, warm lanterns glowed gently above velvet seats while tiny silver bells chimed quietly somewhere deep inside the carriages. Floating trays carried mugs of hot chocolate through the aisles while sleepy travelers wrapped themselves in blankets beside frosted windows."
+
     },
 
     {
-      art:"🎠 🚂 ⭐ 🎵 🌙",
-      text:"In one magical train car, glowing carousel horses floated gently through the air while children laughed and played beneath hanging lanterns."
+
+      art:"🌌 ❄️ 🚂 🏔️ ✨",
+
+      text:"As the train rolled deeper into the night, the world outside transformed completely. Snow-covered mountains rose beneath the moonlight while frozen waterfalls glittered like glass under the stars. Ryan pressed his hands against the window in amazement."
+
     },
 
     {
-      art:"🌌 🚂 💤 ✨ 🌠",
-      text:"Ryan curled into a soft velvet seat and watched shooting stars streak across the windows while the train glided silently through the sleeping world."
+
+      art:"🦉 📚 🚂 🌙 ✨",
+
+      text:"In the next carriage, Ryan discovered a magical library filled with floating books and tiny owls carrying glowing scrolls between shelves. One old book slowly opened by itself and revealed maps of hidden kingdoms, underwater cities, and giant crystal forests."
+
     },
 
     {
-      art:"🌅 🚂 ☀️ 🎫 🌈",
-      text:"As sunrise appeared, golden light poured through the train windows painting everything warm orange and pink."
+
+      art:"🌊 🚂 🌉 🌌 ⭐",
+
+      text:"Suddenly, the train crossed an enormous bridge suspended high above a glowing ocean. Deep below the tracks, giant silver whales swam silently through dark waters while glowing jellyfish drifted beneath the waves like floating lanterns."
+
     },
 
     {
-      art:"🏆 🚂 ✨ 🌟 🎫",
-      text:"Before leaving, the conductor handed Ryan a magical golden ticket stamped with the words: 'For Future Adventures.' Ryan smiled knowing the Magic Train would one day return."
+
+      art:"🌲 ✨ 🚂 🌌 🌙",
+
+      text:"Hours later, the Magic Train entered a mysterious forest where every tree glowed softly blue in the darkness. Tiny lights floated through the branches while strange creatures darted silently between the trunks watching the train pass."
+
+    },
+
+    {
+
+      art:"🏰 🚂 ✨ 👑 🌟",
+
+      text:"At sunrise, towering golden castles finally appeared beyond the mountains. The conductor smiled proudly and whispered, 'Welcome to the Kingdom of Dreams.' Ryan stepped off the train slowly, unable to believe the magical world waiting beyond the station gates."
+
+    },
+
+    {
+
+      art:"🌅 🚂 ⭐ ✨ 🌈",
+
+      text:"Before the train disappeared again into the morning fog, the conductor handed Ryan a tiny silver compass glowing faintly with magic. 'Whenever you are ready for another adventure,' he whispered, 'the Magic Train will always find you.' Then the whistle echoed one final time and the train vanished into the sunrise."
+
     }
 
   ]
+
 },
 
 {
