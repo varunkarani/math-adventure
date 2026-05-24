@@ -120,7 +120,9 @@ const BOOKS = [
 {
   title:"🏴‍☠️ Pirate Treasure",
   theme:"pirate",
-
+  
+  pages:[
+    
    {
 
       art:"🌊 ⛵ 🏴‍☠️ ☀️ 🦜",
@@ -408,7 +410,7 @@ const BOOKS = [
 
 {
   title:"🚂 Magic Train",
-  theme:"pirate",
+  theme:"train",
 
   pages:[
 
@@ -596,7 +598,7 @@ const BOOKS = [
 
 {
   title:"❄️ Ice Kingdom",
-  theme:"space",
+  theme:"ice",
 
   pages:[
 
@@ -752,66 +754,77 @@ container.appendChild(
 
 }
 
-/* ========================= */
-/* STORY */
-/* ========================= */
+/* ========================= /
+/ STORY /
+/ ========================= */
 
 function renderStory(){
 
-  const page =
-    BOOKS[currentBook]
-    .pages[storyPage];
+const page =
+BOOKS[currentBook]
+.pages[storyPage];
 
-  document.getElementById(
-    "storyIllustration"
-  ).innerHTML =
-    page.art;
+document.getElementById(
+“storyIllustration”
+).innerHTML =
+page.art;
 
-  document.getElementById(
-    "storyText"
-  ).innerHTML =
-    page.text;
+document.getElementById(
+“storyText”
+).innerHTML =
+page.text;
 
-  document.getElementById(
-    "storyTitle"
-  ).innerHTML =
-    BOOKS[currentBook].title;
+document.getElementById(
+“storyTitle”
+).innerHTML =
+BOOKS[currentBook].title;
 
-  const progress =
-    document.getElementById(
-      "storyProgress"
-    );
+const progress =
+document.getElementById(
+“storyProgress”
+);
 
-  if(progress){
+if(progress){
 
-    progress.innerHTML = `
-      Page ${storyPage+1}
-      of
-      ${BOOKS[currentBook].pages.length}
-    `;
-  }
+progress.innerHTML = `
+  Page ${storyPage+1}
+  of
+  ${BOOKS[currentBook].pages.length}
+`;
 
-  renderTheme();
-  playThemeAudio();
 }
 
-/* ========================= */
-/* THEMES */
-/* ========================= */
+renderTheme();
+
+if(
+typeof playThemeAudio ===
+“function”
+){
+playThemeAudio();
+}
+
+}
+
+/* ========================= /
+/ THEMES /
+/ ========================= */
 
 function renderTheme(){
 
-  const body =
-    document.body;
+const body =
+document.body;
 
-  body.classList.remove(
-    "theme-space",
-    "theme-dino",
-    "theme-pirate",
-    "theme-wizard"
-  );
+body.classList.remove(
+“theme-space”,
+“theme-dino”,
+“theme-pirate”,
+“theme-wizard”,
+“theme-ice”,
+“theme-train”
+);
 
-  body.classList.add(
-    `theme-${BOOKS[currentBook].theme}`
-  );
+body.classList.add(
+theme-${BOOKS[currentBook].theme}
+);
+
 }
