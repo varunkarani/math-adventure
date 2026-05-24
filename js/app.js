@@ -70,7 +70,11 @@ document.addEventListener(
     document.getElementById(
       "bedtimeBtn"
     );
-
+const audioToggleBtn =
+  document.getElementById(
+    "audioToggleBtn"
+  );
+  
   const nextPageBtn =
     document.getElementById(
       "nextPageBtn"
@@ -93,6 +97,15 @@ document.addEventListener(
   let currentInput = "";
 
   let incorrectTries = 0;
+
+  let ambienceEnabled = false;
+
+  let ambienceAudio =
+    new Audio();
+
+  ambienceAudio.loop = true;
+
+  ambienceAudio.volume = 0.35;
 
   /* ========================= */
   /* INIT */
@@ -394,7 +407,7 @@ document.addEventListener(
       }
 
       renderStory();
-
+      playThemeAudio();
     });
 
   }
@@ -410,6 +423,7 @@ document.addEventListener(
         storyPage--;
 
         renderStory();
+        playThemeAudio();
       }
 
     });
@@ -481,6 +495,96 @@ document.addEventListener(
     });
 
   }
+
+/* ========================= */
+/* AMBIENT AUDIO */
+/* ========================= */
+
+function playThemeAudio(){
+
+  if(!ambienceEnabled) return;
+
+  let audioSrc = "";
+
+  const currentTheme =
+    BOOKS[currentBook]
+    .theme;
+
+  if(currentTheme==="space"){
+
+    audioSrc =
+      "audio/space.mp3";
+  }
+
+  else if(
+    currentTheme==="dino"
+  ){
+
+    audioSrc =
+      "audio/dino.mp3";
+  }
+
+  else if(
+    currentTheme==="pirate"
+  ){
+
+    audioSrc =
+      "audio/pirate.mp3";
+  }
+
+  else if(
+    currentTheme==="wizard"
+  ){
+
+    audioSrc =
+      "audio/wizard.mp3";
+  }
+
+  else{
+
+    audioSrc =
+      "audio/space.mp3";
+  }
+
+  ambienceAudio.pause();
+
+  ambienceAudio =
+    new Audio(audioSrc);
+
+  ambienceAudio.loop = true;
+
+  ambienceAudio.volume = 0.35;
+
+  ambienceAudio.play();
+}
+
+if(audioToggleBtn){
+
+  audioToggleBtn.addEventListener(
+    "click",
+    function(){
+
+    ambienceEnabled =
+      !ambienceEnabled;
+
+    if(ambienceEnabled){
+
+      playThemeAudio();
+
+      audioToggleBtn.innerHTML =
+        "🔈 Sound ON";
+
+    }else{
+
+      ambienceAudio.pause();
+
+      audioToggleBtn.innerHTML =
+        "🔊 Ambient Sound";
+    }
+
+  });
+
+}
 
   /* ========================= */
   /* BEDTIME MODE */
