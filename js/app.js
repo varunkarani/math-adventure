@@ -499,5 +499,24 @@ document.addEventListener(
     });
 
   }
+if("serviceWorker" in navigator){
 
+  navigator.serviceWorker
+    .register("./sw.js")
+    .then(function(){
+
+      console.log(
+        "SW registered"
+      );
+
+    })
+    .catch(function(error){
+
+      console.log(
+        "SW failed",
+        error
+      );
+
+    });
+}
 });
