@@ -737,7 +737,7 @@ function renderBookshelf(){
       storyPage = 0;
 
       renderStory();
-
+      playThemeAudio();
       document
         .getElementById(
           "bookshelfView"
