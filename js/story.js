@@ -829,12 +829,6 @@ function backToBookshelf(){
 
 }
 
-window.onload = () => {
-
-  renderBookshelf();
-
-};
-
 if(
 typeof playThemeAudio ===
 "function"
@@ -844,12 +838,19 @@ playThemeAudio();
 
 }
 
+function nextPage(){
+
 /* ========================= */
 /* THEMES */
 /* ========================= */
 
 function renderTheme(){
+  
+window.onload = () => {
 
+  renderBookshelf();
+
+};
   const body =
     document.body;
 
@@ -865,5 +866,6 @@ function renderTheme(){
   body.classList.add(
     `theme-${BOOKS[currentBook].theme}`
   );
+  
 }
 
