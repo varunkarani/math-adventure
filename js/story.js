@@ -760,42 +760,50 @@ container.appendChild(
 
 function renderStory(){
 
-const page =
-BOOKS[currentBook]
-.pages[storyPage];
+  const page =
+    BOOKS[currentBook]
+    .pages[storyPage];
 
-document.getElementById(
-"storyIllustration"
-).innerHTML =
-page.art;
+  document.getElementById(
+    "storyIllustration"
+  ).innerHTML =
+    page.art;
 
-document.getElementById(
-"storyText"
-).innerHTML =
-page.text;
+  document.getElementById(
+    "storyText"
+  ).innerHTML =
+    page.text;
 
-document.getElementById(
-"storyTitle"
-).innerHTML =
-BOOKS[currentBook].title;
+  document.getElementById(
+    "storyTitle"
+  ).innerHTML =
+    BOOKS[currentBook].title;
 
-const progress =
-document.getElementById(
-"storyProgress"
-);
+  const progress =
+    document.getElementById(
+      "storyProgress"
+    );
 
-if(progress){
+  if(progress){
 
-progress.innerHTML = `
-  Page ${storyPage+1}
-  of
-  ${BOOKS[currentBook].pages.length}
-`;
+    progress.innerHTML = `
+      Page ${storyPage+1}
+      of
+      ${BOOKS[currentBook].pages.length}
+    `;
+
+  }
+
+  renderTheme();
+
+  if(
+    typeof playThemeAudio ===
+    "function"
+  ){
+    playThemeAudio();
+  }
 
 }
-
-renderTheme();
-
 function nextPage(){
 
   if(
@@ -829,28 +837,14 @@ function backToBookshelf(){
 
 }
 
-if(
-typeof playThemeAudio ===
-"function"
-){
-playThemeAudio();
-}
-
-}
-
-function nextPage(){
-
-/* ========================= */
-/* THEMES */
-/* ========================= */
-
-function renderTheme(){
-  
 window.onload = () => {
 
   renderBookshelf();
 
 };
+
+function renderTheme(){
+
   const body =
     document.body;
 
@@ -866,6 +860,6 @@ window.onload = () => {
   body.classList.add(
     `theme-${BOOKS[currentBook].theme}`
   );
-  
+
 }
 
