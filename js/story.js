@@ -2210,7 +2210,7 @@ renderTheme();
 
 if(
 typeof playThemeAudio ===
-“function”
+"function"
 ){
 playThemeAudio();
 }
