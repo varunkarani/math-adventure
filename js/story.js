@@ -709,7 +709,7 @@ document.getElementById(
 
 if(!container) return;
 
-container.innerHTML = “”;
+container.innerHTML = "";
 
 BOOKS.forEach((book,index)=>{
 
@@ -796,6 +796,45 @@ progress.innerHTML = `
 
 renderTheme();
 
+function nextPage(){
+
+  if(
+    storyPage <
+    BOOKS[currentBook].pages.length - 1
+  ){
+    storyPage++;
+    renderStory();
+  }
+
+}
+
+function prevPage(){
+
+  if(storyPage > 0){
+    storyPage--;
+    renderStory();
+  }
+
+}
+
+function backToBookshelf(){
+
+  document
+    .getElementById("readerView")
+    .classList.add("hidden");
+
+  document
+    .getElementById("bookshelfView")
+    .classList.remove("hidden");
+
+}
+
+window.onload = () => {
+
+  renderBookshelf();
+
+};
+
 if(
 typeof playThemeAudio ===
 "function"
@@ -826,62 +865,5 @@ function renderTheme(){
   body.classList.add(
     `theme-${BOOKS[currentBook].theme}`
   );
-
-}
-);
-
-if(!container) return;
-
-container.innerHTML = “”;
-
-BOOKS.forEach((book,index)=>{
-
-const card =
-  document.createElement(
-    "button"
-  );
-card.className =
-  "book-card";
-card.innerHTML = `
-  <div class="book-title">
-    ${book.title}
-  </div>
-  <div class="book-subtitle">
-    ${book.pages.length} pages
-  </div>
-`;
-card.onclick = ()=>{
-  currentBook = index;
-  storyPage = 0;
-  renderStory();
-  document
-    .getElementById(
-      "bookshelfView"
-    )
-    .classList.add(
-      "hidden"
-    );
-  document
-    .getElementById(
-      "readerView"
-    )
-    .classList.remove(
-      "hidden"
-    );
-};
-container.appendChild(
-  card
-);
-
-});
-
 }
 
-if(
-typeof playThemeAudio ===
-“function”
-){
-playThemeAudio();
-}
-
-}
