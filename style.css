@@ -492,14 +492,6 @@ select{
   font-size:1rem;
 html,
 body{
-
-  touch-action:
-    manipulation;
-
-  overscroll-behavior:
-    contain;
-}
-
 button,
 .key{
 
