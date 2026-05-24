@@ -8,6 +8,13 @@
   -webkit-tap-highlight-color:transparent;
 }
 
+html,
+body,
+button,
+.key{
+  touch-action:manipulation;
+}
+
 body{
 
   margin:0;
@@ -148,9 +155,38 @@ select{
 
   display:flex;
 
-  justify-content:center;
+  flex-direction:column;
+
+  align-items:center;
+
+  gap:16px;
 
   margin-bottom:18px;
+}
+
+.stats-row{
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:14px;
+
+  flex-wrap:wrap;
+}
+
+.stat-card{
+
+  background:
+    rgba(255,255,255,0.08);
+
+  padding:14px 18px;
+
+  border-radius:18px;
+
+  font-weight:900;
+
+  font-size:1rem;
 }
 
 /* ========================= */
@@ -444,6 +480,10 @@ select{
     saturate(0.88);
 }
 
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
 @media(max-width:768px){
 
   .question-card{
@@ -465,36 +505,5 @@ select{
   .key{
     height:74px;
   }
-.stats-row{
 
-  display:flex;
-
-  justify-content:center;
-
-  gap:14px;
-
-  flex-wrap:wrap;
-
-  margin-bottom:18px;
-}
-
-.stat-card{
-
-  background:
-    rgba(255,255,255,0.08);
-
-  padding:14px 18px;
-
-  border-radius:18px;
-
-  font-weight:900;
-
-  font-size:1rem;
-html,
-body,
-button,
-.key{
-
-  touch-action:
-    manipulation;
 }
