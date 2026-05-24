@@ -10,10 +10,18 @@ let streak = 0;
 
 function generateQuestion(){
 
-  const difficulty =
-    document.getElementById(
-      "difficulty"
-    )?.value || "medium";
+  let difficulty = "medium";
+
+const difficultySelect =
+  document.getElementById(
+    "difficulty"
+  );
+
+if(difficultySelect){
+
+  difficulty =
+    difficultySelect.value;
+}
 
   let num1;
   let num2;
