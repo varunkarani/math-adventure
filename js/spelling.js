@@ -476,3 +476,5 @@ window.addEventListener(
 
   }
 );
+
+console.log("SPELLING JS LOADED");
