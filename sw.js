@@ -1,30 +1,119 @@
-self.addEventListener("install", (e) => {
+const CACHE_NAME =
+  "ryan-adventure-v25";
 
-  e.waitUntil(
+const FILES_TO_CACHE = [
 
-    caches.open("math-adventure-v17").then((cache) => {
+  "./",
+  "./index.html",
+  "./style.css",
 
-      return cache.addAll([
-        "./",
-        "./index.html",
-        "./style.css",
-        "./js/app.js",
-        "./js/math.js",
-        "./js/story.js"
-      ]);
+  /* JS */
+  "./js/app.js",
+  "./js/math.js",
+  "./js/story.js",
+  "./js/spelling.js",
+  "./js/spellingwords.js",
 
-    })
+  /* AUDIO */
+  "./audio/Space.mp3",
+  "./audio/Dino.mp3",
+  "./audio/Pirate.mp3",
+  "./audio/Wizard.mp3",
+  "./audio/Ice.mp3",
+  "./audio/Train.mp3"
 
-  );
-});
+];
 
-self.addEventListener("fetch", (e) => {
+/* ========================= */
+/* INSTALL */
+/* ========================= */
 
-  e.respondWith(
+self.addEventListener(
+  "install",
+  (event) => {
 
-    caches.match(e.request).then((response) => {
-      return response || fetch(e.request);
-    })
+    event.waitUntil(
 
-  );
-});
+      caches.open(CACHE_NAME)
+      .then((cache) => {
+
+        return cache.addAll(
+          FILES_TO_CACHE
+        );
+
+      })
+
+    );
+
+    self.skipWaiting();
+
+  }
+);
+
+/* ========================= */
+/* ACTIVATE */
+/* ========================= */
+
+self.addEventListener(
+  "activate",
+  (event) => {
+
+    event.waitUntil(
+
+      caches.keys()
+      .then((cacheNames) => {
+
+        return Promise.all(
+
+          cacheNames.map(
+            (cache) => {
+
+              if(
+                cache !== CACHE_NAME
+              ){
+
+                return caches.delete(
+                  cache
+                );
+
+              }
+
+            }
+          )
+
+        );
+
+      })
+
+    );
+
+    self.clients.claim();
+
+  }
+);
+
+/* ========================= */
+/* FETCH */
+/* ========================= */
+
+self.addEventListener(
+  "fetch",
+  (event) => {
+
+    event.respondWith(
+
+      caches.match(
+        event.request
+      ).then((response) => {
+
+        return (
+          response ||
+          fetch(event.request)
+        );
+
+      })
+
+    );
+
+  }
+);
