@@ -34,11 +34,6 @@ const spellingEmoji =
     "spellingEmoji"
   );
 
-const spellingModeSelect =
-  document.getElementById(
-    "spellingMode"
-  );
-
 const spellingStreakCount =
   document.getElementById(
     "spellingStreakCount"
@@ -62,6 +57,21 @@ const speakWordBtn =
 const nextWordBtn =
   document.getElementById(
     "nextWordBtn"
+  );
+
+const gameModeSelect =
+  document.getElementById(
+    "gameMode"
+  );
+
+const spellingDifficulty =
+  document.getElementById(
+    "spellingDifficulty"
+  );
+
+const spellingTheme =
+  document.getElementById(
+    "spellingTheme"
   );
 
 /* ========================= */
@@ -90,12 +100,16 @@ function initSpelling(){
 }
 
 /* ========================= */
-/* GET MODE */
+/* CURRENT MODE */
 /* ========================= */
 
 function getCurrentMode(){
 
-  return spellingModeSelect.value;
+  if(!gameModeSelect){
+    return "listen";
+  }
+
+  return gameModeSelect.value;
 
 }
 
@@ -105,40 +119,45 @@ function getCurrentMode(){
 
 function getFilteredWords(){
 
-  const selected =
-    spellingModeSelect.value;
-
-  const gameplayModes = [
-    "listen",
-    "scramble",
-    "missing",
-    "typing"
-  ];
-
-  /* DEFAULT */
-
   if(
-    gameplayModes.includes(selected)
+    typeof SPELLING_WORDS ===
+    "undefined"
   ){
-
-    return SPELLING_WORDS;
-
+    return [];
   }
 
-  /* THEME FILTER */
+  const difficulty =
+    spellingDifficulty
+      ? spellingDifficulty.value
+      : "easy";
+
+  const theme =
+    spellingTheme
+      ? spellingTheme.value
+      : "all";
 
   return SPELLING_WORDS.filter(
-    word =>
+    word => {
 
-      word.level === selected ||
+      const matchesDifficulty =
+        word.level === difficulty;
 
-      word.theme === selected
+      const matchesTheme =
+        theme === "all" ||
+        word.theme === theme;
+
+      return (
+        matchesDifficulty &&
+        matchesTheme
+      );
+
+    }
   );
 
 }
 
 /* ========================= */
-/* GENERATE */
+/* GENERATE WORD */
 /* ========================= */
 
 function generateSpellingQuestion(){
@@ -169,12 +188,12 @@ function generateSpellingQuestion(){
 
   renderSpelling();
 
-  const currentMode =
+  const mode =
     getCurrentMode();
 
   if(
-    currentMode === "listen" ||
-    currentMode === "typing"
+    mode === "listen" ||
+    mode === "typing"
   ){
 
     speakCurrentWord();
@@ -209,7 +228,7 @@ function createMissingWord(word){
   const randomIndex =
     Math.floor(
       Math.random() *
-      (word.length - 1)
+      word.length
     );
 
   return (
@@ -230,16 +249,16 @@ function renderSpelling(){
     return;
   }
 
-  const currentMode =
+  const mode =
     getCurrentMode();
 
-  let prompt = "";
+  let displayText = "";
 
   /* LISTEN */
 
-  if(currentMode === "listen"){
+  if(mode === "listen"){
 
-    prompt =
+    displayText =
       "🔊 Listen carefully";
 
   }
@@ -247,10 +266,10 @@ function renderSpelling(){
   /* UNSCRAMBLE */
 
   else if(
-    currentMode === "scramble"
+    mode === "scramble"
   ){
 
-    prompt =
+    displayText =
       scrambleWord(
         spellingCurrentWord.word
       );
@@ -260,10 +279,10 @@ function renderSpelling(){
   /* MISSING LETTER */
 
   else if(
-    currentMode === "missing"
+    mode === "missing"
   ){
 
-    prompt =
+    displayText =
       createMissingWord(
         spellingCurrentWord.word
       );
@@ -273,33 +292,43 @@ function renderSpelling(){
   /* TYPING */
 
   else if(
-    currentMode === "typing"
+    mode === "typing"
   ){
 
-    prompt =
+    displayText =
       "⌨️ Type what you hear";
 
   }
 
-  /* THEME / LEVEL MODES */
-
   else{
 
-    prompt =
-      "🔊 Listen carefully";
+    displayText =
+      "🔊 Spell the word";
 
   }
 
   /* DISPLAY */
 
-  spellingWordDisplay.innerHTML =
-    prompt;
+  if(spellingWordDisplay){
 
-  spellingInputDisplay.innerHTML =
-    spellingCurrentInput || "_";
+    spellingWordDisplay.innerHTML =
+      displayText;
 
-  spellingEmoji.innerHTML =
-    spellingCurrentWord.emoji;
+  }
+
+  if(spellingInputDisplay){
+
+    spellingInputDisplay.innerHTML =
+      spellingCurrentInput || "_";
+
+  }
+
+  if(spellingEmoji){
+
+    spellingEmoji.innerHTML =
+      spellingCurrentWord.emoji;
+
+  }
 
 }
 
@@ -324,6 +353,8 @@ function speakCurrentWord(){
 
   utterance.pitch = 1;
 
+  utterance.volume = 1;
+
   speechSynthesis.speak(
     utterance
   );
@@ -331,7 +362,7 @@ function speakCurrentWord(){
 }
 
 /* ========================= */
-/* CHECK */
+/* CHECK ANSWER */
 /* ========================= */
 
 function checkSpellingAnswer(){
@@ -340,17 +371,17 @@ function checkSpellingAnswer(){
     return;
   }
 
-  const correct =
+  const correctWord =
     spellingCurrentWord.word
     .toLowerCase();
 
-  const user =
+  const userWord =
     spellingCurrentInput
     .toLowerCase();
 
   /* CORRECT */
 
-  if(user === correct){
+  if(userWord === correctWord){
 
     spellingSolved++;
 
@@ -358,11 +389,15 @@ function checkSpellingAnswer(){
 
     updateSpellingStats();
 
-    spellingFeedback.innerHTML =
-      "✅ Correct!";
+    if(spellingFeedback){
 
-    spellingFeedback.className =
-      "feedback success";
+      spellingFeedback.innerHTML =
+        "✅ Correct!";
+
+      spellingFeedback.className =
+        "feedback success";
+
+    }
 
     if(
       typeof launchConfetti ===
@@ -375,8 +410,12 @@ function checkSpellingAnswer(){
 
     setTimeout(()=>{
 
-      spellingFeedback.innerHTML =
-        "";
+      if(spellingFeedback){
+
+        spellingFeedback.innerHTML =
+          "";
+
+      }
 
       generateSpellingQuestion();
 
@@ -392,16 +431,24 @@ function checkSpellingAnswer(){
 
     updateSpellingStats();
 
-    spellingFeedback.innerHTML =
-      `❌ ${correct}`;
+    if(spellingFeedback){
 
-    spellingFeedback.className =
-      "feedback error";
+      spellingFeedback.innerHTML =
+        `❌ Correct answer: ${correctWord}`;
+
+      spellingFeedback.className =
+        "feedback error";
+
+    }
 
     setTimeout(()=>{
 
-      spellingFeedback.innerHTML =
-        "";
+      if(spellingFeedback){
+
+        spellingFeedback.innerHTML =
+          "";
+
+      }
 
       generateSpellingQuestion();
 
@@ -417,11 +464,19 @@ function checkSpellingAnswer(){
 
 function updateSpellingStats(){
 
-  spellingStreakCount.innerHTML =
-    spellingStreak;
+  if(spellingStreakCount){
 
-  spellingSolvedCount.innerHTML =
-    spellingSolved;
+    spellingStreakCount.innerHTML =
+      spellingStreak;
+
+  }
+
+  if(spellingSolvedCount){
+
+    spellingSolvedCount.innerHTML =
+      spellingSolved;
+
+  }
 
 }
 
@@ -487,7 +542,7 @@ if(spellingKeyboard){
 }
 
 /* ========================= */
-/* BUTTONS */
+/* BUTTON EVENTS */
 /* ========================= */
 
 if(speakWordBtn){
@@ -517,12 +572,38 @@ if(nextWordBtn){
 }
 
 /* ========================= */
-/* MODE CHANGE */
+/* DROPDOWNS */
 /* ========================= */
 
-if(spellingModeSelect){
+if(gameModeSelect){
 
-  spellingModeSelect.addEventListener(
+  gameModeSelect.addEventListener(
+    "change",
+    function(){
+
+      generateSpellingQuestion();
+
+    }
+  );
+
+}
+
+if(spellingDifficulty){
+
+  spellingDifficulty.addEventListener(
+    "change",
+    function(){
+
+      generateSpellingQuestion();
+
+    }
+  );
+
+}
+
+if(spellingTheme){
+
+  spellingTheme.addEventListener(
     "change",
     function(){
 
