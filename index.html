@@ -312,102 +312,174 @@
         ✏️ Ryan's Spelling Adventures
       </div>
 
-      <div class="stats-row">
-
-        <div class="stat-card">
-          🔥 Streak:
-          <span id="spellingStreak">
-            0
-          </span>
-        </div>
-
-        <div class="stat-card">
-          ✅ Solved:
-          <span id="spellingSolved">
-            0
-          </span>
-        </div>
-
+      <div class="story-banner">
+        Learn spelling with sounds,
+        streaks, and fun word challenges!
       </div>
 
-      <div class="story-controls">
+      <div class="top-row">
+
+        <div class="stats-row">
+
+          <div class="stat-card">
+            🔥 Streak:
+            <span id="spellingStreakCount">
+              0
+            </span>
+          </div>
+
+          <div class="stat-card">
+            ⭐ Solved:
+            <span id="spellingSolvedCount">
+              0
+            </span>
+          </div>
+
+        </div>
 
         <select id="spellingMode">
 
-          <option value="listen">
-            🔊 Listen & Spell
+          <option value="easy">
+            Easy Words
           </option>
 
-          <option value="scramble">
-            🔀 Unscramble
+          <option value="medium">
+            Medium Words
           </option>
 
-          <option value="missing">
-            ❓ Missing Letter
+          <option value="hard">
+            Hard Words
           </option>
 
-          <option value="typing">
-            ⌨️ Typing Challenge
+          <option value="animals">
+            Animals
+          </option>
+
+          <option value="food">
+            Food
+          </option>
+
+          <option value="space">
+            Space
+          </option>
+
+          <option value="dinosaurs">
+            Dinosaurs
+          </option>
+
+          <option value="pirates">
+            Pirates
+          </option>
+
+          <option value="magic">
+            Magic
+          </option>
+
+          <option value="vehicles">
+            Vehicles
           </option>
 
         </select>
 
-        <button onclick="generateSpellingQuestion()">
-          🎲 New Word
-        </button>
-
-        <button onclick="speakCurrentWord()">
-          🔊 Hear Word
-        </button>
-
       </div>
 
-      <div class="story-book">
+      <div class="main-content">
 
         <div
           id="spellingEmoji"
           class="story-illustration"
         >
-          ✨
+          ✏️
+        </div>
+
+        <div class="question-container">
+
+          <div class="question-card">
+
+            <div
+              id="spellingWordDisplay"
+              class="question-text"
+            >
+              Press Speak
+            </div>
+
+            <div
+              id="spellingInputDisplay"
+              class="answer-display"
+            >
+              _
+            </div>
+
+            <div
+              id="spellingFeedback"
+              class="feedback"
+            ></div>
+
+          </div>
+
+        </div>
+
+        <div class="story-controls">
+
+          <button id="speakWordBtn">
+            🔊 Speak Word
+          </button>
+
+          <button id="nextWordBtn">
+            ⏭ Next Word
+          </button>
+
         </div>
 
         <div
-          id="spellingPrompt"
-          class="question-text"
-        >
-          Press "New Word"
-        </div>
-
-        <input
-          type="text"
-          id="spellingInput"
-          placeholder="Type the spelling..."
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-          style="
-            font-size:28px;
-            padding:16px;
-            border-radius:16px;
-            border:none;
-            text-align:center;
-            width:80%;
-            max-width:400px;
-            margin:20px auto;
-            display:block;
-          "
+          id="spellingKeyboard"
+          class="spelling-keyboard"
         >
 
-        <div
-          id="spellingFeedback"
-          class="feedback"
-        ></div>
+          <!-- ROW 1 -->
 
-        <div class="story-buttons">
+          <button class="spell-key">A</button>
+          <button class="spell-key">B</button>
+          <button class="spell-key">C</button>
+          <button class="spell-key">D</button>
+          <button class="spell-key">E</button>
+          <button class="spell-key">F</button>
+          <button class="spell-key">G</button>
 
-          <button onclick="checkSpellingAnswer()">
-            ✅ Submit
+          <!-- ROW 2 -->
+
+          <button class="spell-key">H</button>
+          <button class="spell-key">I</button>
+          <button class="spell-key">J</button>
+          <button class="spell-key">K</button>
+          <button class="spell-key">L</button>
+          <button class="spell-key">M</button>
+          <button class="spell-key">N</button>
+
+          <!-- ROW 3 -->
+
+          <button class="spell-key">O</button>
+          <button class="spell-key">P</button>
+          <button class="spell-key">Q</button>
+          <button class="spell-key">R</button>
+          <button class="spell-key">S</button>
+          <button class="spell-key">T</button>
+          <button class="spell-key">U</button>
+
+          <!-- ROW 4 -->
+
+          <button class="spell-key">V</button>
+          <button class="spell-key">W</button>
+          <button class="spell-key">X</button>
+          <button class="spell-key">Y</button>
+          <button class="spell-key">Z</button>
+
+          <button class="spell-key action">
+            ⌫
+          </button>
+
+          <button class="spell-key action">
+            ✓
           </button>
 
         </div>
