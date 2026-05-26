@@ -241,3 +241,47 @@ function getWordsByDifficulty(level){
 ========================================= */
 
 console.log(
+
+/* =========================================
+   CONVERT WORD BANK
+   INTO SPELLING_WORDS ARRAY
+========================================= */
+
+const SPELLING_WORDS = [];
+
+Object.keys(SPELLING_WORD_BANK).forEach(level => {
+
+  const categories =
+    SPELLING_WORD_BANK[level];
+
+  Object.keys(categories).forEach(category => {
+
+    categories[category].forEach(word => {
+
+      SPELLING_WORDS.push({
+
+        word: word,
+
+        level: level,
+
+        category: category,
+
+        theme: category,
+
+        emoji: "✨"
+
+      });
+
+    });
+
+  });
+
+});
+
+window.SPELLING_WORDS =
+  SPELLING_WORDS;
+
+console.log(
+  "SPELLING_WORDS READY:",
+  SPELLING_WORDS.length
+);
