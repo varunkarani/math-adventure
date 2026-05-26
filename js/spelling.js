@@ -10,6 +10,8 @@ let spellingSolved = 0;
 
 let spellingStreak = 0;
 
+let recentlyUsedWords = [];
+
 /* ========================= */
 /* ELEMENTS */
 /* ========================= */
@@ -162,7 +164,7 @@ function getFilteredWords(){
 
 function generateSpellingQuestion(){
 
-  const words =
+  let words =
     getFilteredWords();
 
   if(words.length === 0){
@@ -175,6 +177,28 @@ function generateSpellingQuestion(){
 
   }
 
+  /* REMOVE RECENT WORDS */
+
+  words = words.filter(
+    word =>
+
+      !recentlyUsedWords.includes(
+        word.word
+      )
+  );
+
+  /* RESET IF TOO FEW LEFT */
+
+  if(words.length < 5){
+
+    recentlyUsedWords = [];
+
+    words = getFilteredWords();
+
+  }
+
+  /* PICK RANDOM WORD */
+
   const randomIndex =
     Math.floor(
       Math.random() *
@@ -186,14 +210,29 @@ function generateSpellingQuestion(){
 
   spellingCurrentInput = "";
 
+  /* SAVE TO RECENT */
+
+  recentlyUsedWords.push(
+    spellingCurrentWord.word
+  );
+
+  /* KEEP LAST 12 */
+
+  if(
+    recentlyUsedWords.length > 12
+  ){
+
+    recentlyUsedWords.shift();
+
+  }
+
   renderSpelling();
 
   const mode =
     getCurrentMode();
 
   if(
-    mode === "listen" ||
-    mode === "typing"
+    mode === "listen"
   ){
 
     speakCurrentWord();
