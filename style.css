@@ -587,157 +587,23 @@ button,
 
   padding:20px;
 
-}
+  position:relative;
 
-.spelling-container{
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-
-  gap:20px;
+  z-index:5;
 
 }
 
-.spelling-top-row{
+#spellingSection button{
 
-  width:100%;
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  flex-wrap:wrap;
-
-  gap:14px;
-
-}
-
-.spelling-stats{
-
-  display:flex;
-
-  gap:12px;
-
-  flex-wrap:wrap;
-
-}
-
-.spelling-card{
-
-  background:
-    rgba(255,255,255,0.08);
-
-  padding:14px 18px;
-
-  border-radius:18px;
-
-  font-weight:900;
-
-}
-
-.spelling-panel{
-
-  width:100%;
-  max-width:760px;
-
-  padding:30px;
-
-  border-radius:30px;
-
-  background:
-    rgba(255,255,255,0.08);
-
-  text-align:center;
-
-}
-
-.spelling-emoji{
-
-  font-size:5rem;
-
-  margin-bottom:16px;
-
-}
-
-.spelling-theme{
-
-  font-size:0.95rem;
-
-  opacity:0.75;
-
-  margin-bottom:8px;
-
-  text-transform:uppercase;
-
-  font-weight:900;
-
-}
-
-.spelling-category{
-
-  font-size:1.2rem;
-
-  font-weight:900;
-
-  margin-bottom:20px;
-
-}
-
-.spelling-input{
-
-  min-height:80px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:2.5rem;
-
-  font-weight:900;
-
-  letter-spacing:4px;
-
-  border-radius:22px;
-
-  background:
-    rgba(255,255,255,0.06);
-
-  margin:20px 0;
-
-}
-
-.spelling-feedback{
-
-  min-height:40px;
-
-  font-size:1.4rem;
-
-  font-weight:900;
-
-}
-
-.spelling-buttons{
-
-  display:flex;
-
-  justify-content:center;
-
-  gap:14px;
-
-  flex-wrap:wrap;
-
-  margin-top:20px;
+  pointer-events:auto;
 
 }
 
 .spelling-keyboard{
+
+  width:100%;
+
+  max-width:760px;
 
   margin-top:26px;
 
@@ -754,6 +620,8 @@ button,
 
   min-height:62px;
 
+  border:none;
+
   border-radius:18px;
 
   font-size:1.4rem;
@@ -765,6 +633,24 @@ button,
 
   color:white;
 
+  cursor:pointer;
+
+  transition:
+    transform 0.12s ease,
+    background 0.2s ease;
+
+}
+
+.spell-key:hover{
+
+  transform:scale(1.03);
+
+}
+
+.spell-key:active{
+
+  transform:scale(0.95);
+
 }
 
 .spell-key.action{
@@ -772,21 +658,36 @@ button,
   background:
     linear-gradient(
       135deg,
-      rgba(124,92,255,0.5),
-      rgba(124,92,255,0.2)
+      rgba(124,92,255,0.7),
+      rgba(50,213,131,0.45)
     );
 
 }
 
-.spelling-select{
+#spellingWordDisplay{
 
-  border:none;
+  font-size:
+    clamp(2rem,5vw,4rem);
 
-  border-radius:16px;
+}
 
-  padding:12px 14px;
+#spellingInputDisplay{
 
-  font-weight:900;
+  margin-top:18px;
+
+}
+
+#spellingFeedback{
+
+  min-height:42px;
+
+}
+
+#spellingEmoji{
+
+  font-size:5rem;
+
+  margin-bottom:20px;
 
 }
 
@@ -838,30 +739,20 @@ button,
 
   }
 
-  .spelling-panel{
-
-    padding:20px;
-
-  }
-
-  .spelling-input{
-
-    font-size:2rem;
-
-  }
-
   .spelling-keyboard{
 
     grid-template-columns:
-      repeat(5,1fr);
+      repeat(4,1fr);
+
+    gap:8px;
 
   }
 
   .spell-key{
 
-    min-height:56px;
+    min-height:58px;
 
-    font-size:1.1rem;
+    font-size:1.05rem;
 
   }
 
