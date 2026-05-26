@@ -1,195 +1,495 @@
-/* =========================================
-   RYAN'S SPELLING WORDS
-   FULL GAME WORD DATABASE
-========================================= */
+const SPELLING_WORDS = [
 
-const SPELLING_WORD_BANK = {
+  /* ========================= */
+  /* EASY */
+  /* ========================= */
 
-  easy: {
-
-    basics: [
-      "cat","dog","sun","hat","bat","pen","cup","bed","jam","fox",
-      "fish","tree","milk","book","ball","duck","frog","lamp","sock","ring",
-      "apple","banana","cookie","pizza","water","happy","yellow","purple","green","orange",
-      "house","window","garden","flower","rocket","planet","school","teacher","friend","family"
-    ],
-
-    animals: [
-      "cat","dog","lion","tiger","zebra","monkey","horse","snake","rabbit","panda",
-      "koala","shark","whale","dolphin","camel","sheep","goat","mouse","otter","penguin"
-    ],
-
-    food: [
-      "apple","cake","pizza","pasta","burger","cheese","bread","carrot","cookie","juice",
-      "banana","orange","grapes","melon","mango","rice","noodle","waffle","donut","popcorn"
-    ]
-
+  {
+    word:"cat",
+    level:"easy",
+    theme:"animals",
+    category:"pets",
+    emoji:"🐱"
   },
 
-  medium: {
-
-    nature: [
-      "mountain","rainbow","waterfall","sunshine","forest","ocean","volcano","thunder","lightning","desert",
-      "river","island","snowflake","blizzard","tornado","hurricane","canyon","jungle","valley","glacier"
-    ],
-
-    space: [
-      "planet","rocket","astronaut","galaxy","meteor","satellite","spaceship","comet","nebula","starlight",
-      "moonlight","gravity","telescope","universe","asteroid","orbit","capsule","launch","cosmos","alien"
-    ],
-
-    vehicles: [
-      "airplane","helicopter","submarine","motorcycle","tractor","bulldozer","ambulance","firetruck","spaceship","scooter",
-      "train","wagon","skateboard","yacht","ferry","racecar","pickup","van","jeep","taxi"
-    ]
-
+  {
+    word:"dog",
+    level:"easy",
+    theme:"animals",
+    category:"pets",
+    emoji:"🐶"
   },
 
-  hard: {
-
-    adventure: [
-      "treasure","adventure","discovery","explorer","mysterious","dangerous","enchanted","crystalline","waterfall","forgotten",
-      "legendary","invisible","magnificent","spectacular","protective","powerful","lightning","thunderstorm","volcanic","adventurer"
-    ],
-
-    magic: [
-      "wizard","dragon","phoenix","spellbook","potion","enchanted","crystal","invisible","magician","cauldron",
-      "lightning","fireball","wand","sorcery","mystical","illusion","guardian","castle","unicorn","griffin"
-    ],
-
-    science: [
-      "electricity","experiment","laboratory","chemical","gravity","energy","microscope","technology","invention","engineering",
-      "generator","computer","mechanical","magnetic","reaction","circuit","battery","satellite","formula","oxygen"
-    ]
-
+  {
+    word:"sun",
+    level:"easy",
+    theme:"space",
+    category:"nature",
+    emoji:"☀️"
   },
 
-  animals: {
-
-    jungle: [
-      "lion","tiger","elephant","giraffe","monkey","gorilla","cheetah","hippopotamus","crocodile","chimpanzee",
-      "parrot","toucan","panther","leopard","buffalo","hyena","rhino","baboon","gazelle","jaguar"
-    ],
-
-    ocean: [
-      "whale","dolphin","octopus","starfish","jellyfish","stingray","lobster","seahorse","hammerhead","penguin",
-      "seal","walrus","shrimp","turtle","coral","shark","squid","crab","clam","urchin"
-    ],
-
-    farm: [
-      "chicken","cow","pig","horse","goose","turkey","sheep","donkey","rabbit","rooster",
-      "duckling","kitten","puppy","goat","llama","alpaca","barn","tractor","haystack","pasture"
-    ]
-
+  {
+    word:"moon",
+    level:"easy",
+    theme:"space",
+    category:"space",
+    emoji:"🌙"
   },
 
-  dinosaurs: {
-
-    dinos: [
-      "tyrannosaurus","triceratops","velociraptor","stegosaurus","brachiosaurus","ankylosaurus","pterodactyl","diplodocus","spinosaurus","allosaurus",
-      "fossil","prehistoric","volcano","meteorite","extinction","claws","tail","scales","eggshell","roaring"
-    ]
-
+  {
+    word:"star",
+    level:"easy",
+    theme:"space",
+    category:"space",
+    emoji:"⭐"
   },
 
-  pirates: {
-
-    piratewords: [
-      "pirate","treasure","captain","parrot","compass","shipwreck","cannon","island","ocean","anchor",
-      "sailor","harbor","goldcoin","cutlass","map","voyage","captaincy","adventure","stormy","crew"
-    ]
-
+  {
+    word:"fish",
+    level:"easy",
+    theme:"animals",
+    category:"ocean",
+    emoji:"🐠"
   },
 
-  magic: {
-
-    wizardry: [
-      "wizard","spell","dragon","castle","phoenix","magic","enchanted","wand","potion","cauldron",
-      "griffin","sorcery","crystal","spellbook","cloak","mystical","guardian","fireball","alchemy","floating"
-    ]
-
+  {
+    word:"cake",
+    level:"easy",
+    theme:"food",
+    category:"dessert",
+    emoji:"🎂"
   },
 
-  vehicles: {
+  {
+    word:"apple",
+    level:"easy",
+    theme:"food",
+    category:"fruit",
+    emoji:"🍎"
+  },
 
-    transport: [
-      "airplane","submarine","helicopter","motorcycle","spaceship","racecar","ambulance","firetruck","scooter","bulldozer",
-      "tractor","wagon","taxi","pickup","ferry","train","bicycle","yacht","van","jeep"
-    ]
+  {
+    word:"pizza",
+    level:"easy",
+    theme:"food",
+    category:"meal",
+    emoji:"🍕"
+  },
 
+  {
+    word:"car",
+    level:"easy",
+    theme:"vehicles",
+    category:"transport",
+    emoji:"🚗"
+  },
+
+  {
+    word:"train",
+    level:"easy",
+    theme:"vehicles",
+    category:"transport",
+    emoji:"🚂"
+  },
+
+  {
+    word:"boat",
+    level:"easy",
+    theme:"pirates",
+    category:"ocean",
+    emoji:"⛵"
+  },
+
+  {
+    word:"ship",
+    level:"easy",
+    theme:"pirates",
+    category:"ocean",
+    emoji:"🚢"
+  },
+
+  {
+    word:"hat",
+    level:"easy",
+    theme:"magic",
+    category:"wizard",
+    emoji:"🎩"
+  },
+
+  {
+    word:"wand",
+    level:"easy",
+    theme:"magic",
+    category:"wizard",
+    emoji:"🪄"
+  },
+
+  {
+    word:"dragon",
+    level:"easy",
+    theme:"magic",
+    category:"creatures",
+    emoji:"🐉"
+  },
+
+  {
+    word:"dino",
+    level:"easy",
+    theme:"dinosaurs",
+    category:"creatures",
+    emoji:"🦖"
+  },
+
+  {
+    word:"tiger",
+    level:"easy",
+    theme:"animals",
+    category:"jungle",
+    emoji:"🐯"
+  },
+
+  {
+    word:"lion",
+    level:"easy",
+    theme:"animals",
+    category:"jungle",
+    emoji:"🦁"
+  },
+
+  {
+    word:"frog",
+    level:"easy",
+    theme:"animals",
+    category:"pond",
+    emoji:"🐸"
+  },
+
+  /* ========================= */
+  /* MEDIUM */
+  /* ========================= */
+
+  {
+    word:"planet",
+    level:"medium",
+    theme:"space",
+    category:"space",
+    emoji:"🪐"
+  },
+
+  {
+    word:"rocket",
+    level:"medium",
+    theme:"space",
+    category:"space",
+    emoji:"🚀"
+  },
+
+  {
+    word:"galaxy",
+    level:"medium",
+    theme:"space",
+    category:"space",
+    emoji:"🌌"
+  },
+
+  {
+    word:"astronaut",
+    level:"medium",
+    theme:"space",
+    category:"space",
+    emoji:"🧑‍🚀"
+  },
+
+  {
+    word:"volcano",
+    level:"medium",
+    theme:"dinosaurs",
+    category:"nature",
+    emoji:"🌋"
+  },
+
+  {
+    word:"triceratops",
+    level:"medium",
+    theme:"dinosaurs",
+    category:"creatures",
+    emoji:"🦕"
+  },
+
+  {
+    word:"treasure",
+    level:"medium",
+    theme:"pirates",
+    category:"adventure",
+    emoji:"💎"
+  },
+
+  {
+    word:"captain",
+    level:"medium",
+    theme:"pirates",
+    category:"adventure",
+    emoji:"🏴‍☠️"
+  },
+
+  {
+    word:"parrot",
+    level:"medium",
+    theme:"pirates",
+    category:"animals",
+    emoji:"🦜"
+  },
+
+  {
+    word:"castle",
+    level:"medium",
+    theme:"magic",
+    category:"wizard",
+    emoji:"🏰"
+  },
+
+  {
+    word:"wizard",
+    level:"medium",
+    theme:"magic",
+    category:"wizard",
+    emoji:"🧙"
+  },
+
+  {
+    word:"potion",
+    level:"medium",
+    theme:"magic",
+    category:"wizard",
+    emoji:"🧪"
+  },
+
+  {
+    word:"unicorn",
+    level:"medium",
+    theme:"magic",
+    category:"creatures",
+    emoji:"🦄"
+  },
+
+  {
+    word:"sandwich",
+    level:"medium",
+    theme:"food",
+    category:"meal",
+    emoji:"🥪"
+  },
+
+  {
+    word:"banana",
+    level:"medium",
+    theme:"food",
+    category:"fruit",
+    emoji:"🍌"
+  },
+
+  {
+    word:"hamburger",
+    level:"medium",
+    theme:"food",
+    category:"meal",
+    emoji:"🍔"
+  },
+
+  {
+    word:"helicopter",
+    level:"medium",
+    theme:"vehicles",
+    category:"transport",
+    emoji:"🚁"
+  },
+
+  {
+    word:"airplane",
+    level:"medium",
+    theme:"vehicles",
+    category:"transport",
+    emoji:"✈️"
+  },
+
+  {
+    word:"submarine",
+    level:"medium",
+    theme:"vehicles",
+    category:"ocean",
+    emoji:"🛳️"
+  },
+
+  {
+    word:"firetruck",
+    level:"medium",
+    theme:"vehicles",
+    category:"rescue",
+    emoji:"🚒"
+  },
+
+  /* ========================= */
+  /* HARD */
+  /* ========================= */
+
+  {
+    word:"adventure",
+    level:"hard",
+    theme:"pirates",
+    category:"story",
+    emoji:"🗺️"
+  },
+
+  {
+    word:"spaceship",
+    level:"hard",
+    theme:"space",
+    category:"space",
+    emoji:"🚀"
+  },
+
+  {
+    word:"constellation",
+    level:"hard",
+    theme:"space",
+    category:"space",
+    emoji:"✨"
+  },
+
+  {
+    word:"microscope",
+    level:"hard",
+    theme:"space",
+    category:"science",
+    emoji:"🔬"
+  },
+
+  {
+    word:"tyrannosaurus",
+    level:"hard",
+    theme:"dinosaurs",
+    category:"creatures",
+    emoji:"🦖"
+  },
+
+  {
+    word:"pterodactyl",
+    level:"hard",
+    theme:"dinosaurs",
+    category:"creatures",
+    emoji:"🦕"
+  },
+
+  {
+    word:"waterfall",
+    level:"hard",
+    theme:"animals",
+    category:"nature",
+    emoji:"🌊"
+  },
+
+  {
+    word:"lightning",
+    level:"hard",
+    theme:"space",
+    category:"weather",
+    emoji:"⚡"
+  },
+
+  {
+    word:"chocolate",
+    level:"hard",
+    theme:"food",
+    category:"dessert",
+    emoji:"🍫"
+  },
+
+  {
+    word:"strawberry",
+    level:"hard",
+    theme:"food",
+    category:"fruit",
+    emoji:"🍓"
+  },
+
+  {
+    word:"crocodile",
+    level:"hard",
+    theme:"animals",
+    category:"jungle",
+    emoji:"🐊"
+  },
+
+  {
+    word:"chimpanzee",
+    level:"hard",
+    theme:"animals",
+    category:"jungle",
+    emoji:"🐵"
+  },
+
+  {
+    word:"motorcycle",
+    level:"hard",
+    theme:"vehicles",
+    category:"transport",
+    emoji:"🏍️"
+  },
+
+  {
+    word:"excavator",
+    level:"hard",
+    theme:"vehicles",
+    category:"construction",
+    emoji:"🚜"
+  },
+
+  {
+    word:"laboratory",
+    level:"hard",
+    theme:"magic",
+    category:"science",
+    emoji:"🧪"
+  },
+
+  {
+    word:"electricity",
+    level:"hard",
+    theme:"space",
+    category:"science",
+    emoji:"⚡"
+  },
+
+  {
+    word:"magnificent",
+    level:"hard",
+    theme:"magic",
+    category:"story",
+    emoji:"🌟"
+  },
+
+  {
+    word:"discovery",
+    level:"hard",
+    theme:"space",
+    category:"story",
+    emoji:"🔭"
+  },
+
+  {
+    word:"imagination",
+    level:"hard",
+    theme:"magic",
+    category:"story",
+    emoji:"✨"
+  },
+
+  {
+    word:"celebration",
+    level:"hard",
+    theme:"food",
+    category:"party",
+    emoji:"🎉"
   }
 
-};
-
-/* =========================================
-   CONVERT WORD BANK
-   INTO SPELLING_WORDS ARRAY
-========================================= */
-
-const SPELLING_WORDS = [];
-
-Object.keys(SPELLING_WORD_BANK).forEach(level => {
-
-  const categories =
-    SPELLING_WORD_BANK[level];
-
-  Object.keys(categories).forEach(category => {
-
-    categories[category].forEach(word => {
-
-      SPELLING_WORDS.push({
-
-        word: word,
-
-        level: level,
-
-        category: category,
-
-        theme: category,
-
-        emoji: getEmoji(category)
-
-      });
-
-    });
-
-  });
-
-});
-
-function getEmoji(category){
-
-  const emojis = {
-
-    basics:"✨",
-    animals:"🦁",
-    jungle:"🌴",
-    ocean:"🌊",
-    farm:"🚜",
-    food:"🍕",
-    space:"🚀",
-    vehicles:"🚗",
-    transport:"🚂",
-    dinos:"🦖",
-    dinosaurs:"🦕",
-    pirates:"🏴‍☠️",
-    piratewords:"⚓",
-    magic:"🧙",
-    wizardry:"🔮",
-    science:"⚡",
-    nature:"🌈",
-    adventure:"🗺️"
-
-  };
-
-  return emojis[category] || "✨";
-
-}
-
-window.SPELLING_WORDS =
-  SPELLING_WORDS;
-
-console.log(
-  "SPELLING WORDS LOADED:",
-  SPELLING_WORDS.length
-);
+];
