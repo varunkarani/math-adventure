@@ -5,11 +5,9 @@
 let spellingMode = "easy";
 
 let spellingCurrentWord = null;
-
 let spellingCurrentInput = "";
 
 let spellingSolved = 0;
-
 let spellingStreak = 0;
 
 let spellingSpeechEnabled = true;
@@ -18,25 +16,55 @@ let spellingSpeechEnabled = true;
 /* ELEMENTS */
 /* ========================= */
 
-let spellingWordDisplay;
+const spellingWordDisplay =
+  document.getElementById(
+    "spellingWordDisplay"
+  );
 
-let spellingInputDisplay;
+const spellingInputDisplay =
+  document.getElementById(
+    "spellingInputDisplay"
+  );
 
-let spellingFeedback;
+const spellingFeedback =
+  document.getElementById(
+    "spellingFeedback"
+  );
 
-let spellingEmoji;
+const spellingEmoji =
+  document.getElementById(
+    "spellingEmoji"
+  );
 
-let spellingModeSelect;
+const spellingModeSelect =
+  document.getElementById(
+    "spellingMode"
+  );
 
-let spellingStreakCount;
+const spellingStreakCount =
+  document.getElementById(
+    "spellingStreakCount"
+  );
 
-let spellingSolvedCount;
+const spellingSolvedCount =
+  document.getElementById(
+    "spellingSolvedCount"
+  );
 
-let spellingKeyboard;
+const spellingKeyboard =
+  document.getElementById(
+    "spellingKeyboard"
+  );
 
-let speakWordBtn;
+const speakWordBtn =
+  document.getElementById(
+    "speakWordBtn"
+  );
 
-let nextWordBtn;
+const nextWordBtn =
+  document.getElementById(
+    "nextWordBtn"
+  );
 
 /* ========================= */
 /* INIT */
@@ -44,7 +72,12 @@ let nextWordBtn;
 
 function initSpelling(){
 
-  if(!window.SPELLING_WORDS){
+  if(
+    !window.SPELLING_WORDS ||
+    !Array.isArray(
+      SPELLING_WORDS
+    )
+  ){
 
     console.error(
       "SPELLING_WORDS missing"
@@ -54,182 +87,14 @@ function initSpelling(){
 
   }
 
-  /* ========================= */
-  /* GET ELEMENTS */
-  /* ========================= */
-
-  spellingWordDisplay =
-    document.getElementById(
-      "spellingWordDisplay"
-    );
-
-  spellingInputDisplay =
-    document.getElementById(
-      "spellingInputDisplay"
-    );
-
-  spellingFeedback =
-    document.getElementById(
-      "spellingFeedback"
-    );
-
-  spellingEmoji =
-    document.getElementById(
-      "spellingEmoji"
-    );
-
-  spellingModeSelect =
-    document.getElementById(
-      "spellingMode"
-    );
-
-  spellingStreakCount =
-    document.getElementById(
-      "spellingStreakCount"
-    );
-
-  spellingSolvedCount =
-    document.getElementById(
-      "spellingSolvedCount"
-    );
-
-  spellingKeyboard =
-    document.getElementById(
-      "spellingKeyboard"
-    );
-
-  speakWordBtn =
-    document.getElementById(
-      "speakWordBtn"
-    );
-
-  nextWordBtn =
-    document.getElementById(
-      "nextWordBtn"
-    );
-
-  /* ========================= */
-  /* EVENTS */
-  /* ========================= */
-
-  setupSpellingEvents();
+  console.log(
+    "SPELLING_WORDS loaded:",
+    SPELLING_WORDS.length
+  );
 
   generateSpellingWord();
 
   updateSpellingStats();
-
-}
-
-/* ========================= */
-/* EVENTS */
-/* ========================= */
-
-function setupSpellingEvents(){
-
-  /* KEYBOARD */
-
-  if(spellingKeyboard){
-
-    spellingKeyboard.addEventListener(
-      "click",
-      function(e){
-
-        if(
-          !e.target.classList.contains(
-            "spell-key"
-          )
-        ){
-          return;
-        }
-
-        const value =
-          e.target.innerText;
-
-        /* DELETE */
-
-        if(value === "⌫"){
-
-          spellingCurrentInput =
-            spellingCurrentInput.slice(
-              0,
-              -1
-            );
-
-          renderSpelling();
-
-          return;
-
-        }
-
-        /* SUBMIT */
-
-        if(value === "✓"){
-
-          submitSpellingAnswer();
-
-          return;
-
-        }
-
-        /* LETTER */
-
-        spellingCurrentInput +=
-          value.toLowerCase();
-
-        renderSpelling();
-
-      }
-    );
-
-  }
-
-  /* MODE */
-
-  if(spellingModeSelect){
-
-    spellingModeSelect.addEventListener(
-      "change",
-      function(){
-
-        spellingMode =
-          spellingModeSelect.value;
-
-        generateSpellingWord();
-
-      }
-    );
-
-  }
-
-  /* SPEAK */
-
-  if(speakWordBtn){
-
-    speakWordBtn.addEventListener(
-      "click",
-      function(){
-
-        speakCurrentWord();
-
-      }
-    );
-
-  }
-
-  /* NEXT WORD */
-
-  if(nextWordBtn){
-
-    nextWordBtn.addEventListener(
-      "click",
-      function(){
-
-        generateSpellingWord();
-
-      }
-    );
-
-  }
 
 }
 
@@ -239,24 +104,46 @@ function setupSpellingEvents(){
 
 function generateSpellingWord(){
 
+  if(
+    !window.SPELLING_WORDS
+  ){
+    return;
+  }
+
   const filteredWords =
     SPELLING_WORDS.filter(
-      word => {
+      word =>
 
-        return (
-          word.level === spellingMode ||
-          word.category === spellingMode
-        );
+        word.level === spellingMode ||
 
-      }
+        word.category === spellingMode ||
+
+        word.theme === spellingMode
     );
+
+  console.log(
+    "Mode:",
+    spellingMode
+  );
+
+  console.log(
+    "Filtered:",
+    filteredWords.length
+  );
 
   if(filteredWords.length === 0){
 
     console.warn(
-      "No words found for mode:",
+      "No words found for:",
       spellingMode
     );
+
+    if(spellingWordDisplay){
+
+      spellingWordDisplay.innerHTML =
+        "No Words Found";
+
+    }
 
     return;
 
@@ -275,10 +162,10 @@ function generateSpellingWord(){
 
   renderSpelling();
 
-  if(spellingSpeechEnabled){
-
+  if(
+    spellingSpeechEnabled
+  ){
     speakCurrentWord();
-
   }
 
 }
@@ -289,22 +176,16 @@ function generateSpellingWord(){
 
 function renderSpelling(){
 
-  if(!spellingCurrentWord){
+  if(
+    !spellingCurrentWord
+  ){
     return;
   }
 
   if(spellingWordDisplay){
 
     spellingWordDisplay.innerHTML =
-      `
-      <div class="spelling-theme">
-        ${spellingCurrentWord.theme}
-      </div>
-
-      <div class="spelling-category">
-        ${spellingCurrentWord.category}
-      </div>
-      `;
+      spellingCurrentWord.word;
 
   }
 
@@ -319,19 +200,22 @@ function renderSpelling(){
   if(spellingEmoji){
 
     spellingEmoji.innerHTML =
-      spellingCurrentWord.emoji;
+      spellingCurrentWord.emoji ||
+      "✨";
 
   }
 
 }
 
 /* ========================= */
-/* SPEECH */
+/* SPEAK */
 /* ========================= */
 
 function speakCurrentWord(){
 
-  if(!spellingCurrentWord){
+  if(
+    !spellingCurrentWord
+  ){
     return;
   }
 
@@ -342,7 +226,7 @@ function speakCurrentWord(){
       spellingCurrentWord.word
     );
 
-  utterance.rate = 0.82;
+  utterance.rate = 0.8;
 
   utterance.pitch = 1;
 
@@ -360,17 +244,21 @@ function speakCurrentWord(){
 
 function submitSpellingAnswer(){
 
-  if(!spellingCurrentWord){
+  if(
+    !spellingCurrentWord
+  ){
     return;
   }
 
   const correctWord =
     spellingCurrentWord.word
-    .toLowerCase();
+    .toLowerCase()
+    .trim();
 
   const userWord =
     spellingCurrentInput
-    .toLowerCase();
+    .toLowerCase()
+    .trim();
 
   if(userWord === correctWord){
 
@@ -464,6 +352,115 @@ function updateSpellingStats(){
       spellingSolved;
 
   }
+
+}
+
+/* ========================= */
+/* KEYBOARD */
+/* ========================= */
+
+if(spellingKeyboard){
+
+  spellingKeyboard.addEventListener(
+    "click",
+    function(e){
+
+      if(
+        !e.target.classList.contains(
+          "spell-key"
+        )
+      ){
+        return;
+      }
+
+      const value =
+        e.target.innerText;
+
+      /* DELETE */
+
+      if(value === "⌫"){
+
+        spellingCurrentInput =
+          spellingCurrentInput.slice(
+            0,
+            -1
+          );
+
+        renderSpelling();
+
+        return;
+
+      }
+
+      /* SUBMIT */
+
+      if(value === "✓"){
+
+        submitSpellingAnswer();
+
+        return;
+
+      }
+
+      /* LETTER */
+
+      spellingCurrentInput +=
+        value.toLowerCase();
+
+      renderSpelling();
+
+    }
+  );
+
+}
+
+/* ========================= */
+/* MODE */
+/* ========================= */
+
+if(spellingModeSelect){
+
+  spellingModeSelect.addEventListener(
+    "change",
+    function(){
+
+      spellingMode =
+        spellingModeSelect.value;
+
+      generateSpellingWord();
+
+    }
+  );
+
+}
+
+/* ========================= */
+/* BUTTONS */
+/* ========================= */
+
+if(speakWordBtn){
+
+  speakWordBtn.addEventListener(
+    "click",
+    function(){
+
+      speakCurrentWord();
+
+    }
+  );
+
+}
+
+if(nextWordBtn){
+
+  nextWordBtn.addEventListener(
+    "click",
+    function(){
+
+      generateSpellingWord();
+
+    }
+  );
 
 }
 
