@@ -1,9 +1,40 @@
 {
-  "name": "Math Adventure",
-  "short_name": "Math",
-  "start_url": ".",
+  "name": "Ryan's Adventure Academy",
+  "short_name": "Ryan Academy",
+  "description": "An interactive learning adventure with math, stories, and spelling games for kids.",
+
+  "start_url": "./index.html",
+  "scope": "./",
+
   "display": "standalone",
+  "orientation": "portrait",
+
   "background_color": "#0b1020",
   "theme_color": "#0b1020",
-  "icons": []
+
+  "lang": "en",
+  "dir": "ltr",
+
+  "categories": [
+    "education",
+    "kids",
+    "games"
+  ],
+
+  "icons": [
+
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+
+  ]
+
 }
