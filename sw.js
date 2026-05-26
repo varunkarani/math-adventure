@@ -1,5 +1,5 @@
 const CACHE_NAME =
-  "ryan-adventure-v30";
+  "ryan-adventure-v31";
 
 const FILES_TO_CACHE = [
 
