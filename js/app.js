@@ -102,6 +102,11 @@ document.addEventListener(
       "storyTab"
     );
 
+  const spellingTabBtn =
+    document.getElementById(
+      "spellingTabBtn"
+    );
+
   const mathSection =
     document.getElementById(
       "mathSection"
@@ -110,6 +115,11 @@ document.addEventListener(
   const storySection =
     document.getElementById(
       "storySection"
+    );
+
+  const spellingSection =
+    document.getElementById(
+      "spellingSection"
     );
 
   const keypad =
@@ -381,7 +391,75 @@ document.addEventListener(
   }
 
   /* ========================= */
-  /* TABS */
+  /* TAB SWITCHING */
+  /* ========================= */
+
+  function showSection(section){
+
+    mathSection.classList.add(
+      "hidden"
+    );
+
+    storySection.classList.add(
+      "hidden"
+    );
+
+    spellingSection.classList.add(
+      "hidden"
+    );
+
+    mathTab.classList.remove(
+      "active"
+    );
+
+    storyTab.classList.remove(
+      "active"
+    );
+
+    spellingTabBtn.classList.remove(
+      "active"
+    );
+
+    if(section === "math"){
+
+      mathSection.classList.remove(
+        "hidden"
+      );
+
+      mathTab.classList.add(
+        "active"
+      );
+
+    }
+
+    if(section === "stories"){
+
+      storySection.classList.remove(
+        "hidden"
+      );
+
+      storyTab.classList.add(
+        "active"
+      );
+
+    }
+
+    if(section === "spelling"){
+
+      spellingSection.classList.remove(
+        "hidden"
+      );
+
+      spellingTabBtn.classList.add(
+        "active"
+      );
+
+    }
+
+  }
+
+  /* ========================= */
+  /* TAB EVENTS */
   /* ========================= */
 
   if(mathTab){
@@ -390,21 +468,7 @@ document.addEventListener(
       "click",
       function(){
 
-      mathSection.classList.remove(
-        "hidden"
-      );
-
-      storySection.classList.add(
-        "hidden"
-      );
-
-      mathTab.classList.add(
-        "active"
-      );
-
-      storyTab.classList.remove(
-        "active"
-      );
+      showSection("math");
 
     });
 
@@ -416,21 +480,19 @@ document.addEventListener(
       "click",
       function(){
 
-      storySection.classList.remove(
-        "hidden"
-      );
+      showSection("stories");
 
-      mathSection.classList.add(
-        "hidden"
-      );
+    });
 
-      storyTab.classList.add(
-        "active"
-      );
+  }
 
-      mathTab.classList.remove(
-        "active"
-      );
+  if(spellingTabBtn){
+
+    spellingTabBtn.addEventListener(
+      "click",
+      function(){
+
+      showSection("spelling");
 
     });
 
