@@ -3,10 +3,13 @@
 /* ========================= */
 
 let spellingMode = "easy";
+
 let spellingCurrentWord = null;
+
 let spellingCurrentInput = "";
 
 let spellingSolved = 0;
+
 let spellingStreak = 0;
 
 let spellingSpeechEnabled = true;
@@ -15,55 +18,25 @@ let spellingSpeechEnabled = true;
 /* ELEMENTS */
 /* ========================= */
 
-const spellingWordDisplay =
-  document.getElementById(
-    "spellingWordDisplay"
-  );
+let spellingWordDisplay;
 
-const spellingInputDisplay =
-  document.getElementById(
-    "spellingInputDisplay"
-  );
+let spellingInputDisplay;
 
-const spellingFeedback =
-  document.getElementById(
-    "spellingFeedback"
-  );
+let spellingFeedback;
 
-const spellingEmoji =
-  document.getElementById(
-    "spellingEmoji"
-  );
+let spellingEmoji;
 
-const spellingModeSelect =
-  document.getElementById(
-    "spellingMode"
-  );
+let spellingModeSelect;
 
-const spellingStreakCount =
-  document.getElementById(
-    "spellingStreakCount"
-  );
+let spellingStreakCount;
 
-const spellingSolvedCount =
-  document.getElementById(
-    "spellingSolvedCount"
-  );
+let spellingSolvedCount;
 
-const spellingKeyboard =
-  document.getElementById(
-    "spellingKeyboard"
-  );
+let spellingKeyboard;
 
-const speakWordBtn =
-  document.getElementById(
-    "speakWordBtn"
-  );
+let speakWordBtn;
 
-const nextWordBtn =
-  document.getElementById(
-    "nextWordBtn"
-  );
+let nextWordBtn;
 
 /* ========================= */
 /* INIT */
@@ -72,15 +45,191 @@ const nextWordBtn =
 function initSpelling(){
 
   if(!window.SPELLING_WORDS){
+
     console.error(
       "SPELLING_WORDS missing"
     );
+
     return;
+
   }
+
+  /* ========================= */
+  /* GET ELEMENTS */
+  /* ========================= */
+
+  spellingWordDisplay =
+    document.getElementById(
+      "spellingWordDisplay"
+    );
+
+  spellingInputDisplay =
+    document.getElementById(
+      "spellingInputDisplay"
+    );
+
+  spellingFeedback =
+    document.getElementById(
+      "spellingFeedback"
+    );
+
+  spellingEmoji =
+    document.getElementById(
+      "spellingEmoji"
+    );
+
+  spellingModeSelect =
+    document.getElementById(
+      "spellingMode"
+    );
+
+  spellingStreakCount =
+    document.getElementById(
+      "spellingStreakCount"
+    );
+
+  spellingSolvedCount =
+    document.getElementById(
+      "spellingSolvedCount"
+    );
+
+  spellingKeyboard =
+    document.getElementById(
+      "spellingKeyboard"
+    );
+
+  speakWordBtn =
+    document.getElementById(
+      "speakWordBtn"
+    );
+
+  nextWordBtn =
+    document.getElementById(
+      "nextWordBtn"
+    );
+
+  /* ========================= */
+  /* EVENTS */
+  /* ========================= */
+
+  setupSpellingEvents();
 
   generateSpellingWord();
 
   updateSpellingStats();
+
+}
+
+/* ========================= */
+/* EVENTS */
+/* ========================= */
+
+function setupSpellingEvents(){
+
+  /* KEYBOARD */
+
+  if(spellingKeyboard){
+
+    spellingKeyboard.addEventListener(
+      "click",
+      function(e){
+
+        if(
+          !e.target.classList.contains(
+            "spell-key"
+          )
+        ){
+          return;
+        }
+
+        const value =
+          e.target.innerText;
+
+        /* DELETE */
+
+        if(value === "⌫"){
+
+          spellingCurrentInput =
+            spellingCurrentInput.slice(
+              0,
+              -1
+            );
+
+          renderSpelling();
+
+          return;
+
+        }
+
+        /* SUBMIT */
+
+        if(value === "✓"){
+
+          submitSpellingAnswer();
+
+          return;
+
+        }
+
+        /* LETTER */
+
+        spellingCurrentInput +=
+          value.toLowerCase();
+
+        renderSpelling();
+
+      }
+    );
+
+  }
+
+  /* MODE */
+
+  if(spellingModeSelect){
+
+    spellingModeSelect.addEventListener(
+      "change",
+      function(){
+
+        spellingMode =
+          spellingModeSelect.value;
+
+        generateSpellingWord();
+
+      }
+    );
+
+  }
+
+  /* SPEAK */
+
+  if(speakWordBtn){
+
+    speakWordBtn.addEventListener(
+      "click",
+      function(){
+
+        speakCurrentWord();
+
+      }
+    );
+
+  }
+
+  /* NEXT WORD */
+
+  if(nextWordBtn){
+
+    nextWordBtn.addEventListener(
+      "click",
+      function(){
+
+        generateSpellingWord();
+
+      }
+    );
+
+  }
 
 }
 
@@ -92,12 +241,25 @@ function generateSpellingWord(){
 
   const filteredWords =
     SPELLING_WORDS.filter(
-      word =>
-        word.level === spellingMode
+      word => {
+
+        return (
+          word.level === spellingMode ||
+          word.category === spellingMode
+        );
+
+      }
     );
 
   if(filteredWords.length === 0){
+
+    console.warn(
+      "No words found for mode:",
+      spellingMode
+    );
+
     return;
+
   }
 
   const randomIndex =
@@ -114,7 +276,9 @@ function generateSpellingWord(){
   renderSpelling();
 
   if(spellingSpeechEnabled){
+
     speakCurrentWord();
+
   }
 
 }
@@ -178,8 +342,10 @@ function speakCurrentWord(){
       spellingCurrentWord.word
     );
 
-  utterance.rate = 0.8;
+  utterance.rate = 0.82;
+
   utterance.pitch = 1;
+
   utterance.volume = 1;
 
   speechSynthesis.speak(
@@ -189,7 +355,7 @@ function speakCurrentWord(){
 }
 
 /* ========================= */
-/* CHECK ANSWER */
+/* SUBMIT */
 /* ========================= */
 
 function submitSpellingAnswer(){
@@ -209,6 +375,7 @@ function submitSpellingAnswer(){
   if(userWord === correctWord){
 
     spellingSolved++;
+
     spellingStreak++;
 
     updateSpellingStats();
@@ -227,14 +394,18 @@ function submitSpellingAnswer(){
       typeof launchConfetti ===
       "function"
     ){
+
       launchConfetti();
+
     }
 
     setTimeout(()=>{
 
       if(spellingFeedback){
+
         spellingFeedback.innerHTML =
           "";
+
       }
 
       generateSpellingWord();
@@ -260,8 +431,10 @@ function submitSpellingAnswer(){
     setTimeout(()=>{
 
       if(spellingFeedback){
+
         spellingFeedback.innerHTML =
           "";
+
       }
 
       generateSpellingWord();
@@ -291,127 +464,6 @@ function updateSpellingStats(){
       spellingSolved;
 
   }
-
-}
-
-/* ========================= */
-/* KEYBOARD */
-/* ========================= */
-
-if(spellingKeyboard){
-
-  spellingKeyboard.addEventListener(
-    "click",
-    function(e){
-
-      if(
-        !e.target.classList.contains(
-          "spell-key"
-        )
-      ){
-        return;
-      }
-
-      const value =
-        e.target.innerText;
-
-      /* DELETE */
-
-      if(value === "⌫"){
-
-        spellingCurrentInput =
-          spellingCurrentInput.slice(
-            0,
-            -1
-          );
-
-        renderSpelling();
-
-        return;
-
-      }
-
-      /* SUBMIT */
-
-      if(value === "✓"){
-
-        submitSpellingAnswer();
-
-        return;
-
-      }
-
-      /* SPACE */
-
-      if(value === "SPACE"){
-
-        spellingCurrentInput += " ";
-
-        renderSpelling();
-
-        return;
-
-      }
-
-      /* LETTER */
-
-      spellingCurrentInput +=
-        value.toLowerCase();
-
-      renderSpelling();
-
-    }
-  );
-
-}
-
-/* ========================= */
-/* MODE SELECT */
-/* ========================= */
-
-if(spellingModeSelect){
-
-  spellingModeSelect.addEventListener(
-    "change",
-    function(){
-
-      spellingMode =
-        spellingModeSelect.value;
-
-      generateSpellingWord();
-
-    }
-  );
-
-}
-
-/* ========================= */
-/* BUTTONS */
-/* ========================= */
-
-if(speakWordBtn){
-
-  speakWordBtn.addEventListener(
-    "click",
-    function(){
-
-      speakCurrentWord();
-
-    }
-  );
-
-}
-
-if(nextWordBtn){
-
-  nextWordBtn.addEventListener(
-    "click",
-    function(){
-
-      generateSpellingWord();
-
-    }
-  );
 
 }
 
